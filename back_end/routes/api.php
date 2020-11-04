@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\User\BankAccountController;
 use App\Http\Controllers\Api\User\ReceiverController;
 use App\Http\Controllers\Api\User\TransactionController;
 use App\Http\Controllers\Api\User\NewsController;
+use App\Http\Controllers\Api\User\NotificationController;
 
 use App\Http\Controllers\Api\Admin\InterestRateController as AdminInterestRateController;
 use App\Http\Controllers\Api\Admin\BankAccountController as AdminBankAccountController;
@@ -68,7 +69,7 @@ Route::group([
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'transaction', 'middleware' => ['checkPinCode']], function () {
-        Route::get('/', [TransactionController::class, 'list']);
+        Route::get('/{account_number}', [TransactionController::class, 'list']);
         
         Route::post('/cash-out', [TransactionController::class, 'createCashOut']);
     
@@ -104,6 +105,17 @@ Route::group([
         Route::get('/', [NewsController::class, 'list']);
     
         Route::get('/{id}', [NewsController::class, 'detail']);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Notification
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['prefix' => 'notification'], function () {
+        Route::get('/', [NotificationController::class, 'list']);
+    
+        Route::get('/{id}', [NotificationController::class, 'detail']);
     });
 });
 
@@ -214,6 +226,11 @@ Route::group([
     |--------------------------------------------------------------------------
     */
     Route::group(['prefix' => 'transaction'], function () {
+        Route::get('/', [AdminTransactionController::class, 'list']);
+
+        Route::get('/{id}', [AdminTransactionController::class, 'detail'])
+            ->where(['id' => '[0-9]+']);
+
         Route::post('/cash-in', [AdminTransactionController::class, 'createCashIn']);
     });
 });

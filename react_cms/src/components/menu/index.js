@@ -13,6 +13,10 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     marginRight: theme.spacing(2),
   },
+  menuButton: {
+    textTransform: 'none',
+    fontWeight: 'bold'
+  }
 }));
 
 const menuItemsData = [
@@ -67,9 +71,13 @@ const menuItemsData = [
   
 ];
 
-export default function Menu() {
+export default function Menu(props) {
   const classes = useStyles();
   const [currentMenu, setCurrentMenu] = React.useState('none');
+  const logOutClick = () => {
+    localStorage.removeItem('token');
+    props.setLoggedIn(false);
+  }
   const menuItems = menuItemsData.map( (item, idx) =>
     <MenuButton
       key={idx} 
@@ -77,7 +85,8 @@ export default function Menu() {
       route={item.route}
       items={item.items}
       setCurrentMenu={setCurrentMenu}
-      color={currentMenu.includes(item.route) ? 'secondary' : 'default'} 
+      selected={currentMenu.includes(item.route)}
+      // color="inherit"
     />
   );
 
@@ -86,14 +95,16 @@ export default function Menu() {
       <AppBar position="static">
         <Toolbar>
           <Grid
-            justify="space-between" // Add it here :)
+            justify="space-between"
             container
           >
               {menuItems}
               <Button
                 color="inherit"
+                onClick={logOutClick}
+                className={classes.menuButton}
               >
-                Login
+                Logout
               </Button>
           </Grid>
 

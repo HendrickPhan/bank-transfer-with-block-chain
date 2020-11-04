@@ -35,8 +35,8 @@ class BankAccount extends Model
 
     public function getTypeTextAttribute()
     {
-        return isset($this->attributes['status']) 
-            ? $this->getTypeText($this->attributes['status'])
+        return isset($this->attributes['type']) 
+            ? $this->getTypeText($this->attributes['type'])
             : null;
     }
 

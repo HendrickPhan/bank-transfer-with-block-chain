@@ -25,6 +25,36 @@ class Transaction extends Model
         'fee'
     ];
 
+    protected $appends = [
+        'status_text',
+        'type_text'
+    ];
+
+    public function getTypeTextAttribute()
+    {
+        return isset($this->attributes['type']) 
+            ? $this->getTypeText($this->attributes['type'])
+            : null;
+    }
+
+    public static function getTypeText($type)
+    {
+        $typeTexts = [
+            "Transfer",
+            "Cash In",
+            "Cash Out"
+        ];
+
+        return $typeTexts[$type];
+    }
+
+    public function getStatusTextAttribute()
+    {
+        return isset($this->attributes['status']) 
+            ? ( $this->attributes['status'] ? "Confirmed" : "Pending")
+            : null;
+    }
+
     public function fromAccount() {
         return $this->belongsTo(BankAccount::class, 'from_account', 'account_number');
     }

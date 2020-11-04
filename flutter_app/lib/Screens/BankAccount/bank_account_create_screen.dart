@@ -1,6 +1,6 @@
 import 'package:app/Models/bank_account_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/BLoC/bank_account_list_bloc.dart';
+import 'package:app/BLoC/BankAccount/bank_account_list_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';

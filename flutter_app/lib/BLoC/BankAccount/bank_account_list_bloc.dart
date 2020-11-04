@@ -1,12 +1,12 @@
 import 'package:app/Models/bank_account_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
-import 'package:app/Repositories/bank_account_list_repository.dart';
+import 'package:app/Repositories/bank_account_repository.dart';
 import 'dart:async';
 import '../bloc.dart';
 
 class BankAccountListBloc implements Bloc {
-  BankAccountListRepository _bankAccountListRepository;
+  BankAccountRepository _bankAccountRepository;
   StreamController _walletListController;
 
   StreamSink<ApiResponse<PaginateModel<BankAccountModel>>>
@@ -18,14 +18,14 @@ class BankAccountListBloc implements Bloc {
   BankAccountListBloc() {
     _walletListController =
         StreamController<ApiResponse<PaginateModel<BankAccountModel>>>();
-    _bankAccountListRepository = BankAccountListRepository();
+    _bankAccountRepository = BankAccountRepository();
   }
 
   fetchBankAccountLists() async {
     bankAccountListSink.add(ApiResponse.loading('Đang lấy dữ liệu ví'));
     try {
       PaginateModel bankAccountList =
-          await _bankAccountListRepository.fetchBankAccountListData(page: 1);
+          await _bankAccountRepository.fetchBankAccountListData(page: 1);
       bankAccountListSink.add(ApiResponse.completed(bankAccountList));
     } catch (e) {
       bankAccountListSink.add(ApiResponse.error(e.toString()));
@@ -36,7 +36,7 @@ class BankAccountListBloc implements Bloc {
   fetchMoreBankAccounts(int page) async {
     try {
       PaginateModel bankAccountList =
-          await _bankAccountListRepository.fetchBankAccountListData(page: page);
+          await _bankAccountRepository.fetchBankAccountListData(page: page);
       bankAccountListSink.add(ApiResponse.completed(bankAccountList));
     } catch (e) {
       bankAccountListSink.add(ApiResponse.error(e.toString()));

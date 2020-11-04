@@ -12,7 +12,28 @@ use App\Models\Transaction;
 
 class TransactionController extends Controller
 {
-    //
+    public function list(Request $request) {
+        $limit = $request->input('limit', 10);
+        $fromAccount = $request->input('from_account');
+        $toAccount = $request->input('to_account');
+
+        $query = Transaction::orderBy('id', 'desc');
+        if($fromAccount) {
+            $query->where('from_account', $fromAccount);
+        }
+        if($toAccount) {
+            $query->where('to_account', $toAccount);
+        }
+        $transactions = $query->paginate($limit);
+
+        return $this->responseSuccess($transactions);
+    }
+
+    public function detail(Request $request) {
+        $transaction = Transaction::find($request->id);
+        return $this->responseSuccess($transaction);
+    }
+
     public function createCashIn(CreateCashInRequest $request) {
         $data = $request->validated();
 

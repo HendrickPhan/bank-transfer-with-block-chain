@@ -11,6 +11,7 @@ import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
 import { useHistory } from "react-router-dom";
+import { formatNumber } from "../../../ultilities"
 import Settings from '../../../settings';
 
 const headers = [
@@ -83,12 +84,15 @@ export default function ListTable(props) {
     props.setAddBalanceAccountNumber(accountNumber);
   }
 
+  const handleTransactionClick = (accountNumber) => {
+    history.push('/transaction/' + accountNumber);
+  }
+
   const handleChangePage = (event, value) => {
     setPage(value)
   };
 
   const handleChangeRowsPerPage = (event) => {
-    console.log(event.target.value);
     setPage(0)
     setRowsPerPage(event.target.value)
   }
@@ -99,9 +103,10 @@ export default function ListTable(props) {
       .then(
         (result) => {
           setIsLoaded(true);
+          result.data.map((value, idx) => {
+            return value.amount = formatNumber(value.amount);
+          })
           setData(result);
-          console.log(result.data);
-
         },
         // Note: it's important to handle errors here
         // instead of a catch() block so that we don't swallow
@@ -154,11 +159,11 @@ export default function ListTable(props) {
                   >
                     <Button
                       variant="contained"
-                      // onClick={() => handleActionClick(action.path, {id: data[0]})}
+                      onClick={() => handleTransactionClick(row['account_number'])}
                       color='default' 
                       className={classes.button}
                     >
-                      Update
+                      Transactions
                     </Button>
                     <Button
                       variant="contained"

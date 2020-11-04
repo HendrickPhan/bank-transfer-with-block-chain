@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect, useCallback } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -8,38 +9,82 @@ import Menu from "./components/menu"
 import Home from "./pages/home"
 import UserPage from "./pages/user"
 import BankAccountPage from "./pages/bank_account"
+import TransactionPage from "./pages/transaction"
 import InterestRatePage from "./pages/interest_rate"
-// Since routes are regular React components, they
-// may be rendered anywhere in the app, including in
-// child elements.
-//
-// This helps when it's time to code-split your app
-// into multiple bundles because code-splitting a
-// React Router app is the same as code-splitting
-// any other React app.
+import LoginPage from "./pages/login"
+import Settings from "./settings"
+import { Get } from "./api"
+// theme
+import CssBaseline from "@material-ui/core/CssBaseline";
+import {ThemeProvider } from '@material-ui/core/styles';
+import Theme from './theme'
+import { makeStyles } from '@material-ui/core/styles';
+
+const useStyles = makeStyles((theme) => ({
+  root: {
+   
+  }
+}));
 
 export default function Routes() {
+  const classes = useStyles();
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const fetchData = useCallback(() => {
+    Get(Settings.API_URL_WITHOUT_ADMIN + 'profile')
+      .then(
+        (result) => {
+          setLoggedIn(true)
+        },
+        (errors) => {
+          setLoggedIn(false)
+        }
+      )
+  }, []);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData])
+
+
   return (
-    <Router>
-        <Menu/>
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/user">
-            <UserPage />
-            {/* <Topics /> */}
-          </Route>
-          <Route path="/bank-account">
-            <BankAccountPage />
-            {/* <Topics /> */}
-          </Route>
-          <Route path="/interest-rate">
-            <InterestRatePage />
-            {/* <Topics /> */}
-          </Route>
-          
-        </Switch>
-    </Router>
+    <ThemeProvider theme={Theme}>
+      <CssBaseline />
+      <Router>
+        {loggedIn ?
+          <div
+            className={classes.root}
+          >
+            <Menu
+              setLoggedIn={setLoggedIn}
+            />
+
+            <Switch>
+              <Route exact path="/">
+                <Home />
+              </Route>
+              <Route path="/user">
+                <UserPage />
+              </Route>
+              <Route path="/bank-account">
+                <BankAccountPage />
+              </Route>
+              <Route path="/transaction">
+                <TransactionPage />
+              </Route>
+              <Route path="/transaction/:accountNumber">
+                <TransactionPage />
+              </Route>
+              <Route path="/interest-rate">
+                <InterestRatePage />
+              </Route>
+            </Switch>
+          </div>
+          : <LoginPage
+            setLoggedIn={setLoggedIn}
+          />
+        }
+      </Router>
+    </ThemeProvider>
+
   );
 }
