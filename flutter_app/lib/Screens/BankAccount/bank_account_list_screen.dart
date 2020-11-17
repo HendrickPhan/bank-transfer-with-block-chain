@@ -5,6 +5,7 @@ import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
+import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
 
 class BankAccountListScreen extends StatefulWidget {
   @override
@@ -107,10 +108,9 @@ class BankAccountList extends StatelessWidget {
     return Column(
       children: [
         Row(children: <Widget>[
-          Expanded(child: Text("First Name")),
-          Expanded(child: Text("Last Name")),
-          Expanded(child: Text("City")),
-          Expanded(child: Text("Id")),
+          Expanded(child: Text("Account Number")),
+          Expanded(child: Text("Type")),
+          Expanded(child: Text("Ammount")),
         ]),
         Expanded(
           child: NotificationListener<ScrollNotification>(
@@ -123,10 +123,13 @@ class BankAccountList extends StatelessWidget {
                         vertical: 1.0,
                       ),
                       child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => null));
-                          // ShowChuckyJoke(categoryList.categories[index])));
+                        onTap: () => {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => BankAccountDetailScreen(
+                                    this.bankAccountList.data[index].id)),
+                          )
                         },
                         child: Row(
                           children: [

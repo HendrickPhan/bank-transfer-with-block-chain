@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:async';
 import 'package:app/Screens/Login/login_screen.dart';
+import 'package:app/Models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override

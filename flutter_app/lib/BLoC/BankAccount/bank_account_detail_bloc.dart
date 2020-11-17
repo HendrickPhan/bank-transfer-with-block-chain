@@ -2,6 +2,7 @@ import 'package:app/Models/bank_account_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Repositories/bank_account_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../bloc.dart';
 
@@ -9,37 +10,26 @@ class BankAccountDetailBloc implements Bloc {
   BankAccountRepository _bankAccountRepository;
   StreamController _walletListController;
 
-  StreamSink<ApiResponse<PaginateModel<BankAccountModel>>>
-      get bankAccountListSink => _walletListController.sink;
+  StreamSink<ApiResponse<BankAccountModel>> get bankAccountDetailSink =>
+      _walletListController.sink;
 
-  Stream<ApiResponse<PaginateModel<BankAccountModel>>>
-      get bankAccountListStream => _walletListController.stream;
+  Stream<ApiResponse<BankAccountModel>> get bankAccountDetailStream =>
+      _walletListController.stream;
 
-  BankAccountListBloc() {
-    _walletListController =
-        StreamController<ApiResponse<PaginateModel<BankAccountModel>>>();
+  BankAccountDetailBloc() {
+    _walletListController = StreamController<ApiResponse<BankAccountModel>>();
     _bankAccountRepository = BankAccountRepository();
   }
 
-  fetchBankAccountLists() async {
-    bankAccountListSink.add(ApiResponse.loading('Đang lấy dữ liệu ví'));
+  fetchBankAccountDetail(int a) async {
+    bankAccountDetailSink
+        .add(ApiResponse.loading('Đang lấy dữ liệu người dùng'));
     try {
-      PaginateModel bankAccountList =
-          await _bankAccountRepository.fetchBankAccountListData(page: 1);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
+      BankAccountModel bankAccountDetail =
+          await _bankAccountRepository.fetchBankAccountDetail(id: a);
+      bankAccountDetailSink.add(ApiResponse.completed(bankAccountDetail));
     } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
-      print(e);
-    }
-  }
-
-  fetchMoreBankAccounts(int page) async {
-    try {
-      PaginateModel bankAccountList =
-          await _bankAccountRepository.fetchBankAccountListData(page: page);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
-    } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
+      bankAccountDetailSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
   }

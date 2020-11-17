@@ -1,6 +1,6 @@
 import 'package:app/Models/bank_account_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/BLoC/BankAccount/bank_account_list_bloc.dart';
+import 'package:app/BLoC/BankAccount/bank_account_detail_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
@@ -8,22 +8,24 @@ import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
 import 'package:flutter/services.dart';
 
-class BankAccountListScreen extends StatefulWidget {
+class BankAccountDetailScreen extends StatefulWidget {
+  final int id;
+  const BankAccountDetailScreen(this.id);
   @override
-  _BankAccountListScreenState createState() => _BankAccountListScreenState();
+  //BankAccountDetailScreen({Key key, @required this.id}) : super(key: key);
+  _BankAccountDetailScreenState createState() =>
+      _BankAccountDetailScreenState();
 }
 
-class _BankAccountListScreenState extends State<BankAccountListScreen> {
-  BankAccountListBloc _bloc;
-  int page;
-  PaginateModel<BankAccountModel> bankAccountList;
+class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
+  BankAccountDetailBloc _bloc;
+  BankAccountModel bankAccountDetail;
 
   @override
   void initState() {
-    page = 1;
     super.initState();
-    _bloc = BankAccountListBloc();
-    _bloc.fetchBankAccountLists();
+    _bloc = BankAccountDetailBloc();
+    _bloc.fetchBankAccountDetail(widget.id);
   }
 
   @override
@@ -31,23 +33,14 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
-        automaticallyImplyLeading: false,
         title: Text('Bank Accounts',
             style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: Color(0xFF222222),
       ),
       backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
-        onNotification: (ScrollNotification scrollInfo) {
-          if (scrollInfo.metrics.pixels == scrollInfo.metrics.maxScrollExtent) {
-            page++;
-            print(page);
-            _bloc.fetchMoreBankAccounts(page);
-          }
-          return null;
-        },
-        child: StreamBuilder<ApiResponse<PaginateModel>>(
-          stream: _bloc.bankAccountListStream,
+        child: StreamBuilder<ApiResponse>(
+          stream: _bloc.bankAccountDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
@@ -55,19 +48,13 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
                   return LoadingWidget(loadingMessage: snapshot.data.message);
                   break;
                 case Status.COMPLETED:
-                  if (bankAccountList == null) {
-                    bankAccountList = snapshot.data.data;
-                  } else {
-                    snapshot.data.data.data.forEach((element) {
-                      bankAccountList.data.add(element);
-                    });
-                  }
-                  return BankAccountList(bankAccountList: bankAccountList);
+                  bankAccountDetail = snapshot.data.data;
+                  return BankAccountDetail(
+                      bankAccountDetail: bankAccountDetail);
                   break;
                 case Status.ERROR:
                   return ErrWidget(
                     errorMessage: snapshot.data.message,
-                    onRetryPressed: () => _bloc.fetchBankAccountLists(),
                   );
                   break;
               }
@@ -89,15 +76,15 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
   void createBankAccount() {}
 }
 
-class BankAccountList extends StatelessWidget {
-  final PaginateModel<BankAccountModel> bankAccountList;
+class BankAccountDetail extends StatelessWidget {
+  final BankAccountModel bankAccountDetail;
 
-  const BankAccountList({Key key, this.bankAccountList}) : super(key: key);
+  const BankAccountDetail({Key key, this.bankAccountDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      child: new ListView.builder(
+      child: new PageView.builder(
         itemBuilder: (context, index) {
           return Card(
               child: Padding(
@@ -106,11 +93,6 @@ class BankAccountList extends StatelessWidget {
                   vertical: 1.0,
                 ),
                 child: InkWell(
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(builder: (context) => null));
-                    // ShowChuckyJoke(categoryList.categories[index])));
-                  },
                   child: Row(
                     children: [
                       Expanded(
@@ -124,7 +106,7 @@ class BankAccountList extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
                                 child: Text(
-                                  bankAccountList.data[index].accountNumber,
+                                  bankAccountDetail.accountNumber,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
@@ -147,7 +129,7 @@ class BankAccountList extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
                                 child: Text(
-                                  bankAccountList.data[index].amount.toString(),
+                                  bankAccountDetail.amount.toString(),
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
@@ -170,7 +152,7 @@ class BankAccountList extends StatelessWidget {
                               child: Padding(
                                 padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
                                 child: Text(
-                                  bankAccountList.data[index].type,
+                                  bankAccountDetail.type,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontFamily: 'Roboto',
@@ -188,7 +170,6 @@ class BankAccountList extends StatelessWidget {
               ),
               color: Colors.black54);
         },
-        itemCount: bankAccountList.data.length,
       ),
     );
   }
