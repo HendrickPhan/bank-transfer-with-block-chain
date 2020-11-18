@@ -22,7 +22,7 @@ class Transaction extends Model
         'from_account',
         'to_account',
         'amount',
-        'fee'
+        'fee',
     ];
 
     protected $appends = [

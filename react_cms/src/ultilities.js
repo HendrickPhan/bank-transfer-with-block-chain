@@ -1,5 +1,5 @@
 const formatNumber = (value) =>
-new Intl.NumberFormat('en-IN', {
+new Intl.NumberFormat('vi-VN', {
   style: 'currency',
   currency: 'vnd'
 }).format(value);
