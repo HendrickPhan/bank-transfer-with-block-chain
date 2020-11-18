@@ -1,0 +1,8 @@
+export const GETTING_NEWS = 'GETTING_NEWS';
+export const GET_NEWS_SUCCESS = 'GET_NEWS_SUCCESS';
+export const GET_NEWS_FAIL = 'GET_NEWS_FAIL';
+
+export const ADDING_NEWS = 'ADDING_NEWS';
+export const ADD_NEWS_SUCCESS = 'ADD_NEWS_SUCCESS';
+export const ADD_NEWS_FAIL = 'ADD_NEWS_FAIL';
+export const ADD_NEWS_CLEAR = 'ADD_NEWS_CLEAR';

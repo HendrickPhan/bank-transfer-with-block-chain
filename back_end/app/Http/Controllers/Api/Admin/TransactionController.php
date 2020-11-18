@@ -16,14 +16,30 @@ class TransactionController extends Controller
         $limit = $request->input('limit', 10);
         $fromAccount = $request->input('from_account');
         $toAccount = $request->input('to_account');
-
+        $type = $request->input('type');
+        $status = $request->input('status');
+        $accountNumber = $request->input('account_number');
+        
         $query = Transaction::orderBy('id', 'desc');
         if($fromAccount) {
-            $query->where('from_account', $fromAccount);
+            $query->where('from_account', 'like', "%$fromAccount%");
         }
         if($toAccount) {
-            $query->where('to_account', $toAccount);
+            $query->where('to_account', 'like', "%$toAccount%");
         }
+        if(isset($type)) {
+            $query->where('type', $type);
+        }
+        if(isset($status)) {
+            $query->where('status', $status);
+        }
+        if($accountNumber) {
+            $query->where(function($q) use ($accountNumber) {
+                $q->where('from_account', $accountNumber);
+                $q->orWhere('to_account', $accountNumber);
+            });
+        }
+        
         $transactions = $query->paginate($limit);
 
         return $this->responseSuccess($transactions);

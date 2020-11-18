@@ -3,8 +3,12 @@ import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Grid from '@material-ui/core/Grid';
+import {useHistory} from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import MenuButton from '../../components/menu_button';
+import { useDispatch } from 'react-redux';
+import { logOut } from '../../redux/actions/auth';
+
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,24 +25,24 @@ const useStyles = makeStyles((theme) => ({
 
 const menuItemsData = [
   {
-    title: "User",
-    route: "/user",
+    title: "Users",
+    route: "/users",
   },
   {
-    title: "Transaction",
-    route: "/transaction",
+    title: "Transactions",
+    route: "/transactions",
   },
   {
-    title: "Interest Rate",
-    route: "/interest-rate",
+    title: "Interest Rates",
+    route: "/interest-rates",
   },
   {
     title: "News",
-    route: "/news",
+    route: "/news-list",
   },
   {
-    title: "Setting",
-    route: "/setting",
+    title: "Settings",
+    route: "/settings",
   },
   {
     title: "Statistic",
@@ -73,11 +77,14 @@ const menuItemsData = [
 
 export default function Menu(props) {
   const classes = useStyles();
+  const history = useHistory();
   const [currentMenu, setCurrentMenu] = React.useState('none');
+  const dispatch = useDispatch();
   const logOutClick = () => {
-    localStorage.removeItem('token');
-    props.setLoggedIn(false);
+    dispatch(logOut());
+    history.push('login');
   }
+
   const menuItems = menuItemsData.map( (item, idx) =>
     <MenuButton
       key={idx} 
@@ -86,7 +93,6 @@ export default function Menu(props) {
       items={item.items}
       setCurrentMenu={setCurrentMenu}
       selected={currentMenu.includes(item.route)}
-      // color="inherit"
     />
   );
 

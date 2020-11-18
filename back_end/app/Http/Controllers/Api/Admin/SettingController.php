@@ -22,6 +22,11 @@ class SettingController extends Controller
         return $this->responseSuccess($settings);
     }
 
+    public function detail(Request $request) {
+        $setting = Setting::find($request->id);
+        return $this->responseSuccess($setting);
+    }
+
     public function update(UpdateRequest $request) {
         $setting = Setting::find($request->id);
         if (!$setting) {

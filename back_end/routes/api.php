@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\Admin\SettingController as AdminSettingController;
 use App\Http\Controllers\Api\Admin\NotificationController as AdminNotificationController;
 use App\Http\Controllers\Api\Admin\NewsController as AdminNewsController;
 use App\Http\Controllers\Api\Admin\TransactionController as AdminTransactionController;
+use App\Http\Controllers\Api\Admin\StatisticController as AdminStatisticController;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -144,11 +145,11 @@ Route::group([
     | Bank account
     |--------------------------------------------------------------------------
     */
-    Route::prefix('bank-account')->group(function () {
-        Route::get('/{user_id}', [AdminBankAccountController::class, 'list'])
+    Route::prefix('{user_id}/bank-account')->group(function () {
+        Route::get('/', [AdminBankAccountController::class, 'list'])
             ->where(['user_id' => '[0-9]+']);
 
-        Route::post('/{user_id}', [AdminBankAccountController::class, 'create'])
+        Route::post('/', [AdminBankAccountController::class, 'create'])
             ->where(['user_id' => '[0-9]+']);
 
         Route::get('/detail-bc', [AdminBankAccountController::class, 'detailOnBC']);
@@ -173,6 +174,8 @@ Route::group([
     */
     Route::prefix('setting')->group(function () {
         Route::get('/', [AdminSettingController::class, 'list']);
+
+        Route::get('/{id}', [AdminSettingController::class, 'detail']);
         
         Route::post('/', [AdminSettingController::class, 'add']);
         
@@ -233,4 +236,16 @@ Route::group([
 
         Route::post('/cash-in', [AdminTransactionController::class, 'createCashIn']);
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Statistic
+    |--------------------------------------------------------------------------
+    */
+    Route::group(['prefix' => 'statistic'], function () {
+        Route::get('/daily', [AdminStatisticController::class, 'getDailyStatistic']);
+
+        Route::get('/monthly', [AdminStatisticController::class, 'getMonthlyStatistic']);
+    });
+
 });

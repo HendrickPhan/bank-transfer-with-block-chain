@@ -90,3 +90,25 @@
 22:23:54.276770 db@open done T·26.35413ms
 22:23:57.965101 db@close closing
 22:23:57.965374 db@close done T·285.286µs
+=============== Nov 4, 2020 (+07) ===============
+20:26:07.656747 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:26:07.657543 version@stat F·[3 1] S·4MiB[4MiB 293KiB] Sc·[0.75 0.00]
+20:26:07.657586 db@open opening
+20:26:07.657743 journal@recovery F·1
+20:26:07.662264 journal@recovery recovering @22
+20:26:07.669805 memdb@flush created L0@24 N·24 S·1KiB "H\xd5\xf1..Z\xbc=,v98815":"sec..\x9f=\xd3,v98835"
+20:26:07.672837 version@stat F·[4 1] S·4MiB[4MiB 293KiB] Sc·[1.00 0.00]
+20:26:07.679495 db@janitor F·7 G·0
+20:26:07.680206 db@open done T·22.550694ms
+20:26:07.680246 table@compaction L0·4 -> L1·1 S·4MiB Q·98836
+20:26:07.814003 table@build created L1@27 N·37308 S·2MiB "\x00\x1f\xcd..b\xef\x1e,v1338":"h\x00\x00..\xb1M},v28630"
+20:26:07.875403 table@build created L1@28 N·24861 S·1MiB "h\x00\x00..M}t,v28627":"\xf9\x1b\xd1..b\xbc\x11,v1360"
+20:26:07.880056 version@stat F·[0 2] S·3MiB[0B 3MiB] Sc·[0.00 0.04]
+20:26:07.882056 table@compaction committed F-3 S-1MiB Ke·0 D·34082 T·201.676212ms
+20:26:07.882374 table@remove removed @21
+20:26:07.882603 table@remove removed @18
+20:26:07.882926 table@remove removed @15
+20:26:07.883026 table@remove removed @14
+=============== Nov 5, 2020 (+07) ===============
+08:34:47.956960 db@close closing
+08:34:47.957691 db@close done T·728.837µs

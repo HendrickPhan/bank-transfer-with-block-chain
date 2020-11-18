@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Str;
 use App\Http\Requests\Api\Admin\User\CreateRequest;
+use App\Http\Requests\Api\Admin\User\UpdateRequest;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -15,14 +16,14 @@ class UserController extends Controller
     public function list(Request $request) 
     {
         $limit = $request->get('limit', 10);
-        $phoneNumber = $request->get('phone_number');
-        $name = $request->get('name');
+        $keyword = $request->get('keyword');
         $query = User::orderBy('id', 'desc');
-        if($phoneNumber) {
-            $query->where('phone_number', 'like', "%$phoneNumber%");
-        }
-        if($name) {
-            $query->where('name', 'like', "%$name%");
+
+        if($keyword) {
+            $query->where(function($q) use ($keyword) {
+                $q->where('phone_number', 'like', "%$keyword%");
+                $q->orWhere('name', 'like', "%$keyword%");
+            });
         }
 
         $users = $query->paginate($limit);
@@ -39,6 +40,18 @@ class UserController extends Controller
         User::Create($data);
 
         return $this->responseSuccess($password);
+    }
+
+    public function update(UpdateRequest $request)
+    {
+        $user = $request->find($request->id);
+        $data = $request->validated();
+        $password = $request->input('password');
+        if ($password) {
+            $data['password'] = Hash::make($password);
+        }
+        $user->update($data);
+        return $this->responseSuccess($user);
     }
 
     public function detail(Request $request) 
