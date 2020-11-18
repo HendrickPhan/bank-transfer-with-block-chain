@@ -17,7 +17,6 @@ class BankAccountRepository {
 
   Future<BankAccountModel> fetchBankAccountDetail({int id}) async {
     final response = await _provider.get(url: "bank-account/" + id.toString());
-    debugPrint(response.toString());
     return BankAccountModel.fromJson(response);
   }
 }

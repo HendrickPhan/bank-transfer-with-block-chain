@@ -14,6 +14,7 @@ use GuzzleHttp\Client;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Encryption\Encrypter;
 
+
 class AuthController extends Controller
 {
     //
@@ -37,6 +38,7 @@ class AuthController extends Controller
 
     public function profile(Request $request)
     {
+
         return $this->responseSuccess($request->user());
     }
 
@@ -115,4 +117,5 @@ class AuthController extends Controller
         $response = json_decode($apiRequest->getBody());
         return $response;
     }
+
 }

@@ -72,8 +72,6 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
       ),
     );
   }
-
-  void createBankAccount() {}
 }
 
 class BankAccountDetail extends StatelessWidget {
