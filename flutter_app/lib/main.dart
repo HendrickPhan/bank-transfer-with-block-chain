@@ -31,7 +31,7 @@ class _MainState extends State<Main> {
   CheckLoggedInBloc _bloc;
   int _currentIndex;
   final List<Widget> _children = [
-    BankAccountListScreen(),
+    LoginScreen(),
     CreateTransactionScreen(),
     ProfileScreen(),
   ];
