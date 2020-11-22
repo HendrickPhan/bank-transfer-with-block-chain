@@ -18,6 +18,7 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
   bool loadingNewPage;
   bool allPageLoaded;
   PaginateModel<BankAccountModel> bankAccountList;
+  ScrollController controller = ScrollController();
 
   @override
   void initState() {
@@ -31,15 +32,27 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return SafeArea(
+        child: Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-        title: Text('Bank Accounts',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-        backgroundColor: Color(0xFF222222),
+        elevation: 0,
+        backgroundColor: Color(0xFF6267D7),
+        leading: Icon(
+          Icons.menu,
+          color: Colors.black,
+        ),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search, color: Colors.black),
+            onPressed: () {},
+          ),
+          IconButton(
+            icon: Icon(Icons.person, color: Colors.black),
+            onPressed: () {},
+          )
+        ],
       ),
-      backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
           if (scrollInfo.metrics.pixels ==
@@ -92,7 +105,7 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
         child: Icon(Icons.add),
         backgroundColor: Colors.lightBlue,
       ),
-    );
+    ));
   }
 
   void createBankAccount() {}
@@ -100,121 +113,93 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
 
 class BankAccountList extends StatelessWidget {
   final PaginateModel<BankAccountModel> bankAccountList;
-
   const BankAccountList({Key key, this.bankAccountList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(children: <Widget>[
-          Expanded(child: Text("Account Number")),
-          Expanded(child: Text("Type")),
-          Expanded(child: Text("Ammount")),
-        ]),
-        Expanded(
-          child: NotificationListener<ScrollNotification>(
-            child: new ListView.builder(
-              itemBuilder: (context, index) {
-                return Card(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 0.0,
-                        vertical: 1.0,
-                      ),
-                      child: InkWell(
-                        onTap: () => {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => BankAccountDetailScreen(
-                                    this.bankAccountList.data[index].id)),
-                          )
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList
-                                            .data[index].accountNumber,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList.data[index].amount
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList.data[index].type,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    color: Colors.black54);
-              },
-              itemCount: bankAccountList.data.length,
+    final Size size = MediaQuery.of(context).size;
+    final double categoryHeight = size.height * 0.30;
+    bool closeTopContainer = false;
+    double topContainer = 0;
+    return Container(
+        height: size.height,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: <Widget>[
+                Text(
+                  "Account Number",
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20),
+                ),
+              ],
             ),
-          ),
-        ),
-      ],
-    );
+            const SizedBox(
+              height: 10,
+            ),
+            Expanded(
+              child: NotificationListener<ScrollNotification>(
+                child: new ListView.builder(
+                  itemBuilder: (context, index) {
+                    double scale = 1.0;
+                    if (topContainer > 0.5) {
+                      scale = index + 0.5 - topContainer;
+                      if (scale < 0) {
+                        scale = 0;
+                      } else if (scale > 1) {
+                        scale = 1;
+                      }
+                    }
+                    return Card(
+                        elevation: 5,
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: InkWell(
+                            onTap: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        BankAccountDetailScreen(this
+                                            .bankAccountList
+                                            .data[index]
+                                            .id)),
+                              )
+                            },
+                            child: Row(
+                              children: [
+                                Column(
+                                  children: <Widget>[
+                                    Text(
+                                      bankAccountList.data[index].accountNumber,
+                                      style: TextStyle(
+                                          color: Colors.red,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                    Text(
+                                      bankAccountList.data[index].amount
+                                              .toString() +
+                                          '1000000000VND',
+                                      style: TextStyle(
+                                          color: Colors.black, fontSize: 12),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        color: Colors.white);
+                  },
+                  itemCount: bankAccountList.data.length,
+                ),
+              ),
+            ),
+          ],
+        ));
   }
 }

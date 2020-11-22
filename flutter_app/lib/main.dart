@@ -32,7 +32,7 @@ class _MainState extends State<Main> {
   int _currentIndex;
   final List<Widget> _children = [
     LoginScreen(),
-    CreateTransactionScreen(),
+    BankAccountListScreen(),
     ProfileScreen(),
   ];
 
