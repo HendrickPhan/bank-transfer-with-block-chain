@@ -35,10 +35,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        elevation: 0.0,
-        title: Text('Bank Accounts',
+        elevation: 0,
+        backgroundColor: Color(0xFF6267D7),
+        leading: Icon(
+          Icons.menu,
+          color: Colors.black,
+        ),
+        title: Text('Tài khoản',
             style: TextStyle(color: Colors.white, fontSize: 20)),
-        backgroundColor: Color(0xFF222222),
       ),
       backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
@@ -84,15 +88,14 @@ class UsertDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Tài Khoản'),
-      ),
-      body: Column(
+        body: Container(
+      padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+      child: Column(
         children: <Widget>[
           Expanded(
             child: Padding(
               padding: const EdgeInsets.only(top: 40.0),
-              child: Column(
+              child: ListView(
                 children: <Widget>[
                   Center(
                     child: Padding(
@@ -108,19 +111,35 @@ class UsertDetail extends StatelessWidget {
                               "https://img.webmd.com/dtmcms/live/webmd/consumer_assets/site_images/article_thumbnails/reference_guide/outdoor_cat_risks_ref_guide/1800x1200_outdoor_cat_risks_ref_guide.jpg?resize=750px:*"),
                         )),
                   ),
-                  Center(
-                      child: Text(
-                    userDetail.fullName.toString(),
-                    style: TextStyle(
-                      color: Colors.black54,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
                   SizedBox(
-                    width: 150,
-                    child: Container(
-                      child: RaisedButton(
+                    height: 35,
+                  ),
+                  buildTextField(
+                      "Full Name", userDetail.fullName.toString(), false),
+                  buildTextField(
+                      "Phone Number", userDetail.phoneNumber.toString(), false),
+                  Text(
+                    'Address:',
+                    style: TextStyle(color: Colors.grey, fontSize: 12),
+                  ),
+                  SelectableText(
+                    userDetail.address.toString(),
+                    cursorColor: Colors.red,
+                    showCursor: true,
+                    toolbarOptions: ToolbarOptions(
+                        copy: true, selectAll: true, cut: false, paste: false),
+                    style: TextStyle(
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15),
+                  ),
+                  SizedBox(
+                    height: 35,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      RaisedButton(
                         onPressed: () => {
                           logout(),
                           Navigator.push(
@@ -128,14 +147,20 @@ class UsertDetail extends StatelessWidget {
                               MaterialPageRoute(
                                   builder: (context) => LoginScreen())),
                         },
-                        textColor: Colors.white,
-                        color: Colors.blueGrey,
+                        color: Colors.green,
+                        padding: EdgeInsets.symmetric(horizontal: 50),
+                        elevation: 2,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
                         child: Text(
-                          'Đăng xuất',
-                          style: TextStyle(fontSize: 20),
+                          "Đăng xuất",
+                          style: TextStyle(
+                              fontSize: 14,
+                              letterSpacing: 2.2,
+                              color: Colors.white),
                         ),
                       ),
-                    ),
+                    ],
                   )
                 ],
               ),
@@ -144,11 +169,40 @@ class UsertDetail extends StatelessWidget {
           ),
         ],
       ),
-    );
+    ));
   }
 
   void logout() async {
     FlutterSecureStorage _storage = FlutterSecureStorage();
     await _storage.delete(key: 'token');
+  }
+
+  Widget buildTextField(
+      String labelText, String placeholder, bool isPasswordTextField) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35.0),
+      child: TextField(
+        enabled: false,
+        decoration: InputDecoration(
+            suffixIcon: isPasswordTextField
+                ? IconButton(
+                    onPressed: () {},
+                    icon: Icon(
+                      Icons.remove_red_eye,
+                      color: Colors.grey,
+                    ),
+                  )
+                : null,
+            contentPadding: EdgeInsets.only(bottom: 3),
+            labelText: labelText,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            hintText: placeholder,
+            hintStyle: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+            )),
+      ),
+    );
   }
 }

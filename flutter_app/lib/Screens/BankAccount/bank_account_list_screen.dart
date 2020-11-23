@@ -42,16 +42,8 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
           Icons.menu,
           color: Colors.black,
         ),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search, color: Colors.black),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.person, color: Colors.black),
-            onPressed: () {},
-          )
-        ],
+        title: Text('Bank Accounts',
+            style: TextStyle(color: Colors.white, fontSize: 20)),
       ),
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
@@ -125,18 +117,6 @@ class BankAccountList extends StatelessWidget {
         height: size.height,
         child: Column(
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: <Widget>[
-                Text(
-                  "Account Number",
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                ),
-              ],
-            ),
             const SizedBox(
               height: 10,
             ),
