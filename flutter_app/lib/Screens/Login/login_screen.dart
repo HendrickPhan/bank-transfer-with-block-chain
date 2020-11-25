@@ -55,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       context: context,
                       builder: (_) {
                         return AlertDialog(
-                          title: new Text("Lỗi"),
+                          title: new Text("Error"),
                           content: new Text((snapshot.data.message.toString() ==
                                   '"Unauthorized"')
                               ? "Sai username hoặc password"
@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       controller: phoneNumberController,
                                       decoration: InputDecoration(
                                           border: InputBorder.none,
-                                          hintText: "Số điện thoại",
+                                          hintText: "Phone Number",
                                           hintStyle: TextStyle(
                                               color: Colors.grey[400])),
                                       validator: (value) {
@@ -233,7 +233,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: FlatButton(
                                     onPressed: loginBtnClick,
                                     child: Text(
-                                      "Đăng nhập",
+                                      "Login",
                                       style: TextStyle(
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold),
