@@ -1,6 +1,8 @@
 import { configureStore } from '@reduxjs/toolkit'
 import authReducer from './reducers/auth'
-import {usersReducer,
+import {
+  usersReducer,
+  userReducer,
   addUserReducer
 } from './reducers/user'
 import {transactionsReducer} from './reducers/transaction'
@@ -25,6 +27,7 @@ export default configureStore({
   reducer: {
     auth: authReducer,
     users: usersReducer,
+    user: userReducer,
     addUser: addUserReducer,
     transactions: transactionsReducer,
     

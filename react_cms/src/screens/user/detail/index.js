@@ -2,27 +2,29 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, updateUser, clearUpdateResult } from '../../../redux/actions/user';
-import RenderSettingDetailPage from './render';
-import { useHistory, useParams } from "react-router-dom";
+import RenderUserDetailPage from './render';
+import { useParams } from "react-router-dom";
 
 export default function UserDetailPage() {
   const dispatch = useDispatch();
-  const history = useHistory();
   
-  const settingData = useSelector(state => state.setting);
-  const { loading, setting, errors, updated } = settingData;
+  const userData = useSelector(state => state.user);
+  const { loading, user, errors, updated } = userData;
 
-  const [key, setKey] = useState(setting?.key);
-  const [value, setValue] = useState(setting?.value);
+  const [name, setName] = useState(user?.name);
+  const [phoneNumber, setPhoneNumber] = useState(user?.phone_number);
+  const [password, setPassword] = useState('');
   
-  let { settingId } = useParams();
+  let { userId } = useParams();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
       updateUser(
-        settingId, 
-        name, phoneNumber      
+        userId, 
+        name, 
+        phoneNumber,
+        password      
       )
     );
     setTimeout(() => {
@@ -40,7 +42,7 @@ export default function UserDetailPage() {
 
   const fetchData =  ()  => {
     dispatch(
-      getUser(settingId)
+      getUser(userId)
     );
   }
 
@@ -49,21 +51,22 @@ export default function UserDetailPage() {
   }, []);
 
   useEffect(() => {
-    setKey(setting?.key)  
-    setValue(setting?.value)  
-  }, [settingData]);
+    setName(user?.name)  
+    setPhoneNumber(user?.phone_number)  
+  }, [userData]);
 
   return (
-    <RenderSettingDetailPage
-      keyProp={key}
-      setKey={setKey}
-      value={value}
-      setValue={setValue}
+    <RenderUserDetailPage
+      name={name}
+      setName={setName}
+      phoneNumber={phoneNumber}
+      setPhoneNumber={setPhoneNumber}
+      password={password}
+      setPassword={setPassword}
       handleSubmit={handleSubmit}
       handleClearResult={handleClearResult}
       updated={updated}
       errors={errors}
-      
     />
   );
 }

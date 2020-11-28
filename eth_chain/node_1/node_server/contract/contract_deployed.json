@@ -1,0 +1,870 @@
+{
+	"currentProvider": {
+		"responseCallbacks": {},
+		"notificationCallbacks": [
+			null
+		],
+		"path": "../../../bc_node/data/geth.ipc",
+		"connected": true,
+		"connection": {
+			"connecting": false,
+			"_hadError": false,
+			"_handle": {
+				"reading": true
+			},
+			"_parent": null,
+			"_host": null,
+			"_readableState": {
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"buffer": {
+					"head": null,
+					"tail": null,
+					"length": 0
+				},
+				"length": 0,
+				"pipes": null,
+				"pipesCount": 0,
+				"flowing": true,
+				"ended": false,
+				"endEmitted": false,
+				"reading": true,
+				"sync": false,
+				"needReadable": true,
+				"emittedReadable": false,
+				"readableListening": false,
+				"resumeScheduled": false,
+				"paused": false,
+				"emitClose": false,
+				"autoDestroy": false,
+				"destroyed": false,
+				"defaultEncoding": "utf8",
+				"awaitDrain": 0,
+				"readingMore": false,
+				"decoder": null,
+				"encoding": null
+			},
+			"readable": true,
+			"_events": {
+				"end": [
+					null,
+					null
+				],
+				"connect": [
+					null,
+					null
+				],
+				"close": [
+					null,
+					null
+				],
+				"error": [
+					null,
+					null
+				]
+			},
+			"_eventsCount": 6,
+			"_writableState": {
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"finalCalled": false,
+				"needDrain": false,
+				"ending": false,
+				"ended": false,
+				"finished": false,
+				"destroyed": false,
+				"decodeStrings": false,
+				"defaultEncoding": "utf8",
+				"length": 0,
+				"writing": false,
+				"corked": 0,
+				"sync": false,
+				"bufferProcessing": false,
+				"writecb": null,
+				"writelen": 0,
+				"bufferedRequest": null,
+				"lastBufferedRequest": null,
+				"pendingcb": 1,
+				"prefinished": false,
+				"errorEmitted": false,
+				"emitClose": false,
+				"autoDestroy": false,
+				"bufferedRequestCount": 0,
+				"corkedRequestsFree": {
+					"next": null,
+					"entry": null
+				}
+			},
+			"writable": true,
+			"allowHalfOpen": false,
+			"_sockname": null,
+			"_pendingData": null,
+			"_pendingEncoding": "",
+			"server": null,
+			"_server": null
+		},
+		"lastChunk": null
+	},
+	"_requestManager": {
+		"provider": {
+			"responseCallbacks": {},
+			"notificationCallbacks": [
+				null
+			],
+			"path": "../../../bc_node/data/geth.ipc",
+			"connected": true,
+			"connection": {
+				"connecting": false,
+				"_hadError": false,
+				"_handle": {
+					"reading": true
+				},
+				"_parent": null,
+				"_host": null,
+				"_readableState": {
+					"objectMode": false,
+					"highWaterMark": 16384,
+					"buffer": {
+						"head": null,
+						"tail": null,
+						"length": 0
+					},
+					"length": 0,
+					"pipes": null,
+					"pipesCount": 0,
+					"flowing": true,
+					"ended": false,
+					"endEmitted": false,
+					"reading": true,
+					"sync": false,
+					"needReadable": true,
+					"emittedReadable": false,
+					"readableListening": false,
+					"resumeScheduled": false,
+					"paused": false,
+					"emitClose": false,
+					"autoDestroy": false,
+					"destroyed": false,
+					"defaultEncoding": "utf8",
+					"awaitDrain": 0,
+					"readingMore": false,
+					"decoder": null,
+					"encoding": null
+				},
+				"readable": true,
+				"_events": {
+					"end": [
+						null,
+						null
+					],
+					"connect": [
+						null,
+						null
+					],
+					"close": [
+						null,
+						null
+					],
+					"error": [
+						null,
+						null
+					]
+				},
+				"_eventsCount": 6,
+				"_writableState": {
+					"objectMode": false,
+					"highWaterMark": 16384,
+					"finalCalled": false,
+					"needDrain": false,
+					"ending": false,
+					"ended": false,
+					"finished": false,
+					"destroyed": false,
+					"decodeStrings": false,
+					"defaultEncoding": "utf8",
+					"length": 0,
+					"writing": false,
+					"corked": 0,
+					"sync": false,
+					"bufferProcessing": false,
+					"writecb": null,
+					"writelen": 0,
+					"bufferedRequest": null,
+					"lastBufferedRequest": null,
+					"pendingcb": 1,
+					"prefinished": false,
+					"errorEmitted": false,
+					"emitClose": false,
+					"autoDestroy": false,
+					"bufferedRequestCount": 0,
+					"corkedRequestsFree": {
+						"next": null,
+						"entry": null
+					}
+				},
+				"writable": true,
+				"allowHalfOpen": false,
+				"_sockname": null,
+				"_pendingData": null,
+				"_pendingEncoding": "",
+				"server": null,
+				"_server": null
+			},
+			"lastChunk": null
+		},
+		"providers": {},
+		"subscriptions": {}
+	},
+	"givenProvider": null,
+	"providers": {},
+	"_provider": {
+		"responseCallbacks": {},
+		"notificationCallbacks": [
+			null
+		],
+		"path": "../../../bc_node/data/geth.ipc",
+		"connected": true,
+		"connection": {
+			"connecting": false,
+			"_hadError": false,
+			"_handle": {
+				"reading": true
+			},
+			"_parent": null,
+			"_host": null,
+			"_readableState": {
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"buffer": {
+					"head": null,
+					"tail": null,
+					"length": 0
+				},
+				"length": 0,
+				"pipes": null,
+				"pipesCount": 0,
+				"flowing": true,
+				"ended": false,
+				"endEmitted": false,
+				"reading": true,
+				"sync": false,
+				"needReadable": true,
+				"emittedReadable": false,
+				"readableListening": false,
+				"resumeScheduled": false,
+				"paused": false,
+				"emitClose": false,
+				"autoDestroy": false,
+				"destroyed": false,
+				"defaultEncoding": "utf8",
+				"awaitDrain": 0,
+				"readingMore": false,
+				"decoder": null,
+				"encoding": null
+			},
+			"readable": true,
+			"_events": {
+				"end": [
+					null,
+					null
+				],
+				"connect": [
+					null,
+					null
+				],
+				"close": [
+					null,
+					null
+				],
+				"error": [
+					null,
+					null
+				]
+			},
+			"_eventsCount": 6,
+			"_writableState": {
+				"objectMode": false,
+				"highWaterMark": 16384,
+				"finalCalled": false,
+				"needDrain": false,
+				"ending": false,
+				"ended": false,
+				"finished": false,
+				"destroyed": false,
+				"decodeStrings": false,
+				"defaultEncoding": "utf8",
+				"length": 0,
+				"writing": false,
+				"corked": 0,
+				"sync": false,
+				"bufferProcessing": false,
+				"writecb": null,
+				"writelen": 0,
+				"bufferedRequest": null,
+				"lastBufferedRequest": null,
+				"pendingcb": 1,
+				"prefinished": false,
+				"errorEmitted": false,
+				"emitClose": false,
+				"autoDestroy": false,
+				"bufferedRequestCount": 0,
+				"corkedRequestsFree": {
+					"next": null,
+					"entry": null
+				}
+			},
+			"writable": true,
+			"allowHalfOpen": false,
+			"_sockname": null,
+			"_pendingData": null,
+			"_pendingEncoding": "",
+			"server": null,
+			"_server": null
+		},
+		"lastChunk": null
+	},
+	"options": {
+		"address": "0x2444414500a3097459662e50a4923Ad803fE03C9",
+		"jsonInterface": [
+			{
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "_bankBalance",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "constructor",
+				"signature": "constructor"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "bankAccounts",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "accountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "ownerPhoneNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "balance",
+						"type": "uint256"
+					},
+					{
+						"internalType": "address",
+						"name": "accountAddress",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function",
+				"signature": "0x47bccce0"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "bankBalance",
+				"outputs": [
+					{
+						"internalType": "uint256",
+						"name": "",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function",
+				"signature": "0x28657aa5"
+			},
+			{
+				"constant": true,
+				"inputs": [],
+				"name": "owner",
+				"outputs": [
+					{
+						"internalType": "address",
+						"name": "",
+						"type": "address"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function",
+				"signature": "0x8da5cb5b"
+			},
+			{
+				"constant": true,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "",
+						"type": "string"
+					}
+				],
+				"name": "transactions",
+				"outputs": [
+					{
+						"internalType": "string",
+						"name": "code",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "fromAccountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "toAccountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timeStamp",
+						"type": "uint256"
+					}
+				],
+				"payable": false,
+				"stateMutability": "view",
+				"type": "function",
+				"signature": "0x022236f4"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					}
+				],
+				"name": "addBankBalance",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function",
+				"signature": "0x3ed5cf7e"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "code",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "accountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timeStamp",
+						"type": "uint256"
+					}
+				],
+				"name": "addAccountBalance",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function",
+				"signature": "0x4d36058e"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "accountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "newAddress",
+						"type": "address"
+					}
+				],
+				"name": "changeAddressOfAccount",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function",
+				"signature": "0x41bc3628"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "accountNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "ownerPhoneNumber",
+						"type": "string"
+					},
+					{
+						"internalType": "address",
+						"name": "accountAddress",
+						"type": "address"
+					}
+				],
+				"name": "createAccount",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function",
+				"signature": "0x41d3d0ab"
+			},
+			{
+				"constant": false,
+				"inputs": [
+					{
+						"internalType": "string",
+						"name": "code",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "fromAccount",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "toAccount",
+						"type": "string"
+					},
+					{
+						"internalType": "uint256",
+						"name": "fee",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "amount",
+						"type": "uint256"
+					},
+					{
+						"internalType": "uint256",
+						"name": "timeStamp",
+						"type": "uint256"
+					}
+				],
+				"name": "transfer",
+				"outputs": [],
+				"payable": false,
+				"stateMutability": "nonpayable",
+				"type": "function",
+				"signature": "0xd5e1594f"
+			}
+		]
+	},
+	"handleRevert": false,
+	"transactionPollingTimeout": 750,
+	"transactionConfirmationBlocks": 24,
+	"transactionBlockTimeout": 50,
+	"defaultAccount": null,
+	"defaultBlock": "latest",
+	"methods": {},
+	"events": {},
+	"_address": "0x2444414500a3097459662e50a4923Ad803fE03C9",
+	"_jsonInterface": [
+		{
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "_bankBalance",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "constructor",
+			"signature": "constructor"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"name": "bankAccounts",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "accountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "ownerPhoneNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "balance",
+					"type": "uint256"
+				},
+				{
+					"internalType": "address",
+					"name": "accountAddress",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function",
+			"signature": "0x47bccce0"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "bankBalance",
+			"outputs": [
+				{
+					"internalType": "uint256",
+					"name": "",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function",
+			"signature": "0x28657aa5"
+		},
+		{
+			"constant": true,
+			"inputs": [],
+			"name": "owner",
+			"outputs": [
+				{
+					"internalType": "address",
+					"name": "",
+					"type": "address"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function",
+			"signature": "0x8da5cb5b"
+		},
+		{
+			"constant": true,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "",
+					"type": "string"
+				}
+			],
+			"name": "transactions",
+			"outputs": [
+				{
+					"internalType": "string",
+					"name": "code",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "fromAccountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "toAccountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "fee",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "timeStamp",
+					"type": "uint256"
+				}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function",
+			"signature": "0x022236f4"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				}
+			],
+			"name": "addBankBalance",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function",
+			"signature": "0x3ed5cf7e"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "code",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "accountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "timeStamp",
+					"type": "uint256"
+				}
+			],
+			"name": "addAccountBalance",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function",
+			"signature": "0x4d36058e"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "accountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "address",
+					"name": "newAddress",
+					"type": "address"
+				}
+			],
+			"name": "changeAddressOfAccount",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function",
+			"signature": "0x41bc3628"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "accountNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "ownerPhoneNumber",
+					"type": "string"
+				},
+				{
+					"internalType": "address",
+					"name": "accountAddress",
+					"type": "address"
+				}
+			],
+			"name": "createAccount",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function",
+			"signature": "0x41d3d0ab"
+		},
+		{
+			"constant": false,
+			"inputs": [
+				{
+					"internalType": "string",
+					"name": "code",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "fromAccount",
+					"type": "string"
+				},
+				{
+					"internalType": "string",
+					"name": "toAccount",
+					"type": "string"
+				},
+				{
+					"internalType": "uint256",
+					"name": "fee",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "amount",
+					"type": "uint256"
+				},
+				{
+					"internalType": "uint256",
+					"name": "timeStamp",
+					"type": "uint256"
+				}
+			],
+			"name": "transfer",
+			"outputs": [],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function",
+			"signature": "0xd5e1594f"
+		}
+	]
+}

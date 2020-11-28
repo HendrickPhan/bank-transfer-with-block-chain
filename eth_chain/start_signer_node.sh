@@ -1,1 +1,0 @@
-geth --datadir data-2 --networkid 15 --port 30305 --unlock 0x804f150991feb1150742cf2e414b164a4c5be605 --mine --password "password.txt"

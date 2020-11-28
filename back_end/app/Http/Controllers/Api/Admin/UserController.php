@@ -44,7 +44,7 @@ class UserController extends Controller
 
     public function update(UpdateRequest $request)
     {
-        $user = $request->find($request->id);
+        $user = User::find($request->id);
         $data = $request->validated();
         $password = $request->input('password');
         if ($password) {

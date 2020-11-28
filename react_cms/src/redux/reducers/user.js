@@ -75,7 +75,7 @@ export const addUserReducer = (state = initialStateAdd, { payload, type }) => {
     case ADD_USER_SUCCESS:
       return {
         user: payload.user,
-        errors: null,
+        errors: {},
         loading: false
       };
     case ADD_USER_FAIL:
@@ -103,66 +103,53 @@ const initialStateDetail = {
   loading: false,
   user: {},
   errors: {},
+  updated: false
 };
 
-export const UserReducer = (state = initialStateDetail, { payload, type }) => {
+export const userReducer = (state = initialStateDetail, { payload, type }) => {
   switch (type) {
     case GETTING_USER:
-      return {
+    case UPDATING_USER:
+        return {
         ...state,
         loading: true
       };
     case GET_USER_SUCCESS:
       return {
+        ...state,
         user: payload.user,
-        errors: null,
+        errors: {},
         loading: false
       };
     case GET_USER_FAIL:
       return {
+        ...state,
         user: {},
         errors: payload.errors,
         loading: false
       };
-    default:
-      return state;
-  }
-};
 
-
-/**
- * update
- */
-const initialStateUpdate = {
-  loading: false,
-  user: {},
-  errors: {},
-};
-
-export const updateUserReducer = (state = initialStateUpdate, { payload, type }) => {
-  switch (type) {
-    case UPDATING_USER:
-      return {
-        ...state,
-        loading: true
-      };
     case UPDATE_USER_SUCCESS:
       return {
+        ...state,
+        updated: true,
         user: payload.user,
-        errors: null,
+        errors: {},
         loading: false
       };
+
     case UPDATE_USER_FAIL:
       return {
-        user: {},
+        ...state,
+        updated: false,
         errors: payload.errors,
         loading: false
       };
+
     case UPDATE_USER_CLEAR:
       return {
-        user: {},
-        errors: {},
-        loading: false
+        ...state,
+        updated: false,
       };
     default:
       return state;

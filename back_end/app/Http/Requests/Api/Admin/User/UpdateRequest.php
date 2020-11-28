@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             //
             'name' => 'max:255|string',
             'password' => 'max:255|string',
-            'phone_number' => 'min:10|max:12|string|unique:users,phone_number,' . $this->request->id
+            'phone_number' => 'min:10|max:12|string|unique:users,phone_number,' . $this->id
         ];
     }
 }

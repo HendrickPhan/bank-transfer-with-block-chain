@@ -72,9 +72,9 @@ const RenderInterestRatesPage = (props) => {
                     align="center"
                   >
                     <Button
-                      variant="contained"
+                      variant="outlined"
+                      color="secondary"
                       onClick={() => props.handleActionClick(row)}
-                      color='default' 
                       className={classes.button}
                     >
                       Update
