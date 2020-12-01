@@ -34,16 +34,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Color(0xFF6267D7),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.black,
-        ),
-        title: Text('Tài khoản',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-      ),
       backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
@@ -89,12 +79,45 @@ class UsertDetail extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.only(left: 16, top: 25, right: 16),
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+            Colors.white,
+            Color(0xFF2d3447),
+          ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              tileMode: TileMode.clamp)),
       child: Column(
         children: <Widget>[
+          Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, right: 12.0, top: 30.0, bottom: 8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  IconButton(
+                    icon: Icon(
+                      Icons.menu,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                    onPressed: () {},
+                  ),
+                  IconButton(
+                    icon: Icon(
+                      Icons.search,
+                      color: Colors.white,
+                      size: 30.0,
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+              )),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.only(top: 40.0),
+              padding:
+                  const EdgeInsets.only(left: 12.0, top: 40.0, right: 12.0),
               child: ListView(
                 children: <Widget>[
                   Center(
@@ -139,27 +162,27 @@ class UsertDetail extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      RaisedButton(
-                        onPressed: () => {
-                          logout(),
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => LoginScreen())),
-                        },
-                        color: Colors.green,
-                        padding: EdgeInsets.symmetric(horizontal: 50),
-                        elevation: 2,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        child: Text(
-                          "Đăng xuất",
-                          style: TextStyle(
-                              fontSize: 14,
-                              letterSpacing: 2.2,
-                              color: Colors.white),
-                        ),
-                      ),
+                      // RaisedButton(
+                      //   onPressed: () => {
+                      //     logout(),
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => LoginScreen())),
+                      //   },
+                      //   color: Colors.green,
+                      //   padding: EdgeInsets.symmetric(horizontal: 50),
+                      //   elevation: 2,
+                      //   shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(20)),
+                      //   child: Text(
+                      //     "Đăng xuất",
+                      //     style: TextStyle(
+                      //         fontSize: 14,
+                      //         letterSpacing: 2.2,
+                      //         color: Colors.white),
+                      //   ),
+                      // ),
                     ],
                   )
                 ],

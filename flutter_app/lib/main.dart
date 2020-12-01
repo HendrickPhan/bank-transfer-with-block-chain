@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'BLoC/check_logged_in_bloc.dart';
 import 'Screens/Login/login_screen.dart';
 import 'Screens/Profile/profile_screen.dart';
+import 'Screens/History/history_list_screen.dart';
+import 'Screens/DailyMonth/daily_month_screen.dart';
 import 'Screens/CreateTransaction/create_transaction_screen.dart';
 import 'Screens/BankAccount/bank_account_list_screen.dart';
+import 'Screens/BankAccount/bank_account_create_screen.dart';
+import 'Screens/CreateTransaction/create_transaction_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -32,7 +36,7 @@ class _MainState extends State<Main> {
   int _currentIndex;
   final List<Widget> _children = [
     LoginScreen(),
-    BankAccountListScreen(),
+    CreateTransactionScreen(),
     ProfileScreen(),
   ];
 
