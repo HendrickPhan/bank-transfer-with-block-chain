@@ -8,6 +8,9 @@ import 'Screens/CreateTransaction/create_transaction_screen.dart';
 import 'Screens/BankAccount/bank_account_list_screen.dart';
 import 'Screens/BankAccount/bank_account_create_screen.dart';
 import 'Screens/CreateTransaction/create_transaction_screen.dart';
+import 'Screens/Beneficiary/beneficiary_account_list_screen.dart';
+import 'Screens/Beneficiary/create_beneficiary_account_screen.dart';
+import 'Screens/News/news_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -36,7 +39,7 @@ class _MainState extends State<Main> {
   int _currentIndex;
   final List<Widget> _children = [
     LoginScreen(),
-    CreateTransactionScreen(),
+    NewsScreen(),
     ProfileScreen(),
   ];
 
