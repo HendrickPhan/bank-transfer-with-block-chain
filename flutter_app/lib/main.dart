@@ -11,6 +11,8 @@ import 'Screens/CreateTransaction/create_transaction_screen.dart';
 import 'Screens/Beneficiary/beneficiary_account_list_screen.dart';
 import 'Screens/Beneficiary/create_beneficiary_account_screen.dart';
 import 'Screens/News/news_screen.dart';
+import 'Screens/News/news_detail_screen.dart';
+import 'Screens/News/news_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -23,23 +25,28 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter app  ',
       home: Center(
-        child: Main(),
+        child: Main(index: 0),
       ),
     );
   }
 }
 
 class Main extends StatefulWidget {
+  final index;
+  Main({this.index});
   @override
-  _MainState createState() => _MainState();
+  _MainState createState() => _MainState(a: index);
 }
 
 class _MainState extends State<Main> {
+  final a;
+  _MainState({this.a});
+
   CheckLoggedInBloc _bloc;
   int _currentIndex;
   final List<Widget> _children = [
-    LoginScreen(),
-    NewsScreen(),
+    BankAccountListScreen(),
+    BankAccountListScreen(),
     ProfileScreen(),
   ];
 
@@ -48,7 +55,7 @@ class _MainState extends State<Main> {
     super.initState();
     _bloc = CheckLoggedInBloc();
     _bloc.checkLogged();
-    _currentIndex = 0;
+    _currentIndex = a;
   }
 
   void onTabTapped(int index) {

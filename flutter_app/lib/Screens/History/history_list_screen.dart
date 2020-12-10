@@ -6,6 +6,7 @@ import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
+import './../Drawer/drawer.dart';
 
 class HistoryListScreen extends StatefulWidget {
   @override
@@ -32,19 +33,7 @@ class _HistoryListScreenState extends State<HistoryListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        elevation: 0,
-        backgroundColor: Color(0xFF6267D7),
-        leading: Icon(
-          Icons.menu,
-          color: Colors.black,
-        ),
-        title: Text('History',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-      ),
+    return Scaffold(
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
           if (scrollInfo.metrics.pixels ==
@@ -90,14 +79,7 @@ class _HistoryListScreenState extends State<HistoryListScreen> {
           },
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _bloc.addBankAccount();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.lightBlue,
-      ),
-    ));
+    );
   }
 
   void createBankAccount() {}
@@ -113,112 +95,118 @@ class HistoryList extends StatelessWidget {
     final double categoryHeight = size.height * 0.30;
     bool closeTopContainer = false;
     double topContainer = 0;
-    return Container(
-        height: size.height,
-        child: Column(
-          children: <Widget>[
-            const SizedBox(
-              height: 10,
-            ),
-            Expanded(
-              child: NotificationListener<ScrollNotification>(
-                child: new ListView.builder(
-                  itemBuilder: (context, index) {
-                    double scale = 1.0;
-                    if (topContainer > 0.5) {
-                      scale = index + 0.5 - topContainer;
-                      if (scale < 0) {
-                        scale = 0;
-                      } else if (scale > 1) {
-                        scale = 1;
-                      }
-                    }
-                    return Container(
-                        height: 150,
-                        child: Card(
-                          shape: RoundedRectangleBorder(
-                            side: BorderSide(color: Colors.white70, width: 1),
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          elevation: 5,
-                          child: Padding(
-                            padding: EdgeInsets.only(top: 40, left: 30),
-                            child: InkWell(
-                              onTap: () => {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          BankAccountDetailScreen(this
-                                              .bankAccountList
-                                              .data[index]
-                                              .id)),
-                                )
-                              },
-                              child: Row(
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        bankAccountList
-                                            .data[index].accountNumber,
-                                        style: TextStyle(
-                                          fontStyle: FontStyle.italic,
-                                          fontSize: 28,
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.w900,
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('History'),
+        ),
+        drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
+        body: Container(
+            height: size.height,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    child: new ListView.builder(
+                      itemBuilder: (context, index) {
+                        double scale = 1.0;
+                        if (topContainer > 0.5) {
+                          scale = index + 0.5 - topContainer;
+                          if (scale < 0) {
+                            scale = 0;
+                          } else if (scale > 1) {
+                            scale = 1;
+                          }
+                        }
+                        return Container(
+                            height: 150,
+                            child: Card(
+                              shape: RoundedRectangleBorder(
+                                side:
+                                    BorderSide(color: Colors.white70, width: 1),
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 5,
+                              child: Padding(
+                                padding: EdgeInsets.only(top: 40, left: 30),
+                                child: InkWell(
+                                  onTap: () => {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BankAccountDetailScreen(this
+                                                  .bankAccountList
+                                                  .data[index]
+                                                  .id)),
+                                    )
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            bankAccountList
+                                                .data[index].accountNumber,
+                                            style: TextStyle(
+                                              fontStyle: FontStyle.italic,
+                                              fontSize: 28,
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                            bankAccountList.data[index].amount
+                                                .toString(),
+                                            style: TextStyle(
+                                                fontSize: 20,
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                letterSpacing: 2.0),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(left: 40),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            CircleAvatar(
+                                              radius: 16,
+                                              backgroundColor: Color.fromRGBO(
+                                                  50, 172, 121, 1),
+                                              child: Icon(
+                                                Icons.chevron_right,
+                                                color: Colors.white,
+                                                size: 24,
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        bankAccountList.data[index].amount
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                            letterSpacing: 2.0),
-                                      ),
-                                      SizedBox(
-                                        height: 10,
-                                      ),
+                                      )
                                     ],
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 40),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        CircleAvatar(
-                                          radius: 16,
-                                          backgroundColor:
-                                              Color.fromRGBO(50, 172, 121, 1),
-                                          child: Icon(
-                                            Icons.chevron_right,
-                                            color: Colors.white,
-                                            size: 24,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  )
-                                ],
+                                ),
                               ),
-                            ),
-                          ),
-                          color: Color.fromRGBO(35, 60, 103, 1),
-                        ));
-                  },
-                  itemCount: bankAccountList.data.length,
+                              color: Color.fromRGBO(35, 60, 103, 1),
+                            ));
+                      },
+                      itemCount: bankAccountList.data.length,
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ],
-        ));
+              ],
+            )));
   }
 }

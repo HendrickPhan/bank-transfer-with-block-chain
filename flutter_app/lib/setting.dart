@@ -2,7 +2,7 @@
 const bool isProduction = false;
 
 const testConfig = {
-  'baseUrl': 'http://192.168.42.189:8000/api/',
+  'baseUrl': 'http://192.168.42.10:8000/api/',
   'blockchainNodeUrl': 'http://192.168.1.11:25100/'
 };
 

@@ -36,7 +36,8 @@ dependencies:
   charts_flutter: ^0.6.0
   dropdown_formfield: ^0.1.3
   flutter_svg: ^0.19.0
-  
+  draft_flutter: ^0.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

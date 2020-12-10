@@ -12,6 +12,7 @@ import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
+import 'package:app/BLoC/check_logged_in_bloc.dart';
 
 class CreateTransactionScreen extends StatefulWidget {
   @override
@@ -27,54 +28,11 @@ class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Row(
-        children: <Widget>[
-          Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-            size: 30.0,
-          ),
-          SizedBox(
-            width: 15,
-          ),
-          Container(
-              //margin: EdgeInsets.fromLTRB(0, 0, 130, 0),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                Container(
-                  child: Text(
-                    'Ov3rControl',
-                    style: TextStyle(fontSize: 12.0),
-                  ),
-                ),
-                SizedBox(height: 4.0),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Icon(
-                      Icons.trip_origin,
-                      color: Colors.orange,
-                      size: 12.0,
-                    ),
-                    SizedBox(width: 4.0),
-                    Text('1000', style: TextStyle(fontSize: 12.0))
-                  ],
-                ),
-              ])),
-        ],
-      )),
+        title: Text('Transactions'),
+      ),
       backgroundColor: Colors.transparent,
       body: Container(
         child: CreateTransaction(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _bloc.addBankAccount();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.lightBlue,
       ),
     );
   }
