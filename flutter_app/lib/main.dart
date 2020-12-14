@@ -46,7 +46,7 @@ class _MainState extends State<Main> {
   int _currentIndex;
   final List<Widget> _children = [
     BankAccountListScreen(),
-    BankAccountListScreen(),
+    CreateTransactionScreen(),
     ProfileScreen(),
   ];
 
@@ -55,7 +55,10 @@ class _MainState extends State<Main> {
     super.initState();
     _bloc = CheckLoggedInBloc();
     _bloc.checkLogged();
-    _currentIndex = a;
+    if (a != null) {
+      _currentIndex = a;
+    } else
+      _currentIndex = 0;
   }
 
   void onTabTapped(int index) {

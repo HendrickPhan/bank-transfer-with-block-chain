@@ -13,6 +13,10 @@ import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:dropdown_formfield/dropdown_formfield.dart';
 import 'package:app/BLoC/check_logged_in_bloc.dart';
+import 'package:app/Models/bank_account_model.dart';
+import 'package:app/BLoC/BankAccount/bank_account_list_transaction_bloc.dart';
+import 'package:app/Models/bank_account_list_model.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CreateTransactionScreen extends StatefulWidget {
   @override
@@ -24,6 +28,16 @@ var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
 
 class _CreateTransactionScreenState extends State<CreateTransactionScreen> {
+  BankAccountListTransactionBloc _bloc;
+  BankAccountListModel bankAccountList;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = BankAccountListTransactionBloc();
+    _bloc.fetchBankAccountListsForTransaction();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

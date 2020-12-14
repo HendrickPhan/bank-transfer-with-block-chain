@@ -149,10 +149,10 @@ class DrawerNav extends StatelessWidget {
             ),
             onTap: () => {
               logout(),
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => LoginScreen()),
-              // )
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => LoginScreen()),
+              )
             },
           ),
         ],

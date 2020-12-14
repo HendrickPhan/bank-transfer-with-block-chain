@@ -1,6 +1,7 @@
 import 'package:app/Models/bank_account_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
+import 'package:app/Models/bank_account_list_model.dart';
 import 'package:app/Repositories/bank_account_repository.dart';
 import 'dart:async';
 import '../bloc.dart';
