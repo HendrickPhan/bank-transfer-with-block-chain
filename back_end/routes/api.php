@@ -60,7 +60,7 @@ Route::group([
     */
     Route::prefix('bank-account')->group(function () {
         Route::get('/', [BankAccountController::class, 'list']);
-
+        Route::get('/bank-account', [BankAccountController::class, 'listAccount']);
         Route::get('/{id}', [BankAccountController::class, 'detail']);
     });
 

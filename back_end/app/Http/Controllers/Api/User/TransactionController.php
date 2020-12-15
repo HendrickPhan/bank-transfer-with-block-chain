@@ -35,8 +35,10 @@ class TransactionController extends Controller
     }
 
     public function createTransfer(CreateTransferRequest $request) {
+        console.log($data);
         $data = $request->validated();
         $user = $request->user();
+        
         // validate bank account
         $bankAccount = BankAccount::where('user_id', $user->id)
             ->where('account_number', $data['account_number'])

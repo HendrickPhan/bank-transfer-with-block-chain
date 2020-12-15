@@ -44,6 +44,7 @@ class BankAccountController extends Controller
     public function createSaving(CreateSavingRequest $request)
     {
         $data = $request->validated();
+        console.log($data);
         $user = $request->user();
         //validate transfer_bank_account
         $validatedTransferBankAccount = $this->_validateTransferBankAccount(

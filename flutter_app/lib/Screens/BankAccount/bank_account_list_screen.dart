@@ -127,31 +127,75 @@ class BankAccountList extends StatelessWidget {
                           }
                         }
                         return Container(
-                            height: 150,
-                            child: Card(
-                              shape: RoundedRectangleBorder(
-                                side:
-                                    BorderSide(color: Colors.white70, width: 1),
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              elevation: 5,
-                              child: Padding(
-                                padding: EdgeInsets.only(top: 40, left: 30),
-                                child: InkWell(
-                                  onTap: () => {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              BankAccountDetailScreen(this
-                                                  .bankAccountList
-                                                  .data[index]
-                                                  .id)),
-                                    )
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Column(
+                          height: 150,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white70, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 5,
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BankAccountDetailScreen(this
+                                              .bankAccountList
+                                              .data[index]
+                                              .id)),
+                                )
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 20, left: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "A.No:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Type:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Amount:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )),
+                                  Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: <Widget>[
@@ -159,55 +203,82 @@ class BankAccountList extends StatelessWidget {
                                             bankAccountList
                                                 .data[index].accountNumber,
                                             style: TextStyle(
-                                              fontStyle: FontStyle.italic,
-                                              fontSize: 28,
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w900,
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
                                             ),
                                           ),
                                           SizedBox(
-                                            height: 5,
+                                            height: 2,
+                                          ),
+                                          if (bankAccountList.data[index].type
+                                                  .toString() ==
+                                              '1')
+                                            Text(
+                                              'Thụ hưởng',
+                                              style: TextStyle(
+                                                //fontStyle: FontStyle.italic,
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                                //fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          if (bankAccountList.data[index].type
+                                                  .toString() !=
+                                              '0')
+                                            Text(
+                                              'Tiết kiệm',
+                                              style: TextStyle(
+                                                //fontStyle: FontStyle.italic,
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                                //fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          SizedBox(
+                                            height: 2,
                                           ),
                                           Text(
                                             bankAccountList.data[index].amount
                                                     .toString() +
                                                 'VND',
                                             style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                letterSpacing: 2.0),
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                            ),
                                           ),
                                           SizedBox(
                                             height: 10,
                                           ),
                                         ],
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(left: 40),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            CircleAvatar(
-                                              radius: 16,
-                                              backgroundColor: Color.fromRGBO(
-                                                  50, 172, 121, 1),
-                                              child: Icon(
-                                                Icons.chevron_right,
-                                                color: Colors.white,
-                                                size: 24,
-                                              ),
-                                            ),
-                                          ],
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 16,
+                                          backgroundColor:
+                                              Color.fromRGBO(50, 172, 121, 1),
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.white,
+                                            size: 24,
+                                          ),
                                         ),
-                                      )
-                                    ],
-                                  ),
-                                ),
+                                      ],
+                                    ),
+                                  )
+                                ],
                               ),
-                              color: Color.fromRGBO(35, 60, 103, 1),
-                            ));
+                            ),
+                          ),
+                          color: Colors.white,
+                        );
                       },
                       itemCount: bankAccountList.data.length,
                     ),

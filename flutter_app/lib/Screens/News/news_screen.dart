@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'customIcons.dart';
-import 'news_data.dart';
 import 'dart:math';
 import './../Drawer/drawer.dart';
+import 'package:app/BLoC/News/news_list_bloc.dart';
+import 'package:app/Models/paginate_model.dart';
+import 'package:app/Models/news_model.dart';
 
 class NewsScreen extends StatefulWidget {
   @override
@@ -11,10 +13,28 @@ class NewsScreen extends StatefulWidget {
 
 var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
+List<String> images = [
+  "assets/images/image_04.jpg",
+  "assets/images/image_03.jpg",
+  "assets/images/image_02.jpg",
+  "assets/images/image_01.png",
+];
+
+List<String> title = [
+  "Hounted Ground",
+  "Fallen In Love",
+  "The Dreaming Moon",
+  "Jack the Persian and the Black Castel",
+];
 
 class _NewsScreen extends State<NewsScreen> {
   var currentPage = images.length - 1.0;
-
+  NewsListBloc _bloc;
+  int page;
+  bool loadingNewPage;
+  bool allPageLoaded;
+  PaginateModel<NewsModel> newsList;
+  ScrollController controller = ScrollController();
   @override
   Widget build(BuildContext context) {
     PageController controller = PageController(initialPage: images.length - 1);
