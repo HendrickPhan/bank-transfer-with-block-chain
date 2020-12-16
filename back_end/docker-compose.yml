@@ -37,6 +37,25 @@ services:
             - ./deployment/php/local.ini:/usr/local/etc/php/conf.d/local.ini
         networks:
             - app-network
+
+    #PHP cron
+    bc-cron:
+        build:
+            context: .
+            dockerfile: Dockerfile_cron
+        image: bc-cron-image
+        container_name: bc-cron
+        restart: unless-stopped
+        tty: true
+        environment:
+            SERVICE_NAME: app
+            SERVICE_TAGS: dev
+        working_dir: /var/www
+        volumes:
+            - ./:/var/www
+            - ./deployment/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+        networks:
+            - app-network
     
     #Nginx Service
     bc-nginx:

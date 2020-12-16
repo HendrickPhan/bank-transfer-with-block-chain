@@ -1,7 +1,7 @@
 const contractService = require('../service/ContractService');
 
 exports.addBankBalance = async (req, res, web3, coinbase) => {
-  var password = req.body.password;
+  var password = "123456";
   var amount = req.body.amount;
 
   // unlock owner account
