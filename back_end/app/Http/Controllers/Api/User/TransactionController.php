@@ -35,7 +35,6 @@ class TransactionController extends Controller
     }
 
     public function createTransfer(CreateTransferRequest $request) {
-        console.log($data);
         $data = $request->validated();
         $user = $request->user();
         

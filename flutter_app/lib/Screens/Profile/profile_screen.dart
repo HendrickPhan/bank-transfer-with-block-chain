@@ -82,7 +82,7 @@ class UsertDetail extends StatelessWidget {
               gradient: LinearGradient(
                   colors: [
                 Colors.white,
-                Color(0xFF2d3447),
+                Colors.white,
               ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -96,7 +96,7 @@ class UsertDetail extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding:
-                      const EdgeInsets.only(left: 12.0, top: 40.0, right: 12.0),
+                      const EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
                   child: ListView(
                     children: <Widget>[
                       Center(
@@ -116,57 +116,63 @@ class UsertDetail extends StatelessWidget {
                       SizedBox(
                         height: 35,
                       ),
-                      buildTextField(
-                          "Full Name", userDetail.fullName.toString(), false),
-                      buildTextField("Phone Number",
-                          userDetail.phoneNumber.toString(), false),
-                      Text(
-                        'Address:',
-                        style: TextStyle(color: Colors.grey, fontSize: 12),
-                      ),
-                      SelectableText(
-                        userDetail.address.toString(),
-                        cursorColor: Colors.red,
-                        showCursor: true,
-                        toolbarOptions: ToolbarOptions(
-                            copy: true,
-                            selectAll: true,
-                            cut: false,
-                            paste: false),
-                        style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 15),
-                      ),
-                      SizedBox(
-                        height: 35,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          // RaisedButton(
-                          //   onPressed: () => {
-                          //     logout(),
-                          //     Navigator.push(
-                          //         context,
-                          //         MaterialPageRoute(
-                          //             builder: (context) => LoginScreen())),
-                          //   },
-                          //   color: Colors.green,
-                          //   padding: EdgeInsets.symmetric(horizontal: 50),
-                          //   elevation: 2,
-                          //   shape: RoundedRectangleBorder(
-                          //       borderRadius: BorderRadius.circular(20)),
-                          //   child: Text(
-                          //     "Đăng xuất",
-                          //     style: TextStyle(
-                          //         fontSize: 14,
-                          //         letterSpacing: 2.2,
-                          //         color: Colors.white),
-                          //   ),
-                          // ),
-                        ],
-                      )
+                      Card(
+                          margin: EdgeInsets.all(5),
+                          shape: RoundedRectangleBorder(
+                            side: BorderSide(color: Colors.white70, width: 1),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          elevation: 5,
+                          child: Padding(
+                              padding: const EdgeInsets.only(
+                                  left: 12.0,
+                                  right: 12.0,
+                                  top: 10.0,
+                                  bottom: 8.0),
+                              child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Center(
+                                        child: Text(
+                                      'Profile',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                      textAlign: TextAlign.center,
+                                    )),
+                                    buildTextField("Full Name",
+                                        userDetail.fullName.toString(), false),
+                                    buildTextField(
+                                        "Phone Number",
+                                        userDetail.phoneNumber.toString(),
+                                        false),
+                                    Text(
+                                      'Address:',
+                                      style: TextStyle(
+                                          color: Colors.grey, fontSize: 13),
+                                    ),
+                                    SizedBox(
+                                      height: 2,
+                                    ),
+                                    SelectableText(
+                                      userDetail.address.toString(),
+                                      cursorColor: Colors.red,
+                                      showCursor: true,
+                                      toolbarOptions: ToolbarOptions(
+                                          copy: true,
+                                          selectAll: true,
+                                          cut: false,
+                                          paste: false),
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 15),
+                                    ),
+                                    SizedBox(
+                                      height: 35,
+                                    ),
+                                  ]))),
                     ],
                   ),
                 ),

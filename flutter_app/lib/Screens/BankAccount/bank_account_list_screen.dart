@@ -129,9 +129,10 @@ class BankAccountList extends StatelessWidget {
                         return Container(
                           height: 150,
                           child: Card(
+                            margin: EdgeInsets.all(5),
                             shape: RoundedRectangleBorder(
                               side: BorderSide(color: Colors.white70, width: 1),
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius: BorderRadius.circular(5),
                             ),
                             elevation: 5,
                             child: InkWell(

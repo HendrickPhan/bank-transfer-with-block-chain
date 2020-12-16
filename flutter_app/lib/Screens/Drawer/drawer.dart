@@ -13,6 +13,7 @@ import './../BankAccount/bank_account_list_screen.dart';
 import 'package:app/Screens/Login/login_screen.dart';
 import 'package:app/Screens/History/history_list_screen.dart';
 import 'package:app/Screens/CreateTransaction/create_transaction_screen.dart';
+import 'package:app/Screens/PinCode/pin_code_screen.dart';
 import 'package:app/main.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -94,7 +95,7 @@ class DrawerNav extends StatelessWidget {
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => HistoryListScreen()),
+                MaterialPageRoute(builder: (context) => PinCodeScreen()),
               )
             },
           ),

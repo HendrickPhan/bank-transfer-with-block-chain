@@ -24,26 +24,26 @@ class CreateTransactionBloc implements Bloc {
 
   Future<String> callApiCreateTransaction(
       {String accountNumber, String toAccountNumber, int amount}) async {
-    debugPrint('xxx');
+    await getToken();
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['account_number'] = accountNumber;
     data['to_account_number'] = toAccountNumber;
     data['amount'] = amount;
     final response = await _provider.post(
-      url: 'transaction',
+      url: 'transaction/transfer',
       data: data,
     );
     //save response token to secure storage
     await _storage.write(key: "token", value: response);
+    debugPrint(response);
     return response;
   }
 
   createTransaction(
       {String accountNumber, String toAccountNumber, int amount}) async {
-    debugPrint('xxx');
     transactionSink.add(ApiResponse.loading('Đang thực hiện giao dịch'));
+
     try {
-      debugPrint('123');
       _token = await callApiCreateTransaction(
           accountNumber: accountNumber,
           toAccountNumber: toAccountNumber,
@@ -53,6 +53,10 @@ class CreateTransactionBloc implements Bloc {
       transactionSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
+  }
+
+  Future<Null> getToken() async {
+    _token = await _storage.read(key: "token");
   }
 
   @override

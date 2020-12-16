@@ -144,7 +144,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 margin: EdgeInsets.only(top: 50),
                                 child: Center(
                                   child: Text(
-                                    "Đăng nhập",
+                                    "Login",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 40,

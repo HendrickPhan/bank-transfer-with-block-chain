@@ -63,7 +63,7 @@ class AuthController extends Controller
         $data = $request->validated();
         
         if(!Hash::check($data['pin_code'], $user->pin_code)) {
-            return $this->responseError('Pin code không đúng');
+            return $this->responseError('Pin code is incorrect');
         }
 
         $user->pin_code = Hash::make($data['new_pin_code']);

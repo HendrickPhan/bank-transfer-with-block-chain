@@ -5,6 +5,7 @@ class UserModel {
   final String address;
   final String fullName;
   final String phoneNumber;
+  final String pinCode;
 
   UserModel({
     this.id,
@@ -13,6 +14,7 @@ class UserModel {
     this.address,
     this.fullName,
     this.phoneNumber,
+    this.pinCode,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class UserModel {
       password: json['password'],
       fullName: json['name'],
       phoneNumber: json['phone_number'],
+      pinCode: json['pin_code'],
     );
   }
 
@@ -34,6 +37,7 @@ class UserModel {
     data['password'] = this.password;
     data['full_name'] = this.fullName;
     data['phone_number'] = this.phoneNumber;
+    data['pin_code'] = this.pinCode;
     return data;
   }
 }
