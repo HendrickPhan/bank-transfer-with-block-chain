@@ -1,0 +1,8 @@
+export const AUTH_LOGIN_SUCCESS = 'AUTH_LOGIN_SUCCESS';
+export const AUTH_LOGIN_FAIL = 'AUTH_LOGIN_FAIL';
+
+export const GET_PROFILE_SUCCESS = 'GET_PROFILE_SUCCESS';
+export const GET_PROFILE_FAIL = 'GET_PROFILE_FAIL';
+
+export const LOG_OUT = 'LOG_OUT';
+

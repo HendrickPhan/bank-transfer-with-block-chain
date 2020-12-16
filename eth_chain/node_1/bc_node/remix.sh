@@ -1,0 +1,1 @@
+geth --rpc --rpccorsdomain="https://remix.ethereum.org" --rpcapi web3,eth,debug,personal,net --vmdebug --datadir data --dev console --unlock 0x804f150991feb1150742cf2e414b164a4c5be605 --password "./password.txt" --allow-insecure-unlock
