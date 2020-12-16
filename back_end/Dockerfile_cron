@@ -25,4 +25,4 @@ RUN chmod 0777 /var/log/schedule.log
 COPY ./deployment/php/cron /etc/cron.d/
 RUN crontab /etc/cron.d/cron
 
-CMD cron 
+CMD cron -f
