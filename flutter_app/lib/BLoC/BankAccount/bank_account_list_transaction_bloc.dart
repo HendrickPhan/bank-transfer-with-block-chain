@@ -28,7 +28,7 @@ class BankAccountListTransactionBloc implements Bloc {
 
   fetchBankAccountListsForTransaction() async {
     bankAccountListSink
-        .add(ApiResponse.loading('Đang lấy danh sách người dùng'));
+        .add(ApiResponse.loading('Đang lấy danh sách tài khoản'));
     try {
       BankAccountListModel bankAccountListForTransaction =
           await _bankAccountRepository.fetchBankAccountListDataForTransaction();

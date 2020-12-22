@@ -1,52 +1,54 @@
+import 'package:app/Models/news_list_model.dart';
 import 'package:app/Models/news_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
-import 'package:app/Models/bank_account_list_model.dart';
+
 import 'package:app/Repositories/news_repository.dart';
+import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../bloc.dart';
 
 class NewsListBloc implements Bloc {
   NewsRepository _newsRepository;
-  StreamController _walletListController;
+  StreamController _newsListController;
 
-  StreamSink<ApiResponse<PaginateModel<NewsModel>>> get bankAccountListSink =>
-      _walletListController.sink;
+  StreamSink<ApiResponse<PaginateModel<NewsModel>>> get newsListSink =>
+      _newsListController.sink;
 
-  Stream<ApiResponse<PaginateModel<NewsModel>>> get bankAccountListStream =>
-      _walletListController.stream;
+  Stream<ApiResponse<PaginateModel<NewsModel>>> get newsListStream =>
+      _newsListController.stream;
 
   NewsListBloc() {
-    _walletListController =
+    _newsListController =
         StreamController<ApiResponse<PaginateModel<NewsModel>>>();
     _newsRepository = NewsRepository();
   }
 
   fetchNewsLists() async {
-    bankAccountListSink.add(ApiResponse.loading('Đang lấy tin tức'));
+    newsListSink.add(ApiResponse.loading('Đang lấy dữ liệu tin tức'));
     try {
-      PaginateModel bankAccountList =
-          await _newsRepository.fetchNewsListData(page: 1);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
+      PaginateModel newsList = await _newsRepository.fetchNewsListData(page: 1);
+      newsListSink.add(ApiResponse.completed(newsList));
     } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
+      newsListSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
+    debugPrint('123');
   }
 
   fetchMoreNews(int page) async {
     try {
-      PaginateModel bankAccountList =
+      PaginateModel newsList =
           await _newsRepository.fetchNewsListData(page: page);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
+      newsListSink.add(ApiResponse.completed(newsList));
     } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
+      newsListSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
   }
 
   @override
   void dispose() {
-    _walletListController.close();
+    _newsListController.close();
   }
 }

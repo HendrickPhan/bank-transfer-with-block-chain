@@ -1,236 +1,241 @@
-import 'package:flutter/material.dart';
-import 'customIcons.dart';
-import 'dart:math';
-import './../Drawer/drawer.dart';
-import 'package:app/BLoC/News/news_list_bloc.dart';
-import 'package:app/Models/paginate_model.dart';
 import 'package:app/Models/news_model.dart';
+import 'package:flutter/material.dart';
+import 'package:app/BLoC/News/news_list_bloc.dart';
+import 'package:app/Networking/api_responses.dart';
+import 'package:app/Models/paginate_model.dart';
+import 'package:app/Widget/Error/err_widget.dart';
+import 'package:app/Widget/Loading/loading_widget.dart';
+import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
 
-class NewsScreen extends StatefulWidget {
+import './../Drawer/drawer.dart';
+
+class NewsListScreen extends StatefulWidget {
   @override
-  _NewsScreen createState() => _NewsScreen();
+  _NewsListScreenState createState() => _NewsListScreenState();
 }
 
-var cardAspectRatio = 12.0 / 16.0;
-var widgetAspectRatio = cardAspectRatio * 1.2;
-List<String> images = [
-  "assets/images/image_04.jpg",
-  "assets/images/image_03.jpg",
-  "assets/images/image_02.jpg",
-  "assets/images/image_01.png",
-];
-
-List<String> title = [
-  "Hounted Ground",
-  "Fallen In Love",
-  "The Dreaming Moon",
-  "Jack the Persian and the Black Castel",
-];
-
-class _NewsScreen extends State<NewsScreen> {
-  var currentPage = images.length - 1.0;
+class _NewsListScreenState extends State<NewsListScreen> {
   NewsListBloc _bloc;
   int page;
   bool loadingNewPage;
   bool allPageLoaded;
   PaginateModel<NewsModel> newsList;
   ScrollController controller = ScrollController();
+
+  @override
+  void initState() {
+    loadingNewPage = false;
+    allPageLoaded = false;
+    page = 1;
+    super.initState();
+    _bloc = NewsListBloc();
+    _bloc.fetchNewsLists();
+  }
+
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController(initialPage: images.length - 1);
-    controller.addListener(() {
-      setState(() {
-        currentPage = controller.page;
-      });
-    });
+    return Scaffold(
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (ScrollNotification scrollInfo) {
+          if (scrollInfo.metrics.pixels ==
+                  (scrollInfo.metrics.maxScrollExtent - 30) &&
+              !loadingNewPage &&
+              !allPageLoaded) {
+            loadingNewPage = true;
+            page++;
+            print(page);
+            _bloc.fetchMoreNews(page);
+          }
+          return null;
+        },
+        child: StreamBuilder<ApiResponse<PaginateModel>>(
+          stream: _bloc.newsListStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data.status) {
+                case Status.LOADING:
+                  return LoadingWidget(loadingMessage: snapshot.data.message);
+                  break;
+                case Status.COMPLETED:
+                  if (newsList == null) {
+                    newsList = snapshot.data.data;
+                  } else {
+                    snapshot.data.data.data.forEach((element) {
+                      newsList.data.add(element);
+                    });
+                    allPageLoaded =
+                        snapshot.data.data.to == snapshot.data.data.total;
+                  }
+                  return NewsList(newsList: newsList);
+                  break;
+                case Status.ERROR:
+                  return ErrWidget(
+                    errorMessage: snapshot.data.message,
+                    onRetryPressed: () => _bloc.fetchNewsLists(),
+                  );
+                  break;
+              }
+            }
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+}
 
+class NewsList extends StatelessWidget {
+  final PaginateModel<NewsModel> newsList;
+  const NewsList({Key key, this.newsList}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+    final double categoryHeight = size.height * 0.30;
+    bool closeTopContainer = false;
+    double topContainer = 0;
     return Scaffold(
         appBar: AppBar(
           title: Text('News'),
         ),
         drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
         body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                Colors.white,
-                Color(0xFF2d3447),
-              ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  tileMode: TileMode.clamp)),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, top: 30.0, bottom: 8.0),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFff6e6e),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 22.0, vertical: 6.0),
-                              child: Text("Animated",
-                                  style: TextStyle(color: Colors.white)),
+            height: size.height,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    child: new ListView.builder(
+                      itemBuilder: (context, index) {
+                        double scale = 1.0;
+                        if (topContainer > 0.5) {
+                          scale = index + 0.5 - topContainer;
+                          if (scale < 0) {
+                            scale = 0;
+                          } else if (scale > 1) {
+                            scale = 1;
+                          }
+                        }
+                        return Container(
+                          height: 150,
+                          child: Card(
+                            margin: EdgeInsets.all(5),
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white70, width: 1),
+                              borderRadius: BorderRadius.circular(5),
+                            ),
+                            elevation: 5,
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BankAccountDetailScreen(
+                                              this.newsList.data[index].id)),
+                                )
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 20, left: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "A.No:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Type:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Amount:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )),
+                                  Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            newsList.data[index].title,
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                        ],
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 16,
+                                          backgroundColor:
+                                              Color.fromRGBO(50, 172, 121, 1),
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.white,
+                                            size: 24,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Text("25+ Stories",
-                            style: TextStyle(color: Colors.blueAccent))
-                      ],
+                          color: Colors.white,
+                        );
+                      },
+                      itemCount: newsList.data.length,
                     ),
                   ),
-                  Stack(
-                    children: <Widget>[
-                      CardScrollWidget(currentPage),
-                      Positioned.fill(
-                        child: PageView.builder(
-                          itemCount: images.length,
-                          controller: controller,
-                          reverse: true,
-                          itemBuilder: (context, index) {
-                            return Container();
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 18.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.asset("assets/image_02.jpg",
-                              width: 296.0, height: 222.0),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ));
-  }
-}
-
-class CardScrollWidget extends StatelessWidget {
-  var currentPage;
-  var padding = 20.0;
-  var verticalInset = 20.0;
-
-  CardScrollWidget(this.currentPage);
-
-  @override
-  Widget build(BuildContext context) {
-    return new AspectRatio(
-      aspectRatio: widgetAspectRatio,
-      child: LayoutBuilder(builder: (context, contraints) {
-        var width = contraints.maxWidth;
-        var height = contraints.maxHeight;
-
-        var safeWidth = width - 2 * padding;
-        var safeHeight = height - 2 * padding;
-
-        var heightOfPrimaryCard = safeHeight;
-        var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
-
-        var primaryCardLeft = safeWidth - widthOfPrimaryCard;
-        var horizontalInset = primaryCardLeft / 2;
-
-        List<Widget> cardList = new List();
-
-        for (var i = 0; i < images.length; i++) {
-          var delta = i - currentPage;
-          bool isOnRight = delta > 0;
-
-          var start = padding +
-              max(
-                  primaryCardLeft -
-                      horizontalInset * -delta * (isOnRight ? 15 : 1),
-                  0.0);
-
-          var cardItem = Positioned.directional(
-            top: padding + verticalInset * max(-delta, 0.0),
-            bottom: padding + verticalInset * max(-delta, 0.0),
-            start: start,
-            textDirection: TextDirection.rtl,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(3.0, 6.0),
-                      blurRadius: 10.0)
-                ]),
-                child: AspectRatio(
-                  aspectRatio: cardAspectRatio,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(images[i], fit: BoxFit.cover),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 8.0),
-                              child: Text(title[i],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontFamily: "SF-Pro-Text-Regular")),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 12.0, bottom: 12.0),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 22.0, vertical: 6.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.blueAccent,
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: Text("Read Later",
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ),
                 ),
-              ),
-            ),
-          );
-          cardList.add(cardItem);
-        }
-        return Stack(
-          children: cardList,
-        );
-      }),
-    );
+              ],
+            )));
   }
 }

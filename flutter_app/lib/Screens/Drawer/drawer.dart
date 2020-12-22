@@ -136,7 +136,7 @@ class DrawerNav extends StatelessWidget {
             onTap: () => {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => NewsScreen()),
+                MaterialPageRoute(builder: (context) => NewsListScreen()),
               )
             },
           ),
