@@ -21,7 +21,7 @@ class UserModel {
       username: json['username'],
       address: json['address'],
       password: json['password'],
-      fullName: json['full_name'],
+      fullName: json['name'],
       phoneNumber: json['phone_number'],
     );
   }

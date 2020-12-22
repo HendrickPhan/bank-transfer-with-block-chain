@@ -11,7 +11,7 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 import useStyles from "./styles";
 
 const RenderPage = (props) => {
@@ -19,6 +19,13 @@ const RenderPage = (props) => {
 
   return (
     <div className={classes.root}>
+      <Breadcrumbs aria-label="breadcrumb" className={classes.paper}>
+        <Link color="inherit" href="/blockchain/transactions" onClick={null}>
+          Block Chain Transaction
+        </Link>
+        <Typography color="textPrimary">Detail</Typography>
+      </Breadcrumbs>
+
       <Paper className={classes.paper}>
         {(Object.keys(props.errors).length > 0) &&
           <Alert

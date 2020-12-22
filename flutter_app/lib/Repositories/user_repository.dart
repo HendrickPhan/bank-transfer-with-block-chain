@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:app/Networking/api_provider.dart';
 import 'package:app/Models/user_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter/cupertino.dart';
 
 class UserRepository {
   ApiProvider _provider = ApiProvider();
@@ -17,7 +18,13 @@ class UserRepository {
     );
     //save response token to secure storage
     await _storage.write(key: "token", value: response);
-    print(response);
+    return UserModel.fromJson(response);
+  }
+
+  Future<UserModel> fetchUserDetail() async {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    final response = await _provider.get(url: 'profile');
+    debugPrint(response.toString());
     return UserModel.fromJson(response);
   }
 }

@@ -11,7 +11,8 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
-import Typography from '@material-ui/core/Typography';
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
+
 import useStyles from "./styles";
 
 const RenderPage = (props) => {
@@ -19,6 +20,13 @@ const RenderPage = (props) => {
 
   return (
     <div className={classes.root}>
+      <Breadcrumbs aria-label="breadcrumb" className={classes.paper}>
+        <Link color="inherit" href="/blockchain/blocks" onClick={null}>
+          Block Chain Block
+        </Link>
+        <Typography color="textPrimary">Detail</Typography>
+      </Breadcrumbs>
+
       <Paper className={classes.paper}>
         {(Object.keys(props.errors).length > 0) &&
           <Alert
@@ -81,7 +89,7 @@ const RenderPage = (props) => {
               required
               disabled
             />
-                        <TextField
+            <TextField
               className={classes.textField}
               label="Time Stamp"
               variant="filled"
@@ -168,57 +176,57 @@ const RenderPage = (props) => {
             variant="h4"
           >Transactions</Typography>
           <TableContainer component={Paper}>
-          <Table className={classes.table}>
-            <TableHead>
-              <TableRow>
-                <TableCell
-                  align={"center"}
-                >
-                  Id
-                </TableCell>
-                <TableCell
-                  align={"center"}
-                >
-                  Hash
-                </TableCell>
-                <TableCell
-                  align={"center"}
-                >
-                  Action
-                </TableCell>
-              </TableRow>
-            </TableHead>
-
-            <TableBody>
-              {props.block && props.block.transactions.map((row, rowIdx) => (
-                <TableRow key={rowIdx}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
                   <TableCell
                     align={"center"}
                   >
-                    {row['id']}
-                  </TableCell>
+                    Id
+                </TableCell>
                   <TableCell
                     align={"center"}
                   >
-                    {row['hash']}
-                  </TableCell>
+                    Hash
+                </TableCell>
                   <TableCell
-                    align="center"
+                    align={"center"}
                   >
-                    <Button
-                      variant="outlined"
-                      onClick={() => props.handleDetailClick(row['id'])}
-                      color="primary"
-                      className={classes.button}
-                    >
-                      Detail
-                    </Button>
-                  </TableCell>
+                    Action
+                </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+
+              <TableBody>
+                {props.block && props.block.transactions.map((row, rowIdx) => (
+                  <TableRow key={rowIdx}>
+                    <TableCell
+                      align={"center"}
+                    >
+                      {row['id']}
+                    </TableCell>
+                    <TableCell
+                      align={"center"}
+                    >
+                      {row['hash']}
+                    </TableCell>
+                    <TableCell
+                      align="center"
+                    >
+                      <Button
+                        variant="outlined"
+                        onClick={() => props.handleDetailClick(row['id'])}
+                        color="primary"
+                        className={classes.button}
+                      >
+                        Detail
+                    </Button>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
 
         </Grid>
       </Paper>

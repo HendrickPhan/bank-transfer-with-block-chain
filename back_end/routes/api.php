@@ -171,6 +171,9 @@ Route::group([
     Route::prefix('interest-rate')->group(function () {
         Route::get('/', [AdminInterestRateController::class, 'list']);
 
+        Route::get('/{id}', [AdminInterestRateController::class, 'detail'])
+            ->where(['id' => '[0-9]+']);
+
         Route::put('/{id}', [AdminInterestRateController::class, 'update'])
             ->where(['id' => '[0-9]+']);
     });    

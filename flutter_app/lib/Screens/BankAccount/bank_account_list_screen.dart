@@ -5,6 +5,9 @@ import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
+import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
+
+import './../Drawer/drawer.dart';
 
 class BankAccountListScreen extends StatefulWidget {
   @override
@@ -17,6 +20,7 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
   bool loadingNewPage;
   bool allPageLoaded;
   PaginateModel<BankAccountModel> bankAccountList;
+  ScrollController controller = ScrollController();
 
   @override
   void initState() {
@@ -31,14 +35,6 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        elevation: 0.0,
-        automaticallyImplyLeading: false,
-        title: Text('Bank Accounts',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-        backgroundColor: Color(0xFF222222),
-      ),
-      backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         onNotification: (ScrollNotification scrollInfo) {
           if (scrollInfo.metrics.pixels ==
@@ -93,125 +89,202 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
       ),
     );
   }
-
-  void createBankAccount() {}
 }
 
 class BankAccountList extends StatelessWidget {
   final PaginateModel<BankAccountModel> bankAccountList;
-
   const BankAccountList({Key key, this.bankAccountList}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Row(children: <Widget>[
-          Expanded(child: Text("First Name")),
-          Expanded(child: Text("Last Name")),
-          Expanded(child: Text("City")),
-          Expanded(child: Text("Id")),
-        ]),
-        Expanded(
-          child: NotificationListener<ScrollNotification>(
-            child: new ListView.builder(
-              itemBuilder: (context, index) {
-                return Card(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 0.0,
-                        vertical: 1.0,
-                      ),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.of(context).push(
-                              MaterialPageRoute(builder: (context) => null));
-                          // ShowChuckyJoke(categoryList.categories[index])));
-                        },
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 2,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList
-                                            .data[index].accountNumber,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.centerRight,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList.data[index].amount
-                                            .toString(),
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Expanded(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: 65,
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(4, 0, 0, 0),
-                                      child: Text(
-                                        bankAccountList.data[index].type,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontFamily: 'Roboto',
-                                            color: Colors.white70),
-                                        textAlign: TextAlign.left,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                    color: Colors.black54);
-              },
-              itemCount: bankAccountList.data.length,
-            ),
-          ),
+    final Size size = MediaQuery.of(context).size;
+    final double categoryHeight = size.height * 0.30;
+    bool closeTopContainer = false;
+    double topContainer = 0;
+    return Scaffold(
+        appBar: AppBar(
+          title: Text('Bank Accounts'),
         ),
-      ],
-    );
+        drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
+        body: Container(
+            height: size.height,
+            child: Column(
+              children: <Widget>[
+                const SizedBox(
+                  height: 10,
+                ),
+                Expanded(
+                  child: NotificationListener<ScrollNotification>(
+                    child: new ListView.builder(
+                      itemBuilder: (context, index) {
+                        double scale = 1.0;
+                        if (topContainer > 0.5) {
+                          scale = index + 0.5 - topContainer;
+                          if (scale < 0) {
+                            scale = 0;
+                          } else if (scale > 1) {
+                            scale = 1;
+                          }
+                        }
+                        return Container(
+                          height: 150,
+                          child: Card(
+                            shape: RoundedRectangleBorder(
+                              side: BorderSide(color: Colors.white70, width: 1),
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            elevation: 5,
+                            child: InkWell(
+                              onTap: () => {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          BankAccountDetailScreen(this
+                                              .bankAccountList
+                                              .data[index]
+                                              .id)),
+                                )
+                              },
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                      padding:
+                                          EdgeInsets.only(top: 20, left: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            "A.No:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Type:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            "Amount:",
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )),
+                                  Padding(
+                                      padding: EdgeInsets.only(top: 20),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: <Widget>[
+                                          Text(
+                                            bankAccountList
+                                                .data[index].accountNumber,
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 18,
+                                              color: Colors.black,
+                                              //fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          if (bankAccountList.data[index].type
+                                                  .toString() ==
+                                              '1')
+                                            Text(
+                                              'Thụ hưởng',
+                                              style: TextStyle(
+                                                //fontStyle: FontStyle.italic,
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                                //fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          if (bankAccountList.data[index].type
+                                                  .toString() !=
+                                              '0')
+                                            Text(
+                                              'Tiết kiệm',
+                                              style: TextStyle(
+                                                //fontStyle: FontStyle.italic,
+                                                fontSize: 12,
+                                                color: Colors.black,
+                                                //fontWeight: FontWeight.w900,
+                                              ),
+                                            ),
+                                          SizedBox(
+                                            height: 2,
+                                          ),
+                                          Text(
+                                            bankAccountList.data[index].amount
+                                                    .toString() +
+                                                'VND',
+                                            style: TextStyle(
+                                              //fontStyle: FontStyle.italic,
+                                              fontSize: 12, color: Colors.black,
+                                              fontWeight: FontWeight.w900,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10,
+                                          ),
+                                        ],
+                                      )),
+                                  Padding(
+                                    padding: EdgeInsets.only(right: 10),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: <Widget>[
+                                        CircleAvatar(
+                                          radius: 16,
+                                          backgroundColor:
+                                              Color.fromRGBO(50, 172, 121, 1),
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            color: Colors.white,
+                                            size: 24,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                          color: Colors.white,
+                        );
+                      },
+                      itemCount: bankAccountList.data.length,
+                    ),
+                  ),
+                ),
+              ],
+            )));
   }
 }

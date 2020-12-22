@@ -11,7 +11,8 @@ import Transactions from '../screens/transaction';
 import BankAccounts from '../screens/bankAccount/list';
 import AddBankAccount from '../screens/bankAccount/add';
 import AddBankAccountBalance from '../screens/bankAccount/addBalance';
-import InterestRates from '../screens/interestRate';
+import InterestRates from '../screens/interestRate/list';
+import InterestRateDetail from '../screens/interestRate/detail';
 import NewsList from '../screens/news/list';
 import AddNews from '../screens/news/add';
 import Settings from '../screens/setting/list';
@@ -66,6 +67,9 @@ const Routes = (props) => {
 
                         <AdminRoute exact path="/interest-rates">
                             <InterestRates />
+                        </AdminRoute>
+                        <AdminRoute exact path="/interest-rate/:interestRateId">
+                            <InterestRateDetail />
                         </AdminRoute>
 
                         <AdminRoute exact path="/news-list">

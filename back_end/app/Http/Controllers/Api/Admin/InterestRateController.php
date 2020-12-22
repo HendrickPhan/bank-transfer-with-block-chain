@@ -30,6 +30,13 @@ class InterestRateController extends Controller
         return $this->responseSuccess($interestRate);
     }
 
+    public function detail(Request $request)
+    {
+        $interestRate = InterestRate::find($request->id);
+        $interestRate["type_text"] = $interestRate->getTypeText($interestRate->type); 
+        return $this->responseSuccess($interestRate);
+    }
+
     private function _generateTypeText(&$interestRates) {
         foreach($interestRates as $interestRate) {
             $interestRate["type_text"] = $interestRate->getTypeText($interestRate->type); 

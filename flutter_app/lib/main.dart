@@ -2,8 +2,17 @@ import 'package:flutter/material.dart';
 import 'BLoC/check_logged_in_bloc.dart';
 import 'Screens/Login/login_screen.dart';
 import 'Screens/Profile/profile_screen.dart';
+import 'Screens/History/history_list_screen.dart';
+import 'Screens/DailyMonth/daily_month_screen.dart';
 import 'Screens/CreateTransaction/create_transaction_screen.dart';
 import 'Screens/BankAccount/bank_account_list_screen.dart';
+import 'Screens/BankAccount/bank_account_create_screen.dart';
+import 'Screens/CreateTransaction/create_transaction_screen.dart';
+import 'Screens/Beneficiary/beneficiary_account_list_screen.dart';
+import 'Screens/Beneficiary/create_beneficiary_account_screen.dart';
+import 'Screens/News/news_screen.dart';
+import 'Screens/News/news_detail_screen.dart';
+import 'Screens/News/news_detail_screen.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,18 +25,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Welcome to flutter app  ',
       home: Center(
-        child: Main(),
+        child: Main(index: 0),
       ),
     );
   }
 }
 
 class Main extends StatefulWidget {
+  final index;
+  Main({this.index});
   @override
-  _MainState createState() => _MainState();
+  _MainState createState() => _MainState(a: index);
 }
 
 class _MainState extends State<Main> {
+  final a;
+  _MainState({this.a});
+
   CheckLoggedInBloc _bloc;
   int _currentIndex;
   final List<Widget> _children = [
@@ -41,7 +55,10 @@ class _MainState extends State<Main> {
     super.initState();
     _bloc = CheckLoggedInBloc();
     _bloc.checkLogged();
-    _currentIndex = 0;
+    if (a != null) {
+      _currentIndex = a;
+    } else
+      _currentIndex = 0;
   }
 
   void onTabTapped(int index) {

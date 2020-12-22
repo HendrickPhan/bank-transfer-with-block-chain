@@ -8,6 +8,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TablePagination from '@material-ui/core/TablePagination';
 import Paper from '@material-ui/core/Paper';
+import { Breadcrumbs, Link, Typography } from '@material-ui/core';
 
 import useStyles from "./styles";
 
@@ -41,6 +42,10 @@ const RenderPage = (props) => {
 
   return (
     <div className={classes.root}>
+      <Breadcrumbs aria-label="breadcrumb" className={classes.paper}>
+          <Typography color="textPrimary">Block Chain Block</Typography>
+      </Breadcrumbs>
+
       <Paper className={classes.paper}>
         <TableContainer component={Paper}>
           <Table className={classes.table}>
