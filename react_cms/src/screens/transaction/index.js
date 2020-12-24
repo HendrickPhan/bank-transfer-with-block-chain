@@ -40,8 +40,8 @@ export default function TransactionPage() {
           account_number: accountNumber ? accountNumber : null,
           from_account: filterFromAccount ? filterFromAccount : null,
           to_account: filterToAccount ? filterToAccount : null,
-          type: filterType ? filterType : null,
-          status: filterStatus ? filterStatus : null,
+          type: (filterType !== '' ) ? filterType : null,
+          status: (filterStatus !== '') ? filterStatus : null,
         }
       ));
   }

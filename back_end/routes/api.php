@@ -137,6 +137,9 @@ Route::group([
         Route::get('/{id}', [AdminUserController::class, 'detail'])
             ->where(['id' => '[0-9]+']);
 
+        Route::put('/{id}', [AdminUserController::class, 'update'])
+            ->where(['id' => '[0-9]+']);
+            
         Route::post('/', [AdminUserController::class, 'create']);
     });    
 

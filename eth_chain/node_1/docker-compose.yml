@@ -1,0 +1,37 @@
+version: "3.8"
+services:
+    #Eth service
+    bc-eth:
+        build:
+            context: .
+            dockerfile: Dockerfile_eth
+        image: bc-eth-image
+        container_name: bc-eth
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "5012:5012"
+        volumes:
+            - ./:/app
+        networks:
+            - app-network
+    
+    # node Service
+    bc-node:
+        build:
+            context: .
+            dockerfile: Dockerfile_node
+        image: bc-node-image
+        container_name: bc-node
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "5011:3000"
+        volumes:
+            - ./:/app
+        networks:
+            - app-network
+#Docker Networks
+networks:
+    app-network:
+        driver: bridge

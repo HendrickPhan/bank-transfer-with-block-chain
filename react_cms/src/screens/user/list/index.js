@@ -33,6 +33,12 @@ export default function UsersPage() {
     })
   }
 
+  const handleDetailClick = (userId) => {
+    history.push({
+      pathname: `/user/${userId}`,
+    })
+  }
+
   const handleAddClick = (userId) => {
     history.push({
       pathname: `/user/add`,
@@ -80,6 +86,7 @@ export default function UsersPage() {
         handleChangeRowsPerPage={handleChangeRowsPerPage}
         handleBankAccountClick={handleBankAccountClick}
         handleAddClick={handleAddClick}
+        handleDetailClick={handleDetailClick}
         filterKeyword={filterKeyword}
         setFilterKeyword={setFilterKeyword}
       />

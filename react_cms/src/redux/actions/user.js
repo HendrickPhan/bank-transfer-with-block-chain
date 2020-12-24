@@ -55,7 +55,7 @@ export const getUser = (userId) => async (dispatch, getState) => {
 
     dispatch({
       type: GET_USER_SUCCESS, payload: {
-        user: data.data
+        user: data
       }
     });
 
@@ -109,7 +109,7 @@ export const clearAddUserResult = () => async (dispatch, getState) => {
 /**
  * update 
  */
-export const updateUser = (userId, name, phoneNumber) =>  async (dispatch, getState) => {
+export const updateUser = (userId, name, phoneNumber, password) =>  async (dispatch, getState) => {
   try {
     dispatch({type: UPDATING_USER});
     let param = {
@@ -117,13 +117,14 @@ export const updateUser = (userId, name, phoneNumber) =>  async (dispatch, getSt
       phone_number: phoneNumber
     }
 
-    const data = await callApi('post', `admin/user/${userId}`, param);
+    if (password !== '') {
+      param.password = password;
+    }
+
+    const data = await callApi('put', `admin/user/${userId}`, param);
     dispatch({
       type: UPDATE_USER_SUCCESS, payload: {
-        user: {
-          name: name, 
-          phone_number: phoneNumber
-        }
+        user: data
       }
     });
 
@@ -136,7 +137,7 @@ export const updateUser = (userId, name, phoneNumber) =>  async (dispatch, getSt
   }
 }
 
-export const clearUpdateUserResult = () => async (dispatch, getState) => {
+export const clearUpdateResult = () => async (dispatch, getState) => {
   dispatch({
     type: UPDATE_USER_CLEAR, payload: {}
   });

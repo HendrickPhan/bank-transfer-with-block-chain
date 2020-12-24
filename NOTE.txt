@@ -1,0 +1,7 @@
+SERVER      PORT
+PHP         5010
+NODE        5011
+ETH         5012
+
+CMS         5020
+DB          5030

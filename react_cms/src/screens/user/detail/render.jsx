@@ -9,6 +9,7 @@ import FormControl from '@material-ui/core/FormControl';
 import useStyles from "./styles";
 
 const RenderSettingDetailPage = (props) => {
+  console.log(props)
   const classes = useStyles();
 
   return (
@@ -56,19 +57,31 @@ const RenderSettingDetailPage = (props) => {
             >
               <TextField
                 className={classes.textField}
-                label="Key"
+                label="Name"
                 variant="filled"
-                value={props.keyProp}
-                disabled
+                value={props.name}
+                required
+                onChange={(event) => {
+                  props.setName(event.target.value)
+                }}
               />
               <TextField
                 className={classes.textField}
-                label="Value"
+                label="Phone Number"
                 variant="filled"
-                value={props.value}
+                value={props.phoneNumber}
                 required
                 onChange={(event) => {
-                  props.setValue(event.target.value)
+                  props.setPhoneNumber(event.target.value)
+                }}
+              />
+              <TextField
+                className={classes.textField}
+                label="Password"
+                variant="filled"
+                value={props.password}
+                onChange={(event) => {
+                  props.setPassword(event.target.value)
                 }}
               />
             </FormControl>

@@ -107,11 +107,11 @@ const RenderUsersPage = (props) => {
                   >
                     <Button
                       variant="outlined"
-                      onClick={() => props.handleUpdateClick(user)}
+                      onClick={() => props.handleDetailClick(user["id"])}
                       color="primary"
                       className={classes.button}
                     >
-                      Update
+                      Detail
                     </Button>
                     <Button
                       variant="outlined"

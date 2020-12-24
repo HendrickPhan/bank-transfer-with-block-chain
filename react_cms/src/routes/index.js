@@ -6,6 +6,7 @@ import Home from "../screens/home"
 import Login from '../screens/login';
 import Users from '../screens/user/list';
 import AddUser from '../screens/user/add';
+import User from '../screens/user/detail';
 import Transactions from '../screens/transaction';
 import BankAccounts from '../screens/bankAccount/list';
 import AddBankAccount from '../screens/bankAccount/add';
@@ -37,6 +38,9 @@ const Routes = (props) => {
                             <AddUser />
                         </AdminRoute>
                         
+                        <AdminRoute exact path="/user/:userId">
+                            <User />
+                        </AdminRoute>
                         <AdminRoute exact path="/user/:userId/bank-accounts">
                             <BankAccounts />
                         </AdminRoute>
