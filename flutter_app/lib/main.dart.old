@@ -1,0 +1,129 @@
+import 'package:flutter/material.dart';
+// ----- networking
+import 'package:app/Networking/api_responses.dart';
+// ----- model
+import 'package:app/Models/auth_model.dart';
+// ----- bloc
+import 'BLoC/check_logged_in_bloc.dart';
+import 'BLoC/auth_bloc.dart';
+// ----- screen
+import 'Screens/Login/login_screen.dart';
+import 'Screens/Profile/profile_screen.dart';
+import 'Screens/CreateTransaction/create_transaction_screen.dart';
+import 'Screens/BankAccount/bank_account_list_screen.dart';
+import 'Screens/CreateTransaction/create_transaction_screen.dart';
+import 'Screens/Home/home_screen.dart';
+
+import 'package:firebase_messaging/firebase_messaging.dart';
+// ----- widget
+import 'package:app/Widget/Loading/loading_widget.dart';
+
+void main() {
+  runApp(Main(index: 0));
+}
+
+class Main extends StatefulWidget {
+  final index;
+  Main({this.index});
+  @override
+  _MainState createState() => _MainState(a: index);
+}
+
+class _MainState extends State<Main> {
+  final a;
+
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
+  AuthBloc _authBloc;
+
+  _MainState({this.a});
+
+  CheckLoggedInBloc _bloc;
+  int _currentIndex;
+  final List<Widget> _children = [
+    BankAccountListScreen(),
+    CreateTransactionScreen(),
+    ProfileScreen(),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    //
+    _authBloc = AuthBloc();
+    _authBloc.checkLoggedIn();
+    //
+
+    _bloc = CheckLoggedInBloc();
+    _bloc.checkLogged();
+    if (a != null) {
+      _currentIndex = a;
+    } else {}
+    _currentIndex = 0;
+
+    // firebase
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        // _showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // _navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // _navigateToItemDetail(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      // todo init token, save token id to storage
+      setState(() {
+        // _homeScreenText = "Push Messaging token: $token";
+      });
+      // print(_homeScreenText);
+    });
+  }
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new MaterialApp(
+      title: 'MediaQuery Demo',
+      theme: new ThemeData(
+        primarySwatch: Colors.red,
+      ),
+      home: StreamBuilder<ApiResponse<AuthModel>>(
+        stream: _authBloc.authStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return LoadingWidget(loadingMessage: snapshot.data.message);
+              case Status.COMPLETED:
+                if (snapshot.data.data.loggedIn) {
+                  // return home screen
+                  return HomeScreen();
+                }
+                break;
+              case Status.ERROR:
+            }
+          }
+          return LoginScreen();
+        },
+      ),
+    );
+  }
+}

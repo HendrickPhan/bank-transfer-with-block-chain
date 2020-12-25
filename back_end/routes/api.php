@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\User\ReceiverController;
 use App\Http\Controllers\Api\User\TransactionController;
 use App\Http\Controllers\Api\User\NewsController;
 use App\Http\Controllers\Api\User\NotificationController;
+use App\Http\Controllers\Api\User\DeviceController;
 
 use App\Http\Controllers\Api\Admin\InterestRateController as AdminInterestRateController;
 use App\Http\Controllers\Api\Admin\BankAccountController as AdminBankAccountController;
@@ -57,6 +58,17 @@ Route::group([
         Route::put('/activate', [AuthController::class, 'activate']);
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Device
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('device')->group(function () {
+        Route::post('/', [DeviceController::class, 'create'])
+            ->withoutMiddleware(['auth:sanctum']);
+
+        Route::put('/{id}', [DeviceController::class, 'update']);
+    });
 
     /*
     |--------------------------------------------------------------------------

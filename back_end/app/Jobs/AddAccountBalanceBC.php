@@ -11,6 +11,8 @@ use App\Models\Transaction;
 use App\Models\BankAccount;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
+use App\Http\Services\NotificationService;
+use App\Models\Notification;
 
 class AddAccountBalanceBC implements ShouldQueue
 {
@@ -73,5 +75,22 @@ class AddAccountBalanceBC implements ShouldQueue
         $transaction->save();
 
         $bankAccount->increment('amount', $transaction->amount);
+
+        $this->notiReceiver($transaction);
+    }
+
+    private function notiReceiver($transaction) {
+        $toAccount = $transaction->toAccount;
+        $user = $toAccount->user;
+        $noti = Notification::create([
+            'user_id' => $toAccount->user_id,
+            'title' => 'Giao dịch tới',
+            'body' => "Tài khoản {$toAccount->account_number} của bạn vừa được cộng thêm {$transaction->amount}"
+        ]);
+        $notificationService = new NotificationService();
+        $notificationService->sendNotificationToAllUserDevice($user,  [
+            'title' => $noti->title,
+            'body' => $noti->body,
+        ],);
     }
 }

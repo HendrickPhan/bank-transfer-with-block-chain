@@ -6,7 +6,6 @@ import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
-import './../Drawer/drawer.dart';
 
 class HistoryListScreen extends StatefulWidget {
   @override

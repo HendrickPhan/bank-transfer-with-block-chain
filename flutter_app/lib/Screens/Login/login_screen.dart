@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:app/BLoC/login_bloc.dart';
-import 'package:app/Models/user_model.dart';
 import 'package:app/Networking/api_responses.dart';
-import 'package:app/Widget/Loading/loading_widget.dart';
-import 'package:app/main.dart';
-import 'package:app/Screens/Register/register_screen.dart';
 import 'package:app/Animation/FadeAnimation.dart';
+// ----- bloc
+import 'package:app/BLoC/auth_bloc.dart';
+import 'package:app/BLoC/device_bloc.dart';
+// ----- model
+import 'package:app/Models/auth_model.dart';
+// ----- widgets
+import 'package:app/Widget/Loading/loading_widget.dart';
+// ----- screens
+import 'package:app/Screens/Home/home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
+  static const String route = "login";
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
@@ -18,36 +23,43 @@ class _LoginScreenState extends State<LoginScreen> {
   final phoneNumberController = TextEditingController();
   final passwordController = TextEditingController();
 
-  LoginBloc _bloc;
+  AuthBloc _authBloc;
+  DeviceBloc _deviceBloc;
 
   @override
   void initState() {
     super.initState();
-    _bloc = new LoginBloc();
+    _authBloc = new AuthBloc();
+    _deviceBloc = new DeviceBloc();
+    _authBloc.checkLoggedIn();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
-        body: StreamBuilder<ApiResponse<String>>(
-          stream: _bloc.loginStream,
+        body: StreamBuilder<ApiResponse<AuthModel>>(
+          stream: _authBloc.authStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
                 case Status.LOADING:
                   return LoadingWidget(loadingMessage: snapshot.data.message);
                 case Status.COMPLETED:
-                  Future.delayed(
-                    Duration.zero,
-                    () => {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Main()),
-                      )
-                    },
-                  );
-                  return Container();
+                  if (snapshot.data.data.loggedIn) {
+                    _deviceBloc.updateUser();
+                    Future.delayed(
+                      Duration.zero,
+                      () => {
+                        Navigator.pushReplacementNamed(
+                          context,
+                          HomeScreen.route,
+                        )
+                      },
+                    );
+                    return Container();
+                  }
+                  break;
                 case Status.ERROR:
                   Future.delayed(
                     Duration.zero,
@@ -58,7 +70,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           title: new Text("Error"),
                           content: new Text((snapshot.data.message.toString() ==
                                   '"Unauthorized"')
-                              ? "Sai username hoặc password"
+                              ? "Wrong Info"
                               : snapshot.data.message),
                           actions: [
                             FlatButton(
@@ -144,7 +156,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 margin: EdgeInsets.only(top: 50),
                                 child: Center(
                                   child: Text(
-                                    "Đăng nhập",
+                                    "Login",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 40,
@@ -264,7 +276,7 @@ class _LoginScreenState extends State<LoginScreen> {
     if (_formKey.currentState.validate()) {
       String phoneNumber = phoneNumberController.text;
       String password = passwordController.text;
-      _bloc.login(phoneNumber: phoneNumber, password: password);
+      _authBloc.login(phoneNumber: phoneNumber, password: password);
     }
   }
 }

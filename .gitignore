@@ -1,3 +1,4 @@
 back_end/deployment/mysql/db
 eth_chain/node_1/bc_node/data
 node_modules/
+/flutter_app/build/

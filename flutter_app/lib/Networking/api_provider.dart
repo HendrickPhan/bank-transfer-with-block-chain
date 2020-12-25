@@ -34,7 +34,6 @@ class ApiProvider {
         customBase == null ? _baseUrl + url : customBase + url,
         headers: headers,
       );
-      print(_baseUrl + url);
       responseJson = _response(response);
     } on SocketException {
       throw FetchDataException('Không có kết nối Internet');
@@ -44,7 +43,7 @@ class ApiProvider {
 
   Future<dynamic> post(
       {String url, Map<String, dynamic> data, String customBase}) async {
-    if (_token != null) {
+    if (_token == null) {
       await getToken();
     }
     headers = {
@@ -64,7 +63,34 @@ class ApiProvider {
       );
       responseJson = _response(response);
     } on SocketException {
-      throw FetchDataException('Không có kết nối Internet');
+      throw FetchDataException('No Internet');
+    }
+    return responseJson;
+  }
+
+  Future<dynamic> put(
+      {String url, Map<String, dynamic> data, String customBase}) async {
+    if (_token == null) {
+      await getToken();
+    }
+    headers = {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    };
+    if (_token != null) {
+      headers["Authorization"] = "Bearer " + _token;
+    }
+    var responseJson;
+
+    try {
+      final response = await http.put(
+        customBase == null ? _baseUrl + url : customBase + url,
+        headers: headers,
+        body: jsonEncode(data),
+      );
+      responseJson = _response(response);
+    } on SocketException {
+      throw FetchDataException('No Internet');
     }
     return responseJson;
   }

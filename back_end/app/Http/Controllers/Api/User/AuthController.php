@@ -23,11 +23,11 @@ class AuthController extends Controller
         $user = User::where('phone_number', $data['phone_number'])
             ->first();
         if(!$user) {
-            return $this->responseError('Không tìm thấy số điện thoại');
+            return $this->responseError('Phone not found');
         }
 
         if(!Hash::check($data['password'], $user->password)) {
-            return $this->responseError('Sai mật khẩu');
+            return $this->responseError('Wrong info');
         }
         
         $token = $user->createToken('login-token');

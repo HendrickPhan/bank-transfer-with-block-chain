@@ -6,23 +6,23 @@ import 'package:flutter/material.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class GenerateQRScreen extends StatefulWidget {
-  final String address;
+  static const String route = "generate_qr";
 
-  GenerateQRScreen({Key key, @required this.address}) : super(key: key);
+  final String accountNumber;
+
+  GenerateQRScreen({Key key, @required this.accountNumber}) : super(key: key);
 
   @override
-  _GenerateQRScreenState createState() => _GenerateQRScreenState(address);
+  GenerateQRScreenState createState() => GenerateQRScreenState();
 }
 
-class _GenerateQRScreenState extends State<GenerateQRScreen> {
+class GenerateQRScreenState extends State<GenerateQRScreen> {
   Uint8List bytes = Uint8List(0);
-  final String address;
-  _GenerateQRScreenState(this.address);
 
   @override
   initState() {
     super.initState();
-    _generateBarCode(address);
+    _generateBarCode(widget.accountNumber);
   }
 
   @override
@@ -30,7 +30,7 @@ class _GenerateQRScreenState extends State<GenerateQRScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Mã QR'),
+          title: Text('QR code of: ' + widget.accountNumber),
           leading: BackButton(
             color: Colors.white,
             onPressed: () => Navigator.of(context).pop(),

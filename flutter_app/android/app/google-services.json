@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "985362558856",
+    "project_id": "bc-bank-transfer",
+    "storage_bucket": "bc-bank-transfer.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:985362558856:android:278807fb84f0f69145d43d",
+        "android_client_info": {
+          "package_name": "com.example.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "985362558856-edbuab6h4gcjq8j08a0cg58261f6oll3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOxUrCjiZV7zCRdW6rBFaHkfkPryCubCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "985362558856-edbuab6h4gcjq8j08a0cg58261f6oll3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

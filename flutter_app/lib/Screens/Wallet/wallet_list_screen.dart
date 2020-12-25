@@ -4,7 +4,7 @@ import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/wallet_list_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
-import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
+import 'package:app/Screens/GenerateQR/scan_qr_screen.dart';
 import 'package:flutter/services.dart';
 
 class WalletListScreen extends StatefulWidget {

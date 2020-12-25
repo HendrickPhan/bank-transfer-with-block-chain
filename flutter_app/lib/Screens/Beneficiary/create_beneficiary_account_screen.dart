@@ -189,13 +189,13 @@ class CreateTransaction extends StatelessWidget {
                                           ])),
                                       child: Center(
                                         child: FlatButton(
-                                            //onPressed: loginBtnClick,
+                                            onPressed: () {},
                                             child: Text(
-                                          "Create",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.bold),
-                                        )),
+                                              "Create",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.bold),
+                                            )),
                                       ),
                                     ),
                                   ],

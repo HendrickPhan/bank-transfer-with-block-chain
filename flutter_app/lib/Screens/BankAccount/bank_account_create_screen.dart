@@ -165,13 +165,13 @@ class _BankAccountCreate extends State<BankAccountCreateScreen> {
                                       ])),
                                   child: Center(
                                     child: FlatButton(
-                                        //onPressed: loginBtnClick,
+                                        onPressed: () {},
                                         child: Text(
-                                      "Create",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                                          "Create",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold),
+                                        )),
                                   ),
                                 ),
                                 Container(

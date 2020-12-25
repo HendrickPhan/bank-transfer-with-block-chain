@@ -11,6 +11,9 @@ use Illuminate\Queue\SerializesModels;
 use GuzzleHttp\Client;
 use Carbon\Carbon;
 use Illuminate\Encryption\Encrypter;
+use App\Models\Notification;
+use App\Http\Services\NotificationService;
+use App\Models\BankAccount;
 
 class CreateTransactionOnBC implements ShouldQueue
 {
@@ -74,7 +77,27 @@ class CreateTransactionOnBC implements ShouldQueue
         $transaction->save();
 
         if($transaction->type == Transaction::TYPE_TRANSFER)  {
-            // TODO: add amount to to bank account
+            // add amount to to bank account
+            $toAccount = $transaction->toAccount;
+            $toAccount->increment('amount', $transaction->amount);
         }
+
+        // noti
+        $this->notiReceiver($transaction);
+    }
+
+    private function notiReceiver($transaction) {
+        $toAccount = $transaction->toAccount;
+        $user = $toAccount->user;
+        $noti = Notification::create([
+            'user_id' => $toAccount->user_id,
+            'title' => 'Giao dịch tới',
+            'body' => "Tài khoản {$toAccount->account_number} của bạn vừa được cộng thêm {$transaction->amount}"
+        ]);
+        $notificationService = new NotificationService();
+        $notificationService->sendNotificationToAllUserDevice($user,  [
+            'title' => $noti->title,
+            'body' => $noti->body,
+        ],);
     }
 }

@@ -9,6 +9,8 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use GuzzleHttp\Client;
+use App\Http\Services\NotificationService;
+use App\Models\Notification;
 
 class CreateBankAccountOnBC implements ShouldQueue
 {
@@ -74,5 +76,21 @@ class CreateBankAccountOnBC implements ShouldQueue
 
         $bankAccount->status = BankAccount::STATUS_ACTIVATED;
         $bankAccount->save();
+
+        $this->noti($bankAccount);
+    }
+
+    private function noti($bankAccount) {
+        $user = $bankAccount->user;
+        $noti = Notification::create([
+            'user_id' => $user->id,
+            'title' => 'Tài khoản đã được hệ thống xác nhận',
+            'body' => "Tài khoản số {$bankAccount->account_number} đã được xác nhận trên hệ thống BC"
+        ]);
+        $notificationService = new NotificationService();
+        $notificationService->sendNotificationToAllUserDevice($user,  [
+            'title' => $noti->title,
+            'body' => $noti->body,
+        ],);
     }
 }

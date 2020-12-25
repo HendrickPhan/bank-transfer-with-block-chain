@@ -1,108 +1,79 @@
 import 'package:flutter/material.dart';
-import 'BLoC/check_logged_in_bloc.dart';
+
+// ----- bloc
+import 'BLoC/device_bloc.dart';
+// ----- screen
 import 'Screens/Login/login_screen.dart';
-import 'Screens/Profile/profile_screen.dart';
-import 'Screens/History/history_list_screen.dart';
-import 'Screens/DailyMonth/daily_month_screen.dart';
-import 'Screens/CreateTransaction/create_transaction_screen.dart';
-import 'Screens/BankAccount/bank_account_list_screen.dart';
-import 'Screens/BankAccount/bank_account_create_screen.dart';
-import 'Screens/CreateTransaction/create_transaction_screen.dart';
-import 'Screens/Beneficiary/beneficiary_account_list_screen.dart';
-import 'Screens/Beneficiary/create_beneficiary_account_screen.dart';
-import 'Screens/News/news_screen.dart';
-import 'Screens/News/news_detail_screen.dart';
-import 'Screens/News/news_detail_screen.dart';
+import 'Screens/Home/home_screen.dart';
+import 'Screens/GenerateQR/generate_qr_screen.dart';
 
-void main() {
-  runApp(MyApp());
-}
+import 'package:firebase_messaging/firebase_messaging.dart';
 
-class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+void main() => runApp(MyApp());
+
+class MyApp extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Welcome to flutter app  ',
-      home: Center(
-        child: Main(index: 0),
-      ),
-    );
-  }
+  _MyAppState createState() => _MyAppState();
 }
 
-class Main extends StatefulWidget {
-  final index;
-  Main({this.index});
-  @override
-  _MainState createState() => _MainState(a: index);
-}
-
-class _MainState extends State<Main> {
-  final a;
-  _MainState({this.a});
-
-  CheckLoggedInBloc _bloc;
-  int _currentIndex;
-  final List<Widget> _children = [
-    BankAccountListScreen(),
-    CreateTransactionScreen(),
-    ProfileScreen(),
-  ];
+class _MyAppState extends State<MyApp> {
+  DeviceBloc _deviceBloc;
+  final FirebaseMessaging _firebaseMessaging = FirebaseMessaging();
 
   @override
   void initState() {
     super.initState();
-    _bloc = CheckLoggedInBloc();
-    _bloc.checkLogged();
-    if (a != null) {
-      _currentIndex = a;
-    } else
-      _currentIndex = 0;
-  }
+    //
+    _deviceBloc = DeviceBloc();
 
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
+    // firebase
+    _firebaseMessaging.configure(
+      onMessage: (Map<String, dynamic> message) async {
+        print("onMessage: $message");
+        // _showItemDialog(message);
+      },
+      onLaunch: (Map<String, dynamic> message) async {
+        print("onLaunch: $message");
+        // _navigateToItemDetail(message);
+      },
+      onResume: (Map<String, dynamic> message) async {
+        print("onResume: $message");
+        // _navigateToItemDetail(message);
+      },
+    );
+    _firebaseMessaging.requestNotificationPermissions(
+        const IosNotificationSettings(
+            sound: true, badge: true, alert: true, provisional: true));
+    _firebaseMessaging.onIosSettingsRegistered
+        .listen((IosNotificationSettings settings) {
+      print("Settings registered: $settings");
+    });
+    _firebaseMessaging.getToken().then((String token) {
+      assert(token != null);
+      // init
+      _deviceBloc.init(token: token);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<bool>(
-      stream: _bloc.checkLoggedInStream,
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          if (snapshot.data) {
-            return Container(
-              child: Scaffold(
-                body: _children[_currentIndex],
-                bottomNavigationBar: BottomNavigationBar(
-                  type: BottomNavigationBarType.fixed,
-                  items: const <BottomNavigationBarItem>[
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.account_balance_wallet),
-                      title: Text('Bank Accounts'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.attach_money),
-                      title: Text('Chuyển tiền'),
-                    ),
-                    BottomNavigationBarItem(
-                      icon: Icon(Icons.account_circle),
-                      title: Text('Tài khoản'),
-                    ),
-                  ],
-                  currentIndex: _currentIndex != null ? _currentIndex : 0,
-                  onTap: onTabTapped,
-                  selectedItemColor: Colors.blue,
-                  unselectedItemColor: Colors.blueGrey,
-                ),
-              ),
-            );
-          }
+    return MaterialApp(
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case LoginScreen.route:
+            return MaterialPageRoute(builder: (_) => LoginScreen());
+            break;
+          case HomeScreen.route:
+            return MaterialPageRoute(builder: (_) => HomeScreen());
+            break;
+          case GenerateQRScreen.route:
+            String accountNumber = settings.arguments;
+            return MaterialPageRoute(
+                builder: (_) => GenerateQRScreen(accountNumber: accountNumber));
+            break;
+          default:
+            return MaterialPageRoute(builder: (_) => LoginScreen());
         }
-        return LoginScreen();
       },
     );
   }
