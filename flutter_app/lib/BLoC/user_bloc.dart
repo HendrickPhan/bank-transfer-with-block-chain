@@ -1,10 +1,9 @@
 import 'package:app/Models/user_model.dart';
 import 'package:app/Networking/api_responses.dart';
-import 'package:app/Models/paginate_model.dart';
 import 'package:app/Repositories/user_repository.dart';
-import 'package:flutter/cupertino.dart';
 import 'dart:async';
-import '../bloc.dart';
+import 'bloc.dart';
+import 'package:app/Ultilities/log.dart';
 
 class UserBloc implements Bloc {
   UserRepository _userRepository;
@@ -27,7 +26,7 @@ class UserBloc implements Bloc {
       userSink.add(ApiResponse.completed(userDetailStream));
     } catch (e) {
       userSink.add(ApiResponse.error(e.toString()));
-      print(e);
+      Log.error(e.toString())
     }
   }
 

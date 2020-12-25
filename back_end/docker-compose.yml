@@ -35,6 +35,7 @@ services:
         volumes:
             - ./:/var/www
             - ./deployment/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+            - ./deployment/supervisor/laravel-worker.conf:/etc/supervisor/conf.d/laravel-worker.conf
         networks:
             - app-network
 

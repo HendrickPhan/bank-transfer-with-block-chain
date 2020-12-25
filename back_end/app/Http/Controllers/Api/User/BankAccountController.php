@@ -16,6 +16,7 @@ class BankAccountController extends Controller
     {
         $limit = $request->get('limit', 10);
         $bankAccounts = BankAccount::where('user_id', $request->user()->id)
+            ->where('status', BankAccount::STATUS_ACTIVATED)
             ->orderBy('id', 'desc')
             ->paginate($limit);
 
