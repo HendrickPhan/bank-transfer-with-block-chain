@@ -12,7 +12,7 @@ class UserBloc implements Bloc {
 
   StreamSink<ApiResponse<UserModel>> get userSink => _userController.sink;
 
-  Stream<ApiResponse<UserModel>> get userDetailStream => _userController.stream;
+  Stream<ApiResponse<UserModel>> get userStream => _userController.stream;
 
   UserBloc() {
     _userController = StreamController<ApiResponse<UserModel>>();
@@ -26,7 +26,7 @@ class UserBloc implements Bloc {
       userSink.add(ApiResponse.completed(userDetailStream));
     } catch (e) {
       userSink.add(ApiResponse.error(e.toString()));
-      Log.error(e.toString())
+      Log.error(e.toString());
     }
   }
 

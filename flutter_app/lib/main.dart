@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 
 // ----- bloc
 import 'BLoC/device_bloc.dart';
+import 'BLoC/activate_account_bloc.dart';
+import 'BLoC/bloc_provider.dart';
+
 // ----- screen
 import 'Screens/Login/login_screen.dart';
 import 'Screens/Home/home_screen.dart';
 import 'Screens/GenerateQR/generate_qr_screen.dart';
+import 'Screens/ActivateAccount/activate_account_screen.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(BlocProvider(bloc: DeviceBloc(), child: MyApp()));
 
 class MyApp extends StatefulWidget {
   @override
@@ -24,7 +28,7 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
     //
-    _deviceBloc = DeviceBloc();
+    _deviceBloc = BlocProvider.of(context);
 
     // firebase
     _firebaseMessaging.configure(
@@ -65,6 +69,14 @@ class _MyAppState extends State<MyApp> {
             break;
           case HomeScreen.route:
             return MaterialPageRoute(builder: (_) => HomeScreen());
+            break;
+          case ActivateAccountScreen.route:
+            return MaterialPageRoute(
+              builder: (_) => BlocProvider(
+                bloc: ActivateAccountBloc(),
+                child: ActivateAccountScreen(),
+              ),
+            );
             break;
           case GenerateQRScreen.route:
             String accountNumber = settings.arguments;

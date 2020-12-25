@@ -2,9 +2,21 @@ import 'package:flutter/material.dart';
 // ----- screen
 import 'package:app/Screens/BankAccount/bank_account_list_screen.dart';
 // BankAccountListScreen
+// ----- bloc
+import 'package:app/BLoC/user_bloc.dart';
+
 // ----- widget
 import 'package:app/Widget/drawer_widget.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
+// ----- screen
+import 'package:app/Screens/ActivateAccount/activate_account_screen.dart';
+
+import 'package:app/Networking/api_responses.dart';
+import 'package:app/Models/user_model.dart';
+import 'package:app/Widget/Error/err_widget.dart';
+import 'package:app/Widget/Loading/loading_widget.dart';
+
+import 'package:app/Ultilities/log.dart';
 
 class ScreenWithTitle {
   final Widget screen;
@@ -25,6 +37,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   String title = "Home";
   int _selectedIndex = 0;
+  UserBloc _bloc;
 
   void _onItemTapped(int index) {
     if (index == 1) {
@@ -50,6 +63,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
+    _bloc = UserBloc();
+    _bloc.fetchUserDetail();
     if (widget.initIndex != 0) {
       setState(() {
         _selectedIndex = widget.initIndex;
@@ -62,8 +77,36 @@ class _HomeScreenState extends State<HomeScreen> {
     ScreenWithTitle currentScreen = _widgetOptions.elementAt(_selectedIndex);
     return Scaffold(
       appBar: AppBar(title: Text(currentScreen.title)),
-      body: Container(
-        child: currentScreen.screen,
+      body: StreamBuilder<ApiResponse<UserModel>>(
+        stream: _bloc.userStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return LoadingWidget(loadingMessage: snapshot.data.message);
+              case Status.COMPLETED:
+                UserModel userModel = snapshot.data.data;
+                if (userModel.address == null) {
+                  Log.debug("ok");
+                  Future.delayed(Duration.zero, () {
+                    Navigator.pushReplacementNamed(
+                      context,
+                      ActivateAccountScreen.route,
+                    );
+                  });
+                }
+                break;
+              case Status.ERROR:
+                return ErrWidget(
+                  errorMessage: snapshot.data.message,
+                  onRetryPressed: () => _bloc.fetchUserDetail(),
+                );
+            }
+          }
+          return Container(
+            child: currentScreen.screen,
+          );
+        },
       ),
       drawer: DrawerWidget(),
       bottomNavigationBar: BottomNavigationBar(

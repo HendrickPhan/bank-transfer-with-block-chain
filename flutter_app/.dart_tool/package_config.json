@@ -212,6 +212,12 @@
       "languageVersion": "2.7"
     },
     {
+      "name": "pin_code_fields",
+      "rootUri": "file:///home/hieuphan/development/flutter/.pub-cache/hosted/pub.dartlang.org/pin_code_fields-6.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.7"
+    },
+    {
       "name": "plugin_platform_interface",
       "rootUri": "file:///home/hieuphan/development/flutter/.pub-cache/hosted/pub.dartlang.org/plugin_platform_interface-1.0.3",
       "packageUri": "lib/",
@@ -302,7 +308,7 @@
       "languageVersion": "2.7"
     }
   ],
-  "generated": "2020-12-23T10:31:08.838247Z",
+  "generated": "2020-12-25T15:50:55.123460Z",
   "generator": "pub",
   "generatorVersion": "2.10.4"
 }
