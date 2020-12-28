@@ -28,7 +28,7 @@ class ActivateAccountBloc implements Bloc {
   }
 
   activate({String pinCode}) async {
-    activateAccountSink.add(ApiResponse.loading('Đang đăng nhập'));
+    activateAccountSink.add(ApiResponse.loading('Activating'));
     try {
       String response = await callApiActivate(pinCode: pinCode);
       activateAccountSink.add(ApiResponse.completed(true));

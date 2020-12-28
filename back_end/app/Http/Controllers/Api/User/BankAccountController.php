@@ -23,6 +23,15 @@ class BankAccountController extends Controller
         return $this->responseSuccess($bankAccounts);
     }
 
+    public function selectList(Request $request)
+    {
+        $bankAccounts = BankAccount::where('user_id', $request->user()->id)
+            ->where('status', BankAccount::STATUS_ACTIVATED)
+            ->where('type', BankAccount::TYPE_TRANSFER)
+            ->get();
+        return $this->responseSuccess($bankAccounts);
+    }
+
     public function detail(Request $request) {
         $bankAccount = BankAccount::where('user_id', $request->user()->id)
             ->where('id', $request->id)

@@ -1,6 +1,4 @@
 import 'package:app/Networking/api_responses.dart';
-import 'package:app/Networking/api_provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:app/Models/device_model.dart';
 import 'package:app/Repositories/device_repository.dart';
 import 'dart:async';

@@ -10,6 +10,7 @@ import 'package:app/Widget/drawer_widget.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 // ----- screen
 import 'package:app/Screens/ActivateAccount/activate_account_screen.dart';
+import 'package:app/Screens/Transaction/select_create_transaction_screen.dart';
 
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/user_model.dart';
@@ -52,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static List<ScreenWithTitle> _widgetOptions = <ScreenWithTitle>[
     ScreenWithTitle(BankAccountListScreen(), "Bank Accounts"),
     ScreenWithTitle(Container(), "QR Scan"),
-    ScreenWithTitle(Container(), "News"),
+    ScreenWithTitle(SelectCreateTransactionScreen(), "Transaction"),
   ];
 
   Future _scan() async {
@@ -124,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
             label: 'QR Scan',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.notes),
-            label: 'News',
+            icon: Icon(Icons.money),
+            label: 'Transaction',
           ),
         ],
         currentIndex: _selectedIndex,

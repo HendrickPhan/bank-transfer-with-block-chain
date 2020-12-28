@@ -84,8 +84,8 @@ class CreateBankAccountOnBC implements ShouldQueue
         $user = $bankAccount->user;
         $noti = Notification::create([
             'user_id' => $user->id,
-            'title' => 'Tài khoản đã được hệ thống xác nhận',
-            'body' => "Tài khoản số {$bankAccount->account_number} đã được xác nhận trên hệ thống BC"
+            'title' => 'Bank account confirmed',
+            'body' => "Your account number {$bankAccount->account_number} had just confirmed"
         ]);
         $notificationService = new NotificationService();
         $notificationService->sendNotificationToAllUserDevice($user,  [

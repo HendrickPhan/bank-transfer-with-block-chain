@@ -84,8 +84,8 @@ class AddAccountBalanceBC implements ShouldQueue
         $user = $toAccount->user;
         $noti = Notification::create([
             'user_id' => $toAccount->user_id,
-            'title' => 'Giao dịch tới',
-            'body' => "Tài khoản {$toAccount->account_number} của bạn vừa được cộng thêm {$transaction->amount}"
+            'title' => 'Received',
+            'body' => "Your account number {$toAccount->account_number} had just received {$transaction->amount}"
         ]);
         $notificationService = new NotificationService();
         $notificationService->sendNotificationToAllUserDevice($user,  [

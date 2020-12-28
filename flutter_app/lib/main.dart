@@ -10,6 +10,8 @@ import 'Screens/Login/login_screen.dart';
 import 'Screens/Home/home_screen.dart';
 import 'Screens/GenerateQR/generate_qr_screen.dart';
 import 'Screens/ActivateAccount/activate_account_screen.dart';
+import 'Screens/Transaction/create_transfer_screen.dart';
+import 'Screens/Transaction/create_cash_out_screen.dart';
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -82,6 +84,12 @@ class _MyAppState extends State<MyApp> {
             String accountNumber = settings.arguments;
             return MaterialPageRoute(
                 builder: (_) => GenerateQRScreen(accountNumber: accountNumber));
+            break;
+          case CreateTransferScreen.route:
+            return MaterialPageRoute(builder: (_) => CreateTransferScreen());
+            break;
+          case CreateCashOutScreen.route:
+            return MaterialPageRoute(builder: (_) => CreateCashOutScreen());
             break;
           default:
             return MaterialPageRoute(builder: (_) => LoginScreen());

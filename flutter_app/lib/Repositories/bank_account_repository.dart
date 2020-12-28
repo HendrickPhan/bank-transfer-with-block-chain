@@ -16,6 +16,17 @@ class BankAccountRepository {
         (json) => new BankAccountModel.fromJson(json), response);
   }
 
+  Future<List<BankAccountModel>> fetchBankAccountSelectListData() async {
+    List<BankAccountModel> selectList = [];
+    final response = await _provider.get(url: "bank-account/selections");
+
+    for (final e in response) {
+      selectList.add(BankAccountModel.fromJson(e));
+    }
+
+    return selectList;
+  }
+
   Future<BankAccountModel> fetchBankAccountDetail({int id}) async {
     final response = await _provider.get(url: "bank-account/" + id.toString());
     return BankAccountModel.fromJson(response);
