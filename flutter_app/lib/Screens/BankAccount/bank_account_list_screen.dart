@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:app/Models/bank_account_model.dart';
+import 'package:flutter/material.dart';
 import 'package:app/BLoC/BankAccount/bank_account_list_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
@@ -100,12 +100,21 @@ class BankAccountList extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+            Colors.white,
+            Color(0xFF4E54C8),
+          ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              tileMode: TileMode.clamp)),
       height: size.height,
       child: new ListView.builder(
         controller: controller,
         itemBuilder: (context, index) {
           return Container(
-            height: 150,
+            height: 100,
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.white70, width: 1),
@@ -124,29 +133,31 @@ class BankAccountList extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Center(
+                      child: IconButton(
+                        icon: Icon(Icons.account_balance),
+                        color: Colors.blueAccent,
+                        onPressed: () {
+                          // Navigator.pushNamed(
+                          //   context,
+                          //   GenerateQRScreen.route,
+                          //   arguments:
+                          //       bankAccountList.data[index].accountNumber,
+                          // );
+                        },
+                      ),
+                    ),
                     Padding(
-                        padding: EdgeInsets.only(top: 20, left: 20),
+                        padding: EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
                               "A.No:",
                               style: TextStyle(
-                                //fontStyle: FontStyle.italic,
                                 fontSize: 18,
                                 color: Colors.black,
-                                //fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              "Type:",
-                              style: TextStyle(
-                                //fontStyle: FontStyle.italic,
-                                fontSize: 12, color: Colors.black,
-                                //fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             SizedBox(
@@ -155,9 +166,21 @@ class BankAccountList extends StatelessWidget {
                             Text(
                               "Amount:",
                               style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                //fontWeight: FontWeight.w700,
+                                //letterSpacing: 2.0
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
+                              "Type:",
+                              style: TextStyle(
                                 //fontStyle: FontStyle.italic,
-                                fontSize: 12, color: Colors.black,
-                                fontWeight: FontWeight.w900,
+                                fontSize: 12, color: Colors.grey,
+                                //fontWeight: FontWeight.w900,
                               ),
                             ),
                             SizedBox(
@@ -166,7 +189,7 @@ class BankAccountList extends StatelessWidget {
                           ],
                         )),
                     Padding(
-                        padding: EdgeInsets.only(top: 20),
+                        padding: EdgeInsets.only(top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
@@ -176,7 +199,7 @@ class BankAccountList extends StatelessWidget {
                                 //fontStyle: FontStyle.italic,
                                 fontSize: 18,
                                 color: Colors.black,
-                                //fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w700,
                               ),
                             ),
                             SizedBox(
@@ -189,29 +212,29 @@ class BankAccountList extends StatelessWidget {
                                 style: TextStyle(
                                   //fontStyle: FontStyle.italic,
                                   fontSize: 12,
-                                  color: Colors.black,
+                                  color: Colors.grey,
                                   //fontWeight: FontWeight.w900,
                                 ),
                               ),
+                            Text(
+                              bankAccountList.data[index].amount.toString() +
+                                  'VND',
+                              style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey,
+                                  //fontWeight: FontWeight.w700,
+                                  letterSpacing: 2.0),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             Text(
                               bankAccountList.data[index].type,
                               style: TextStyle(
                                 //fontStyle: FontStyle.italic,
                                 fontSize: 12,
-                                color: Colors.black,
+                                color: Colors.grey,
                                 //fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(
-                              height: 2,
-                            ),
-                            Text(
-                              bankAccountList.data[index].amount.toString() +
-                                  'VND',
-                              style: TextStyle(
-                                //fontStyle: FontStyle.italic,
-                                fontSize: 12, color: Colors.black,
-                                fontWeight: FontWeight.w900,
                               ),
                             ),
                             SizedBox(
@@ -240,7 +263,7 @@ class BankAccountList extends StatelessWidget {
                 ),
               ),
             ),
-            color: Colors.white,
+            //color: Colors.white,
           );
         },
         itemCount: bankAccountList.data.length,

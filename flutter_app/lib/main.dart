@@ -12,8 +12,10 @@ import 'Screens/GenerateQR/generate_qr_screen.dart';
 import 'Screens/ActivateAccount/activate_account_screen.dart';
 import 'Screens/Transaction/create_transfer_screen.dart';
 import 'Screens/Transaction/create_cash_out_screen.dart';
-
+import 'package:app/Screens/Profile/profile_screen.dart';
+import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:app/Widget/Transaction/transaction_list_widget.dart';
 
 void main() => runApp(BlocProvider(bloc: DeviceBloc(), child: MyApp()));
 
@@ -91,6 +93,15 @@ class _MyAppState extends State<MyApp> {
           case CreateCashOutScreen.route:
             return MaterialPageRoute(builder: (_) => CreateCashOutScreen());
             break;
+          case ProfileScreen.route:
+            return MaterialPageRoute(builder: (_) => ProfileScreen());
+            break;
+          case TransactionListScreen.route:
+            return MaterialPageRoute(builder: (_) => TransactionListScreen());
+            break;
+          // case TransactionWidget.route:
+          //   return MaterialPageRoute(builder: (_) => TransactionWidget());
+          //   break;
           default:
             return MaterialPageRoute(builder: (_) => LoginScreen());
         }

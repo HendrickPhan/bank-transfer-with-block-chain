@@ -89,12 +89,17 @@ Route::group([
     | Transaction
     |--------------------------------------------------------------------------
     */
-    Route::group(['prefix' => 'transaction', 'middleware' => ['checkPinCode']], function () {
-        Route::get('/{account_number}', [TransactionController::class, 'list']);
+    Route::group(['prefix' => 'transaction'], function () {
+        Route::get('/', [TransactionController::class, 'list']);
         
-        Route::post('/cash-out', [TransactionController::class, 'createCashOut']);
+        Route::get('/{account_number}', [TransactionController::class, 'listByAccountNumber']);
+        
+        Route::post('/cash-out', [TransactionController::class, 'createCashOut'])
+            ->middleware('checkPinCode');
     
-        Route::post('/transfer', [TransactionController::class, 'createTransfer']);
+        Route::post('/transfer', [TransactionController::class, 'createTransfer'])
+            ->middleware('checkPinCode');
+
     });
 
     /*

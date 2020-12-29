@@ -2,10 +2,10 @@
 import 'package:flutter/material.dart';
 // ----- screens
 import 'package:app/Screens/Login/login_screen.dart';
-// import 'package:app/Screens/History/history_list_screen.dart';
+import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 // import 'package:app/Screens/CreateTransaction/create_transaction_screen.dart';
 import 'package:app/Screens/Home/home_screen.dart';
-
+import 'package:app/Screens/Profile/profile_screen.dart';
 import 'package:app/BLoC/auth_bloc.dart';
 
 class DrawerWidget extends StatefulWidget {
@@ -66,7 +66,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             onTap: () => {
               Navigator.pushNamed(
                 context,
-                HomeScreen.route,
+                ProfileScreen.route,
               )
             },
           ),
@@ -96,7 +96,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             onTap: () => {
               Navigator.pushNamed(
                 context,
-                HomeScreen.route,
+                TransactionListScreen.route,
               )
             },
           ),

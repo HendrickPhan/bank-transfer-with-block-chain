@@ -18,16 +18,34 @@ class TransactionController extends Controller
     public function list(Request $request) {
         $user = $request->user();
         $limit = $request->input('limit', 10);
-        $bankAccount = BankAccount::where('user_id', $user->id)
-            ->where('account_number', $request->account_number)
-            ->first();        
-        if (!$bankAccount) {
-            return $this->responseError('Không tìm thấy tài khoản');
-        }
-        $transactions = $bankAccount->transactions()
-            ->paginate($limit);
+        $query = Transaction::whereHas('fromAccount', function($q) use ($user){
+            $q->where('user_id',  $user->id);
+        })
+            ->orWhereHas('toAccount', function($q) use ($user){
+                $q->where('user_id',  $user->id);
+            });
+
+        $transactions = $query->paginate($limit);
             
-        return $this->response($transactions);
+        return $this->responseSuccess($transactions);
+    }
+
+    public function listByAccountNumber(Request $request) {
+        $user = $request->user();
+        $limit = $request->input('limit', 10);
+        $query = Transaction::where( function($q) use ($user, $request) {
+            $q->whereHas('fromAccount', function($q) use ($user, $request){
+                $q->where('user_id',  $user->id);
+                $q->where('account_number',  $request->account_number);
+            })
+                ->orWhereHas('toAccount', function($q) use ($user, $request){
+                    $q->where('user_id',  $user->id);
+                    $q->where('account_number',  $request->account_number);
+                });
+        });
+        $transactions = $query->paginate($limit);
+
+        return $this->responseSuccess($transactions);
     }
 
     public function detail(Request $request) {

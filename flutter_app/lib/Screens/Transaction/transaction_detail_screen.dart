@@ -1,30 +1,30 @@
-import 'package:app/Models/bank_account_model.dart';
+import 'package:app/Models/transaction_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/BLoC/BankAccount/bank_account_detail_bloc.dart';
+import 'package:app/BLoC/Transaction/transaction_detail_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:flutter/services.dart';
 
-class BankAccountDetailScreen extends StatefulWidget {
+class TransactionDetailScreen extends StatefulWidget {
   final int id;
-  const BankAccountDetailScreen(this.id);
+  const TransactionDetailScreen(this.id);
   @override
   //BankAccountDetailScreen({Key key, @required this.id}) : super(key: key);
-  _BankAccountDetailScreenState createState() =>
-      _BankAccountDetailScreenState();
+  _TransactionDetailScreenState createState() =>
+      _TransactionDetailScreenState();
 }
 
-class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
-  BankAccountDetailBloc _bloc;
-  BankAccountModel bankAccountDetail;
+class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
+  TransactionDetailBloc _bloc;
+  TransactionModel transactionDetail;
 
   @override
   void initState() {
     super.initState();
-    _bloc = BankAccountDetailBloc();
-    _bloc.fetchBankAccountDetail(widget.id);
+    _bloc = TransactionDetailBloc();
+    _bloc.fetchTransactionData(widget.id);
   }
 
   @override
@@ -39,7 +39,7 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
       backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
-          stream: _bloc.bankAccountDetailStream,
+          stream: _bloc.transactionDetailStream,
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               switch (snapshot.data.status) {
@@ -47,9 +47,9 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
                   return LoadingWidget(loadingMessage: snapshot.data.message);
                   break;
                 case Status.COMPLETED:
-                  bankAccountDetail = snapshot.data.data;
-                  return BankAccountDetail(
-                      bankAccountDetail: bankAccountDetail);
+                  transactionDetail = snapshot.data.data;
+                  return TransactionDetail(
+                      transactionDetail: transactionDetail);
                   break;
                 case Status.ERROR:
                   return ErrWidget(
@@ -73,10 +73,10 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
   }
 }
 
-class BankAccountDetail extends StatelessWidget {
-  final BankAccountModel bankAccountDetail;
+class TransactionDetail extends StatelessWidget {
+  final TransactionModel transactionDetail;
 
-  const BankAccountDetail({Key key, this.bankAccountDetail}) : super(key: key);
+  const TransactionDetail({Key key, this.transactionDetail}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +169,7 @@ class BankAccountDetail extends StatelessWidget {
                                       height: 32,
                                     ),
                                     Text(
-                                      bankAccountDetail.accountNumber,
+                                      transactionDetail.fromAccount,
                                       style: TextStyle(
                                           fontSize: 20,
                                           color: Colors.white,
@@ -196,7 +196,7 @@ class BankAccountDetail extends StatelessWidget {
                                                   letterSpacing: 2.0),
                                             ),
                                             Text(
-                                              bankAccountDetail.amount
+                                              transactionDetail.toAccount
                                                   .toString(),
                                               style: TextStyle(
                                                   fontSize: 16,
@@ -219,7 +219,7 @@ class BankAccountDetail extends StatelessWidget {
                                                   letterSpacing: 2.0),
                                             ),
                                             Text(
-                                              bankAccountDetail.interestRate
+                                              transactionDetail.amount
                                                   .toString(),
                                               style: TextStyle(
                                                   fontSize: 16,
@@ -242,7 +242,7 @@ class BankAccountDetail extends StatelessWidget {
                                                   letterSpacing: 2.0),
                                             ),
                                             Text(
-                                              bankAccountDetail.type,
+                                              transactionDetail.createdAt,
                                               style: TextStyle(
                                                   fontSize: 16,
                                                   color: Colors.grey[100],
