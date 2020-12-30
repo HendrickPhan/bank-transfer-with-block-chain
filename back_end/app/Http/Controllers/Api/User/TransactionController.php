@@ -49,7 +49,8 @@ class TransactionController extends Controller
     }
 
     public function detail(Request $request) {
-
+        $transaction = Transaction::find($request->id);
+        return $this->responseSuccess($transaction);
     }
 
     public function createTransfer(CreateTransferRequest $request) {

@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'customIcons.dart';
 import 'dart:math';
-import './../Drawer/drawer.dart';
 import 'package:app/BLoC/News/news_list_bloc.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Models/news_model.dart';
-
-class NewsScreen extends StatefulWidget {
-  @override
-  _NewsScreen createState() => _NewsScreen();
-}
+import 'package:app/Networking/api_responses.dart';
+import 'package:app/Widget/Error/err_widget.dart';
+import 'package:app/Widget/Loading/loading_widget.dart';
 
 var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
@@ -20,12 +17,11 @@ List<String> images = [
   "assets/images/image_01.png",
 ];
 
-List<String> title = [
-  "Hounted Ground",
-  "Fallen In Love",
-  "The Dreaming Moon",
-  "Jack the Persian and the Black Castel",
-];
+class NewsScreen extends StatefulWidget {
+  static const String route = "news";
+  @override
+  _NewsScreen createState() => _NewsScreen();
+}
 
 class _NewsScreen extends State<NewsScreen> {
   var currentPage = images.length - 1.0;
@@ -35,202 +31,195 @@ class _NewsScreen extends State<NewsScreen> {
   bool allPageLoaded;
   PaginateModel<NewsModel> newsList;
   ScrollController controller = ScrollController();
+
+  void _scrollListener() {
+    if (controller.position.extentAfter < 500 &&
+        !allPageLoaded &&
+        !loadingNewPage) {
+      page++;
+      _bloc.fetchMoreNews(page);
+      loadingNewPage = true;
+    }
+  }
+
+  @override
+  void initState() {
+    loadingNewPage = false;
+    allPageLoaded = false;
+    page = 1;
+    super.initState();
+    _bloc = NewsListBloc();
+    _bloc.fetchNewsLists();
+    controller.addListener(_scrollListener);
+  }
+
   @override
   Widget build(BuildContext context) {
-    PageController controller = PageController(initialPage: images.length - 1);
-    controller.addListener(() {
-      setState(() {
-        currentPage = controller.page;
-      });
-    });
-
     return Scaffold(
-        appBar: AppBar(
-          title: Text('News'),
-        ),
-        drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [
-                Colors.white,
-                Color(0xFF2d3447),
-              ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                  tileMode: TileMode.clamp)),
-          child: Scaffold(
-            backgroundColor: Colors.transparent,
-            body: SingleChildScrollView(
-              child: Column(
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 12.0, right: 12.0, top: 30.0, bottom: 8.0),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 20.0),
-                    child: Row(
-                      children: <Widget>[
-                        Container(
-                          decoration: BoxDecoration(
-                            color: Color(0xFFff6e6e),
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
-                          child: Center(
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 22.0, vertical: 6.0),
-                              child: Text("Animated",
-                                  style: TextStyle(color: Colors.white)),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: 15.0,
-                        ),
-                        Text("25+ Stories",
-                            style: TextStyle(color: Colors.blueAccent))
-                      ],
-                    ),
-                  ),
-                  Stack(
-                    children: <Widget>[
-                      CardScrollWidget(currentPage),
-                      Positioned.fill(
-                        child: PageView.builder(
-                          itemCount: images.length,
-                          controller: controller,
-                          reverse: true,
-                          itemBuilder: (context, index) {
-                            return Container();
-                          },
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: <Widget>[
-                      Padding(
-                        padding: EdgeInsets.only(left: 18.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.asset("assets/image_02.jpg",
-                              width: 296.0, height: 222.0),
-                        ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        ));
+      appBar: AppBar(
+        title:
+            Text('News', style: TextStyle(color: Colors.white, fontSize: 20)),
+        elevation: 0.0,
+      ),
+      body: StreamBuilder<ApiResponse<PaginateModel>>(
+        stream: _bloc.newsListStream,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            switch (snapshot.data.status) {
+              case Status.LOADING:
+                return LoadingWidget(loadingMessage: snapshot.data.message);
+                break;
+              case Status.COMPLETED:
+                if (newsList == null) {
+                  newsList = snapshot.data.data;
+                } else {
+                  snapshot.data.data.data.forEach((element) {
+                    newsList.data.add(element);
+                  });
+                  allPageLoaded = snapshot.data.data.currentPage >=
+                      snapshot.data.data.lastPage;
+                  loadingNewPage = false;
+                }
+                return NewsList(
+                  newsList: newsList,
+                  controller: controller,
+                );
+                break;
+              case Status.ERROR:
+                return ErrWidget(
+                  errorMessage: snapshot.data.message,
+                  onRetryPressed: () => _bloc.fetchNewsLists(),
+                );
+                break;
+            }
+          }
+          return Container();
+        },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // _bloc.addBankAccount();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.lightBlue,
+      ),
+    );
   }
 }
 
-class CardScrollWidget extends StatelessWidget {
-  var currentPage;
-  var padding = 20.0;
-  var verticalInset = 20.0;
-
-  CardScrollWidget(this.currentPage);
-
+class NewsList extends StatelessWidget {
+  final PaginateModel<NewsModel> newsList;
+  final ScrollController controller;
+  const NewsList({Key key, this.newsList, this.controller}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return new AspectRatio(
-      aspectRatio: widgetAspectRatio,
-      child: LayoutBuilder(builder: (context, contraints) {
-        var width = contraints.maxWidth;
-        var height = contraints.maxHeight;
-
-        var safeWidth = width - 2 * padding;
-        var safeHeight = height - 2 * padding;
-
-        var heightOfPrimaryCard = safeHeight;
-        var widthOfPrimaryCard = heightOfPrimaryCard * cardAspectRatio;
-
-        var primaryCardLeft = safeWidth - widthOfPrimaryCard;
-        var horizontalInset = primaryCardLeft / 2;
-
-        List<Widget> cardList = new List();
-
-        for (var i = 0; i < images.length; i++) {
-          var delta = i - currentPage;
-          bool isOnRight = delta > 0;
-
-          var start = padding +
-              max(
-                  primaryCardLeft -
-                      horizontalInset * -delta * (isOnRight ? 15 : 1),
-                  0.0);
-
-          var cardItem = Positioned.directional(
-            top: padding + verticalInset * max(-delta, 0.0),
-            bottom: padding + verticalInset * max(-delta, 0.0),
-            start: start,
-            textDirection: TextDirection.rtl,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16.0),
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white, boxShadow: [
-                  BoxShadow(
-                      color: Colors.black12,
-                      offset: Offset(3.0, 6.0),
-                      blurRadius: 10.0)
-                ]),
-                child: AspectRatio(
-                  aspectRatio: cardAspectRatio,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      Image.asset(images[i], fit: BoxFit.cover),
-                      Align(
-                        alignment: Alignment.bottomLeft,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16.0, vertical: 8.0),
-                              child: Text(title[i],
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25.0,
-                                      fontFamily: "SF-Pro-Text-Regular")),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(
-                                  left: 12.0, bottom: 12.0),
-                              child: Container(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 22.0, vertical: 6.0),
-                                decoration: BoxDecoration(
-                                    color: Colors.blueAccent,
-                                    borderRadius: BorderRadius.circular(20.0)),
-                                child: Text("Read Later",
-                                    style: TextStyle(color: Colors.white)),
-                              ),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
+    final Size size = MediaQuery.of(context).size;
+    return Container(
+      decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+            Colors.white,
+            Color(0xFF4E54C8),
+          ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              tileMode: TileMode.clamp)),
+      height: size.height,
+      child: new ListView.builder(
+        controller: controller,
+        itemBuilder: (context, index) {
+          return Container(
+            height: 500,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Positioned(
+                  right: 40,
+                  top: 40,
+                  width: 80,
+                  height: 150,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        image: DecorationImage(
+                            image: AssetImage('assets/images/image_01.png'))),
                   ),
                 ),
-              ),
+                Card(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(color: Colors.white70, width: 1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  elevation: 5,
+                  child: InkWell(
+                    onTap: () => {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(
+                      //       builder: (context) => BankAccountDetailScreen(
+                      //           this.bankAccountList.data[index].id)),
+                      // )
+                    },
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Center(
+                          child: IconButton(
+                            icon: Icon(Icons.new_releases),
+                            color: Colors.blueAccent,
+                            onPressed: () {
+                              // Navigator.pushNamed(
+                              //   context,
+                              //   GenerateQRScreen.route,
+                              //   arguments:
+                              //       bankAccountList.data[index].accountNumber,
+                              // );
+                            },
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Text(
+                                  newsList.data[index].title,
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                              ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Center(
+                            child: IconButton(
+                              icon: Icon(Icons.read_more),
+                              color: Colors.blueAccent,
+                              onPressed: () {
+                                // Navigator.pushNamed(
+                                //   context,
+                                //   GenerateQRScreen.route,
+                                //   arguments:
+                                //       bankAccountList.data[index].accountNumber,
+                                // );
+                              },
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
             ),
           );
-          cardList.add(cardItem);
-        }
-        return Stack(
-          children: cardList,
-        );
-      }),
+        },
+        itemCount: newsList.data.length,
+      ),
     );
   }
 }

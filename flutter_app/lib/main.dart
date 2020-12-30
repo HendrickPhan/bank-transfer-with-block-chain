@@ -14,6 +14,8 @@ import 'Screens/Transaction/create_transfer_screen.dart';
 import 'Screens/Transaction/create_cash_out_screen.dart';
 import 'package:app/Screens/Profile/profile_screen.dart';
 import 'package:app/Screens/Transaction/transaction_list_screen.dart';
+import 'Screens/News/news_screen.dart';
+import 'package:app/Screens/Transaction/transaction_detail_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:app/Widget/Transaction/transaction_list_widget.dart';
 
@@ -66,6 +68,12 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        brightness: Brightness.light,
+        primaryColor: Colors.pink,
+        accentColor: Colors.pinkAccent,
+      ),
       onGenerateRoute: (settings) {
         switch (settings.name) {
           case LoginScreen.route:
@@ -99,9 +107,9 @@ class _MyAppState extends State<MyApp> {
           case TransactionListScreen.route:
             return MaterialPageRoute(builder: (_) => TransactionListScreen());
             break;
-          // case TransactionWidget.route:
-          //   return MaterialPageRoute(builder: (_) => TransactionWidget());
-          //   break;
+          case NewsScreen.route:
+            return MaterialPageRoute(builder: (_) => NewsScreen());
+            break;
           default:
             return MaterialPageRoute(builder: (_) => LoginScreen());
         }

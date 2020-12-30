@@ -114,190 +114,177 @@ class TransactionList extends StatelessWidget {
         child: new ListView.builder(
           controller: controller,
           itemBuilder: (context, index) {
-            return Container(
-              height: 100,
-              child: Card(
-                shape: RoundedRectangleBorder(
-                  side: BorderSide(color: Colors.white70, width: 1),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                elevation: 5,
-                child: InkWell(
-                  onTap: () => {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => TransactionDetailScreen(
-                              this.transactionList.data[index].id)),
-                    )
-                  },
-                  child: Column(children: <Widget>[
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Card(
-                      shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.white70, width: 1),
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      elevation: 5,
-                      child: Container(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Center(
-                              child: IconButton(
-                                icon: Icon(Icons.account_balance),
-                                color: Colors.blueAccent,
-                                onPressed: () {},
-                              ),
-                            ),
-                            Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "From:",
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    Text(
-                                      "To:",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                        //fontWeight: FontWeight.w700,
-                                        //letterSpacing: 2.0
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "Amount:",
-                                      style: TextStyle(
-                                        //fontStyle: FontStyle.italic,
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                        //fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      "Date:",
-                                      style: TextStyle(
-                                        //fontStyle: FontStyle.italic,
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                        //fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                                padding: EdgeInsets.only(top: 10),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      transactionList.data[index].fromAccount
-                                          .toString(),
-                                      style: TextStyle(
-                                        //fontStyle: FontStyle.italic,
-                                        fontSize: 18,
-                                        color: Colors.black,
-                                        fontWeight: FontWeight.w700,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 2,
-                                    ),
-                                    if (transactionList.data[index].toAccount
-                                            .toString() ==
-                                        '1')
-                                      Text(
-                                        'Thụ hưởng',
-                                        style: TextStyle(
-                                          //fontStyle: FontStyle.italic,
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                          //fontWeight: FontWeight.w900,
-                                        ),
-                                      ),
-                                    Text(
-                                      transactionList.data[index].amount
-                                          .toString(),
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.grey,
-                                          //fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      transactionList.data[index].amount
-                                          .toString(),
-                                      style: TextStyle(
-                                        //fontStyle: FontStyle.italic,
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                        //fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Text(
-                                      transactionList.data[index].createdAt
-                                          .toString()
-                                          .substring(0, 10),
-                                      style: TextStyle(
-                                        //fontStyle: FontStyle.italic,
-                                        fontSize: 12,
-                                        color: Colors.grey,
-                                        //fontWeight: FontWeight.w900,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                  ],
-                                )),
-                            Padding(
-                              padding: EdgeInsets.only(right: 10),
-                              child: Center(
-                                child: CircleAvatar(
-                                  radius: 16,
-                                  backgroundColor:
-                                      Color.fromRGBO(50, 172, 121, 1),
-                                  child: Icon(
-                                    Icons.chevron_right,
-                                    color: Colors.white,
-                                    size: 24,
+            return Card(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(color: Colors.white70, width: 1),
+                borderRadius: BorderRadius.circular(10),
+              ),
+              elevation: 5,
+              child: InkWell(
+                onTap: () => {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => TransactionDetailScreen(
+                            this.transactionList.data[index].id)),
+                  )
+                },
+                child: Column(children: <Widget>[
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Center(
+                          child: IconButton(
+                            icon: Icon(Icons.account_balance),
+                            color: Colors.blueAccent,
+                            onPressed: () {},
+                          ),
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "From:",
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
                                   ),
                                 ),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                Text(
+                                  "To:",
+                                  style: TextStyle(
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    //fontWeight: FontWeight.w700,
+                                    //letterSpacing: 2.0
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "Amount:",
+                                  style: TextStyle(
+                                    //fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    //fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  "Date:",
+                                  style: TextStyle(
+                                    //fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    //fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            )),
+                        Padding(
+                            padding: EdgeInsets.only(top: 10),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  transactionList.data[index].fromAccount
+                                      .toString(),
+                                  style: TextStyle(
+                                    //fontStyle: FontStyle.italic,
+                                    fontSize: 18,
+                                    color: Colors.black,
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 2,
+                                ),
+                                if (transactionList.data[index].toAccount
+                                        .toString() ==
+                                    '1')
+                                  Text(
+                                    'Thụ hưởng',
+                                    style: TextStyle(
+                                      //fontStyle: FontStyle.italic,
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                      //fontWeight: FontWeight.w900,
+                                    ),
+                                  ),
+                                Text(
+                                  transactionList.data[index].amount.toString(),
+                                  style: TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.grey,
+                                      //fontWeight: FontWeight.w700,
+                                      letterSpacing: 2.0),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  transactionList.data[index].amount.toString(),
+                                  style: TextStyle(
+                                    //fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    //fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 5,
+                                ),
+                                Text(
+                                  transactionList.data[index].createdAt
+                                      .toString()
+                                      .substring(0, 10),
+                                  style: TextStyle(
+                                    //fontStyle: FontStyle.italic,
+                                    fontSize: 12,
+                                    color: Colors.grey,
+                                    //fontWeight: FontWeight.w900,
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 10,
+                                ),
+                              ],
+                            )),
+                        Padding(
+                          padding: EdgeInsets.only(right: 10),
+                          child: Center(
+                            child: CircleAvatar(
+                              radius: 16,
+                              backgroundColor: Color.fromRGBO(50, 172, 121, 1),
+                              child: Icon(
+                                Icons.chevron_right,
+                                color: Colors.white,
+                                size: 24,
                               ),
-                            )
-                          ],
-                        ),
-                      ),
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                  ]),
-                ),
+                  ),
+                ]),
               ),
             );
           },

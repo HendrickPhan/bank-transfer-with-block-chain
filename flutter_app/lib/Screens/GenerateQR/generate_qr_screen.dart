@@ -39,12 +39,14 @@ class GenerateQRScreenState extends State<GenerateQRScreen> {
         backgroundColor: Color(0xFF333333),
         body: Builder(
           builder: (BuildContext context) {
-            return Center(
-              child: Column(
-                children: <Widget>[
-                  _qrCodeWidget(this.bytes, context),
-                ],
-                mainAxisAlignment: MainAxisAlignment.center,
+            return SingleChildScrollView(
+              child: Center(
+                child: Column(
+                  children: <Widget>[
+                    _qrCodeWidget(this.bytes, context),
+                  ],
+                  mainAxisAlignment: MainAxisAlignment.center,
+                ),
               ),
             );
           },

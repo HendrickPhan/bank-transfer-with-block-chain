@@ -8,45 +8,43 @@ import '../bloc.dart';
 
 class NewsListBloc implements Bloc {
   NewsRepository _newsRepository;
-  StreamController _walletListController;
+  StreamController _controller;
 
-  StreamSink<ApiResponse<PaginateModel<NewsModel>>> get bankAccountListSink =>
-      _walletListController.sink;
+  StreamSink<ApiResponse<PaginateModel<NewsModel>>> get newsListSink =>
+      _controller.sink;
 
-  Stream<ApiResponse<PaginateModel<NewsModel>>> get bankAccountListStream =>
-      _walletListController.stream;
+  Stream<ApiResponse<PaginateModel<NewsModel>>> get newsListStream =>
+      _controller.stream;
 
   NewsListBloc() {
-    _walletListController =
-        StreamController<ApiResponse<PaginateModel<NewsModel>>>();
+    _controller = StreamController<ApiResponse<PaginateModel<NewsModel>>>();
     _newsRepository = NewsRepository();
   }
 
   fetchNewsLists() async {
-    bankAccountListSink.add(ApiResponse.loading('Đang lấy tin tức'));
+    newsListSink.add(ApiResponse.loading('Đang lấy tin tức'));
     try {
-      PaginateModel bankAccountList =
-          await _newsRepository.fetchNewsListData(page: 1);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
+      PaginateModel newsList = await _newsRepository.fetchNewsListData(page: 1);
+      newsListSink.add(ApiResponse.completed(newsList));
     } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
+      newsListSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
   }
 
   fetchMoreNews(int page) async {
     try {
-      PaginateModel bankAccountList =
+      PaginateModel newsList =
           await _newsRepository.fetchNewsListData(page: page);
-      bankAccountListSink.add(ApiResponse.completed(bankAccountList));
+      newsListSink.add(ApiResponse.completed(newsList));
     } catch (e) {
-      bankAccountListSink.add(ApiResponse.error(e.toString()));
+      newsListSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
   }
 
   @override
   void dispose() {
-    _walletListController.close();
+    _controller.close();
   }
 }

@@ -93,6 +93,8 @@ Route::group([
         Route::get('/', [TransactionController::class, 'list']);
         
         Route::get('/{account_number}', [TransactionController::class, 'listByAccountNumber']);
+
+        Route::get('/detail/{id}', [TransactionController::class, 'detail']);
         
         Route::post('/cash-out', [TransactionController::class, 'createCashOut'])
             ->middleware('checkPinCode');

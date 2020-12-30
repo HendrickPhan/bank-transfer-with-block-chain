@@ -43,8 +43,6 @@ class TransactionRepository {
 
   Future<PaginateModel<TransactionModel>> getAllTransactionsById(
       {String bankAccountID}) async {
-    debugPrint('zzzz');
-    debugPrint(bankAccountID);
     final response =
         await _provider.get(url: "transaction/" + bankAccountID.toString());
     return PaginateModel<TransactionModel>.fromJson(
@@ -52,7 +50,8 @@ class TransactionRepository {
   }
 
   Future<TransactionModel> fetchTransactionData({int id}) async {
-    final response = await _provider.get(url: "transaction/" + id.toString());
+    final response =
+        await _provider.get(url: "transaction/detail/" + id.toString());
     return TransactionModel.fromJson(response);
   }
 }

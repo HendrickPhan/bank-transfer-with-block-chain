@@ -37,8 +37,6 @@ class TransactionListBloc implements Bloc {
 
   fetchTransactionListsById(String bankAccountID) async {
     transactionListSink.add(ApiResponse.loading('Đang lấy dữ liệu người dùng'));
-    debugPrint('XXXX');
-    debugPrint(bankAccountID);
     try {
       PaginateModel transactionList = await _transactionRepository
           .getAllTransactionsById(bankAccountID: bankAccountID);
