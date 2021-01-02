@@ -141,4 +141,16 @@ class BankAccountController extends Controller
     {
 
     }
+
+    public function getAccountName(Request $request)
+    {
+        $bankAccount = BankAccount::with('user:id,name')
+            ->where('account_number', $request->account_number)
+            ->first();
+        if(!$bankAccount) {
+            return $this->responseError("Bank account info not found");
+        }
+
+        return $this->responseSuccess($bankAccount->user->name);
+    }
 }
