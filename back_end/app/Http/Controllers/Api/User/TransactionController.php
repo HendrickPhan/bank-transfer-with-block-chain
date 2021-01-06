@@ -58,13 +58,13 @@ class TransactionController extends Controller
         $user = $request->user();
         // validate bank account
         $bankAccount = BankAccount::where('user_id', $user->id)
-            ->where('account_number', $data['account_number'])
+            ->where('account_number', $data['from_account'])
             ->first();        
         if (!$bankAccount) {
             return $this->responseError('Không tìm thấy tài khoản');
         }
 
-        $toBankAccount = BankAccount::where('account_number', $data['to_account_number'])
+        $toBankAccount = BankAccount::where('account_number', $data['to_account'])
             ->first();
         if (!$toBankAccount) {
             return $this->responseError('Không tìm thấy tài khoản nhận');
@@ -99,7 +99,7 @@ class TransactionController extends Controller
             return $this->responseError($e);
         }
 
-        return $this->responseSuccess("Success");
+        return $this->responseSuccess($transaction);
     }
 
     public function createCashOut(CreateCashOutRequest $request) {

@@ -80,7 +80,7 @@ Route::group([
       
         Route::get('/selections', [BankAccountController::class, 'selectList']);
 
-        Route::get('/{account_number}/name', [BankAccountController::class, 'detail']);
+        Route::get('/{account_number}/name', [BankAccountController::class, 'getAccountName']);
 
         Route::get('/{id}', [BankAccountController::class, 'detail'])
             ->where(['id' => '[0-9]+']);

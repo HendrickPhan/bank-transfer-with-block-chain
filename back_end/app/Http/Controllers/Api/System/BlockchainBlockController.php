@@ -20,7 +20,10 @@ class BlockchainBlockController extends Controller
     }
 
     public function create(Request $request) {
-        $block = BlockchainBlock::create($request->all());
+        $data = $request->all();
+        $block = BlockchainBlock::firstOrCreate([
+            "number" => $data["number"]
+        ],$data);
         return $this->responseSuccess($block);
     }   
 }

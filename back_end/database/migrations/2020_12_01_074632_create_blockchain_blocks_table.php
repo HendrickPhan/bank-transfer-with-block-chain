@@ -15,22 +15,22 @@ class CreateBlockchainBlocksTable extends Migration
     {
         Schema::create('blockchain_blocks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedInteger('difficulty');
-            $table->text('extraData');
-            $table->unsignedInteger('gasLimit');
-            $table->unsignedInteger('gasUsed');
-            $table->text('hash');
-            $table->text('logsBloom');
-            $table->text('miner');
-            $table->text('mixHash');
-            $table->text('nonce');
-            $table->unsignedInteger('number');
-            $table->text('parentHash');
-            $table->text('receiptsRoot');
-            $table->unsignedInteger('size');
-            $table->text('stateRoot');
-            $table->unsignedBigInteger('timestamp');
-            $table->unsignedInteger('totalDifficulty');
+            $table->unsignedInteger('difficulty')->nullable();
+            $table->text('extraData')->nullable();
+            $table->unsignedInteger('gasLimit')->nullable();
+            $table->unsignedInteger('gasUsed')->nullable();
+            $table->text('hash')->nullable();
+            $table->text('logsBloom')->nullable();
+            $table->text('miner')->nullable();
+            $table->text('mixHash')->nullable();
+            $table->text('nonce')->nullable();
+            $table->unsignedInteger('number')->nullable();
+            $table->text('parentHash')->nullable();
+            $table->text('receiptsRoot')->nullable();
+            $table->unsignedInteger('size')->nullable();
+            $table->text('stateRoot')->nullable();
+            $table->unsignedBigInteger('timestamp')->nullable();
+            $table->unsignedInteger('totalDifficulty')->nullable();
             $table->timestamps();
         });
     }

@@ -22,6 +22,7 @@ class Transaction extends Model
         'from_account',
         'to_account',
         'amount',
+        'description',
         'fee',
     ];
 

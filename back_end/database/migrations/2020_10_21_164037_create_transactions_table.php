@@ -19,6 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->string('code')->unique();
             $table->string('from_account', 12);
             $table->string('to_account', 12);
+            $table->string('description');
             $table->bigInteger('amount');
             $table->bigInteger('fee');
             $table->unsignedTinyInteger('status')->default(0);

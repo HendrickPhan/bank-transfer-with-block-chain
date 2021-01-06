@@ -1,18 +1,19 @@
+import 'package:app/Screens/Transaction/pin_code_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:app/Widget/BankAccountSelect/bank_account_select_widget.dart';
-import 'package:app/Ultilities/custom_text_input_formatter.dart';
+import 'package:app/Widget/Transaction/bank_account_name_widget.dart';
+import 'package:app/Models/transaction_model.dart';
 
 class ConfirmTransferScreen extends StatefulWidget {
-  static const String route = "transfer";
-  final String from_account;
-  final String to_account;
+  static const String route = "confirm_transfer";
+  final String fromAccount;
+  final String toAccount;
   final int amount;
   final String description;
 
   const ConfirmTransferScreen({
     Key key,
-    this.from_account,
-    this.to_account,
+    this.fromAccount,
+    this.toAccount,
     this.amount,
     this.description,
   }) : super(key: key);
@@ -23,11 +24,23 @@ class ConfirmTransferScreen extends StatefulWidget {
 
 class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
   final _formKey = GlobalKey<FormState>();
-  var _passKey = GlobalKey<FormFieldState>();
-  String to_account_name = '';
   @override
   void initState() {
     super.initState();
+  }
+
+  void onPressedSubmit() {
+    TransactionModel transaction = TransactionModel(
+      fromAccount: widget.fromAccount,
+      toAccount: widget.toAccount,
+      amount: widget.amount,
+      description: widget.description,
+    );
+    Navigator.pushNamed(
+      context,
+      PinCodeScreen.route,
+      arguments: transaction,
+    );
   }
 
   @override
@@ -40,11 +53,17 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
           child: Builder(builder: (BuildContext context) {
             return ListView(
               children: [
-                rowItem("From Account:", widget.from_account),
-                rowItem("To Account:", widget.to_account),
-                rowItem("To Account Name:", to_account_name),
-                rowItem("Amount:", widget.amount),
-                rowItem("From Account:", widget.from_account),
+                rowItem("From Account:", widget.fromAccount),
+                rowItem("To Account:", widget.toAccount),
+                BankAccountNameWidget(accountNumber: widget.toAccount),
+                rowItem("Amount:", widget.amount.toString()),
+                rowItem("Description:", widget.description),
+                RaisedButton(
+                  color: Colors.blue,
+                  textColor: Colors.white,
+                  child: new Text('Confirm'),
+                  onPressed: onPressedSubmit,
+                ),
               ],
             );
           }),
@@ -64,89 +83,5 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
         ),
       ],
     );
-  }
-
-  List<Widget> getFormWidget(BuildContext context) {
-    List<Widget> formWidget = new List();
-    // from account
-    formWidget.add(BankAccountSelectWidget(
-      onChanged: (value) {
-        setState(() {
-          _from_account = value;
-        });
-      },
-    ));
-    // to account
-    formWidget.add(new TextFormField(
-      decoration: InputDecoration(
-          labelText: 'Enter To Account', hintText: 'To Account'),
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter to account';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        setState(() {
-          _to_account = value;
-        });
-      },
-    ));
-    // amount
-    formWidget.add(new TextFormField(
-      decoration:
-          InputDecoration(labelText: 'Enter Amount', hintText: 'Amount'),
-      keyboardType: TextInputType.number,
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter amount';
-        }
-        return null;
-      },
-      inputFormatters: [CustomTextInputFormatter()],
-      onSaved: (value) {
-        setState(() {
-          _amount = int.parse(value.replaceAll(',', ''));
-        });
-      },
-    ));
-
-    formWidget.add(new TextFormField(
-      decoration: InputDecoration(
-          labelText: 'Enter Descrition', hintText: 'Descrition'),
-      validator: (value) {
-        if (value.isEmpty) {
-          return 'Please enter description';
-        }
-        return null;
-      },
-      onSaved: (value) {
-        setState(() {
-          _description = value;
-        });
-      },
-    ));
-
-    void onPressedSubmit() {
-      _formKey.currentState.save();
-      print("_from_account " + _from_account);
-      print("_to_account " + _to_account);
-      print("_amount " + _amount.toString());
-      print("_description " + _description);
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Form Submitted')));
-    }
-
-    formWidget.add(
-      new RaisedButton(
-        color: Colors.blue,
-        textColor: Colors.white,
-        child: new Text('Continue'),
-        onPressed: onPressedSubmit,
-      ),
-    );
-
-    return formWidget;
   }
 }

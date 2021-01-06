@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:app/Widget/BankAccountSelect/bank_account_select_widget.dart';
 import 'package:app/Ultilities/custom_text_input_formatter.dart';
+import 'confirm_transfer_screen.dart';
 
 class CreateTransferScreen extends StatefulWidget {
   static const String route = "transfer";
@@ -108,8 +109,19 @@ class _CreateTransferScreenState extends State<CreateTransferScreen> {
       print("_to_account " + _to_account);
       print("_amount " + _amount.toString());
       print("_description " + _description);
-      Scaffold.of(context)
-          .showSnackBar(SnackBar(content: Text('Form Submitted')));
+      Map transferInfo = {
+        "fromAccount": _from_account,
+        "toAccount": _to_account,
+        "amount": _amount,
+        "description": _description,
+      };
+      Navigator.pushNamed(
+        context,
+        ConfirmTransferScreen.route,
+        arguments: transferInfo,
+      );
+      // Scaffold.of(context)
+      //     .showSnackBar(SnackBar(content: Text('Form Submitted')));
     }
 
     formWidget.add(

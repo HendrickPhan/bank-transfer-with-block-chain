@@ -1,3 +1,4 @@
+import 'package:app/Models/transaction_model.dart';
 import 'package:flutter/material.dart';
 
 // ----- bloc
@@ -12,8 +13,11 @@ import 'Screens/GenerateQR/generate_qr_screen.dart';
 import 'Screens/ActivateAccount/activate_account_screen.dart';
 import 'Screens/Transaction/create_transfer_screen.dart';
 import 'Screens/Transaction/create_cash_out_screen.dart';
+import 'Screens/Transaction/confirm_transfer_screen.dart';
 import 'package:app/Screens/Profile/profile_screen.dart';
 import 'package:app/Screens/Transaction/transaction_list_screen.dart';
+import 'package:app/Screens/Transaction/pin_code_screen.dart';
+import 'package:app/Screens/Transaction/finish_transfer_screen.dart';
 import 'Screens/News/news_screen.dart';
 import 'package:app/Screens/Transaction/transaction_detail_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -106,6 +110,28 @@ class _MyAppState extends State<MyApp> {
             break;
           case TransactionListScreen.route:
             return MaterialPageRoute(builder: (_) => TransactionListScreen());
+            break;
+          case ConfirmTransferScreen.route:
+            Map transferInfo = settings.arguments;
+            return MaterialPageRoute(
+              builder: (_) => ConfirmTransferScreen(
+                fromAccount: transferInfo["fromAccount"],
+                toAccount: transferInfo["toAccount"],
+                amount: transferInfo["amount"],
+                description: transferInfo["description"],
+              ),
+            );
+            break;
+          case PinCodeScreen.route:
+            TransactionModel transactionModel = settings.arguments;
+            return MaterialPageRoute(
+              builder: (_) => PinCodeScreen(
+                transactionModel: transactionModel,
+              ),
+            );
+            break;
+          case FinishTransferScreen.route:
+            return MaterialPageRoute(builder: (_) => FinishTransferScreen());
             break;
           case NewsScreen.route:
             return MaterialPageRoute(builder: (_) => NewsScreen());

@@ -8,23 +8,28 @@ import 'package:flutter/cupertino.dart';
 class TransactionRepository {
   ApiProvider _provider = ApiProvider();
 
-  Future<TransactionModel> transfer({TransactionModel transaction}) async {
+  Future<TransactionModel> transfer(
+      {TransactionModel transaction, String pinCode}) async {
+    Map<String, dynamic> postData = new Map<String, dynamic>();
+    postData = transaction.toJson();
+    postData['pin_code'] = pinCode;
     final response = await _provider.post(
       url: 'transaction/transfer',
-      data: transaction.toJson(),
+      data: postData,
     );
     Log.debug('transfer ' + response.toString());
     return TransactionModel.fromJson(response);
   }
 
-  // Future<TransactionModel> cashOut({TransactionModel transaction}) async {
-  //   final response = await _provider.post(
-  //     url: 'transaction/cash-out',
-  //     data: transaction.toJson(),
-  //   );
-  //   Log.debug('cashOut ' + response.toString());
-  //   return TransactionModel.fromJson(response);
-  // }
+  Future<TransactionModel> cashOut({TransactionModel transaction}) async {
+    final response = await _provider.post(
+      url: 'transaction/cash-out',
+      data: transaction.toJson(),
+    );
+    Log.debug('cashOut ' + response.toString());
+    return TransactionModel.fromJson(response);
+  }
+
   Future<PaginateModel<TransactionModel>> fetchTransactionListData(
       {int page = 1}) async {
     final response =

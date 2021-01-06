@@ -3,6 +3,7 @@
 namespace App\Http\Requests\Api\User\Transaction;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Facades\Log;
 
 class CreateTransferRequest extends FormRequest
 {
@@ -23,11 +24,12 @@ class CreateTransferRequest extends FormRequest
      */
     public function rules()
     {
+        Log::info(json_encode($this->all()));
         return [
             //
             'amount' => 'required|integer|min:1000|max:10000000',
-            'account_number' => 'required|string',
-            'to_account_number' => 'required|string'
+            'from_account' => 'required|string',
+            'to_account' => 'required|string'
         ];
     }
 }

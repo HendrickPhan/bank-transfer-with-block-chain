@@ -19,7 +19,7 @@ class CheckPinCode
     {
         $user = $request->user();
         if(!Hash::check($request->pin_code, $user->pin_code)) {
-            return response()->json('Pin code không đúng', 400);
+            return response()->json('Wrong pincode', 400);
         }
         return $next($request);
     }

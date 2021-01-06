@@ -19,21 +19,21 @@ class CreateTransactionBloc implements Bloc {
     _repository = TransactionRepository();
   }
 
-  transfer({TransactionModel transaction}) async {
+  transfer({TransactionModel transaction, String pinCode}) async {
     transactionSink.add(ApiResponse.loading('Transfering'));
-    try {
-      TransactionModel responseTransaction = await _repository.transfer(
-        transaction: transaction,
-      );
-      transactionSink.add(ApiResponse.completed(
-        responseTransaction,
-      ));
-    } catch (e) {
-      transactionSink.add(
-        ApiResponse.error(e.toString()),
-      );
-      Log.error('transfer ' + e.toString());
-    }
+    // try {
+    TransactionModel responseTransaction = await _repository.transfer(
+      transaction: transaction,
+      pinCode: pinCode,
+    );
+    transactionSink.add(ApiResponse.completed(
+      responseTransaction,
+    ));
+    // } catch (e) {
+    // transactionSink.add(
+    // ApiResponse.error(e.toString()),
+    // );
+    // }
   }
 
   cashOut({TransactionModel transaction}) async {
