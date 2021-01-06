@@ -90,14 +90,15 @@ class BankAccountDetail extends StatelessWidget {
           child: SafeArea(
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [
-                    Colors.white,
-                    Color(0xFF4E54C8),
-                  ],
-                      begin: Alignment.bottomCenter,
-                      end: Alignment.topCenter,
-                      tileMode: TileMode.clamp)),
+                gradient: LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Color(0xFF4E54C8),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    tileMode: TileMode.clamp),
+              ),
               height: MediaQuery.of(context).size.height,
               width: double.infinity,
               child: SingleChildScrollView(
@@ -119,7 +120,7 @@ class BankAccountDetail extends StatelessWidget {
                                 style: TextStyle(
                                     fontWeight: FontWeight.w900,
                                     fontSize: 24,
-                                    color: Colors.black),
+                                    color: Colors.white),
                               ),
                             ],
                           ),
@@ -131,130 +132,131 @@ class BankAccountDetail extends StatelessWidget {
                       height: 16,
                     ),
                     Container(
-                        margin: EdgeInsets.symmetric(horizontal: 32),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          color: Color.fromRGBO(35, 60, 103, 1),
-                        ),
-                        padding: EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                CircleAvatar(
-                                  radius: 16,
-                                  backgroundColor:
-                                      Color.fromRGBO(50, 172, 121, 1),
-                                  child: Icon(
-                                    Icons.check,
+                      margin: EdgeInsets.symmetric(horizontal: 32),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Color.fromRGBO(35, 60, 103, 1),
+                      ),
+                      padding: EdgeInsets.all(16),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              CircleAvatar(
+                                radius: 16,
+                                backgroundColor:
+                                    Color.fromRGBO(50, 172, 121, 1),
+                                child: Icon(
+                                  Icons.check,
+                                  color: Colors.white,
+                                  size: 24,
+                                ),
+                              ),
+                              Text(
+                                "VISA",
+                                style: TextStyle(
+                                    fontStyle: FontStyle.italic,
+                                    fontSize: 28,
                                     color: Colors.white,
-                                    size: 24,
+                                    fontWeight: FontWeight.w900),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          Text(
+                            "Account Number",
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 2.0),
+                          ),
+                          Text(
+                            bankAccountDetail.accountNumber,
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w700,
+                                letterSpacing: 2.0),
+                          ),
+                          SizedBox(
+                            height: 32,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "AMOUNT",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
                                   ),
-                                ),
-                                Text(
-                                  "VISA",
-                                  style: TextStyle(
-                                      fontStyle: FontStyle.italic,
-                                      fontSize: 28,
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w900),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 32,
-                            ),
-                            Text(
-                              "Account Number",
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 2.0),
-                            ),
-                            Text(
-                              bankAccountDetail.accountNumber,
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  letterSpacing: 2.0),
-                            ),
-                            SizedBox(
-                              height: 32,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: <Widget>[
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "AMOUNT",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.blue[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                    Text(
-                                      bankAccountDetail.amount.toString(),
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.grey[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "RATE",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.blue[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                    Text(
-                                      bankAccountDetail.interestRate.toString(),
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.grey[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                  ],
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    Text(
-                                      "TYPE",
-                                      style: TextStyle(
-                                          fontSize: 12,
-                                          color: Colors.blue[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                    Text(
-                                      bankAccountDetail.type,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          color: Colors.grey[100],
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 2.0),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            )
-                          ],
-                        )),
+                                  Text(
+                                    bankAccountDetail.amount.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "RATE",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
+                                  ),
+                                  Text(
+                                    bankAccountDetail.interestRate.toString(),
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "TYPE",
+                                    style: TextStyle(
+                                        fontSize: 12,
+                                        color: Colors.blue[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
+                                  ),
+                                  Text(
+                                    bankAccountDetail.type,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: Colors.grey[100],
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 2.0),
+                                  ),
+                                ],
+                              )
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
                     SizedBox(
                       height: 16,
                     ),
