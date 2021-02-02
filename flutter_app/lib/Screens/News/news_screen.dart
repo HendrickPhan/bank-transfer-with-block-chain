@@ -7,6 +7,7 @@ import 'package:app/Models/news_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
+import 'package:app/Screens/News/news_detail_screen.dart';
 
 var cardAspectRatio = 12.0 / 16.0;
 var widgetAspectRatio = cardAspectRatio * 1.2;
@@ -129,88 +130,53 @@ class NewsList extends StatelessWidget {
         controller: controller,
         itemBuilder: (context, index) {
           return Container(
-            height: 500,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Positioned(
-                  right: 40,
-                  top: 40,
-                  width: 80,
-                  height: 150,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: AssetImage('assets/images/image_01.png'))),
-                  ),
-                ),
-                Card(
-                  shape: RoundedRectangleBorder(
-                    side: BorderSide(color: Colors.white70, width: 1),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  elevation: 5,
-                  child: InkWell(
-                    onTap: () => {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //       builder: (context) => BankAccountDetailScreen(
-                      //           this.bankAccountList.data[index].id)),
-                      // )
-                    },
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Center(
-                          child: IconButton(
-                            icon: Icon(Icons.new_releases),
-                            color: Colors.blueAccent,
-                            onPressed: () {
-                              // Navigator.pushNamed(
-                              //   context,
-                              //   GenerateQRScreen.route,
-                              //   arguments:
-                              //       bankAccountList.data[index].accountNumber,
-                              // );
-                            },
-                          ),
-                        ),
-                        Padding(
-                            padding: EdgeInsets.only(top: 10),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: <Widget>[
-                                Text(
-                                  newsList.data[index].title,
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                              ],
-                            )),
-                        Padding(
-                          padding: EdgeInsets.only(right: 10),
-                          child: Center(
-                            child: IconButton(
-                              icon: Icon(Icons.read_more),
-                              color: Colors.blueAccent,
-                              onPressed: () {
-                                // Navigator.pushNamed(
-                                //   context,
-                                //   GenerateQRScreen.route,
-                                //   arguments:
-                                //       bankAccountList.data[index].accountNumber,
-                                // );
-                              },
+                Container(
+                  margin: EdgeInsets.all(8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(8.0))),
+                    child: InkWell(
+                      onTap: () => {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  NewsDetailScreen(newsList.data[index].id)),
+                        )
+                      },
+                      child: Column(
+                        crossAxisAlignment:
+                            CrossAxisAlignment.stretch, // add this
+                        children: <Widget>[
+                          ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              topLeft: Radius.circular(8.0),
+                              topRight: Radius.circular(8.0),
+                            ),
+                            child: Image.asset(
+                              'assets/images/image_01.png',
+                              height: 150,
+                              fit: BoxFit.fill,
                             ),
                           ),
-                        )
-                      ],
+                          ListTile(
+                            title: Text(
+                              newsList.data[index].title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.black,
+                              ),
+                            ),
+                            subtitle: Text(
+                              newsList.data[index].body.substring(0, 100) +
+                                  '...',
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

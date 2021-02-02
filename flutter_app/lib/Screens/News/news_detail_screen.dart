@@ -1,13 +1,14 @@
+import 'dart:collection';
 import 'dart:convert';
 
-import 'package:app/Models/bank_account_model.dart';
+import 'package:app/Models/news_model.dart';
 import 'package:flutter/material.dart';
-import 'package:app/BLoC/BankAccount/bank_account_detail_bloc.dart';
+import 'package:app/BLoC/News/news_detail_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
-import 'package:app/Screens/GenerateQR/scan_qr_screen.dart';
+
 import 'package:flutter/services.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:draft_flutter/draft_flutter.dart';
@@ -15,15 +16,69 @@ import 'package:draft_flutter/draft_flutter.dart';
 import 'package:flutter/material.dart';
 
 class NewsDetailScreen extends StatefulWidget {
+  final int id;
+  const NewsDetailScreen(this.id);
   @override
   _NewsDetailScreen createState() => _NewsDetailScreen();
 }
 
 class _NewsDetailScreen extends State<NewsDetailScreen> {
+  NewsDetailBloc _bloc;
+  NewsModel newsDetail;
+
+  @override
+  void initState() {
+    super.initState();
+    _bloc = NewsDetailBloc();
+    _bloc.fetchNewsDetail(widget.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Bank Accounts',
+            style: TextStyle(color: Colors.white, fontSize: 20)),
+        backgroundColor: Color(0xFF222222),
+        elevation: 0.0,
+      ),
+      backgroundColor: Color(0xFF333333),
+      body: NotificationListener<ScrollNotification>(
+        child: StreamBuilder<ApiResponse>(
+          stream: _bloc.newsDetailStream,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              switch (snapshot.data.status) {
+                case Status.LOADING:
+                  return LoadingWidget(loadingMessage: snapshot.data.message);
+                  break;
+                case Status.COMPLETED:
+                  newsDetail = snapshot.data.data;
+                  return NewsDetail(newsDetail: newsDetail);
+                  break;
+                case Status.ERROR:
+                  return ErrWidget(
+                    errorMessage: snapshot.data.message,
+                  );
+                  break;
+              }
+            }
+            return Container();
+          },
+        ),
+      ),
+    );
+  }
+}
+
+class NewsDetail extends StatelessWidget {
+  final NewsModel newsDetail;
+  NewsDetail({Key key, this.newsDetail}) : super(key: key);
+
   Map<String, dynamic> testData = {
     "blocks": [
       {
-        "key": "12do6",
+        "key": "anrdg",
         "text": "",
         "type": "unstyled",
         "depth": 0,
@@ -32,7 +87,7 @@ class _NewsDetailScreen extends State<NewsDetailScreen> {
         "data": {}
       },
       {
-        "key": "dknpg",
+        "key": "e6o0s",
         "text": " ",
         "type": "atomic",
         "depth": 0,
@@ -43,12 +98,12 @@ class _NewsDetailScreen extends State<NewsDetailScreen> {
         "data": {}
       },
       {
-        "key": "8h19a",
-        "text": "mlem mlem",
+        "key": "d69ei",
+        "text": "Here you are BITCH",
         "type": "unstyled",
         "depth": 0,
         "inlineStyleRanges": [
-          {"offset": 0, "length": 9, "style": "BOLD"}
+          {"offset": 13, "length": 5, "style": "BOLD"}
         ],
         "entityRanges": [],
         "data": {}
@@ -60,7 +115,7 @@ class _NewsDetailScreen extends State<NewsDetailScreen> {
         "mutability": "MUTABLE",
         "data": {
           "src":
-              "http://bongda12h.com/wp-content/uploads/2020/12/anh-gai-xinh-de-thuong-mac-do-xuyen-thau-1024x725.jpg",
+              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRO3NEyS1grXd3hl3NVU5i16KuMOprdP0ZHbA&usqp=CAU",
           "height": "auto",
           "width": "auto"
         }
@@ -69,33 +124,35 @@ class _NewsDetailScreen extends State<NewsDetailScreen> {
   };
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
-        primarySwatch: Colors.blue,
-        primaryTextTheme: TextTheme(
-          bodyText1:
-              TextStyle(color: Colors.black, fontWeight: FontWeight.normal),
-          headline3: TextStyle(color: Colors.black),
-          headline4: TextStyle(color: Colors.black),
-          headline5: TextStyle(color: Colors.black),
-        ),
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Draft"),
-        ),
-        body: DraftView(
-          rawContentState: testData,
+    Map<String, dynamic> testData = new HashMap();
+    testData = json.decode(newsDetail.body);
+
+    return NotificationListener<ScrollNotification>(
+      child: Scaffold(
+        backgroundColor: Color(0xff4E295B),
+        body: SingleChildScrollView(
+          child: SafeArea(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                      Colors.white,
+                      Color(0xFF4E54C8),
+                    ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    tileMode: TileMode.clamp),
+              ),
+              height: MediaQuery.of(context).size.height,
+              width: double.infinity,
+              child: SingleChildScrollView(
+                child: DraftView(
+                  rawContentState: testData,
+                ),
+                // child: Text(testData.toString()),
+              ),
+            ),
+          ),
         ),
       ),
     );

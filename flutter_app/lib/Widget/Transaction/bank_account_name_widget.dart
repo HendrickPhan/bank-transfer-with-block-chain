@@ -35,7 +35,9 @@ class _BankAccountNameWidgetState extends State<BankAccountNameWidget> {
               return Row(
                 children: [
                   Expanded(
-                    child: Text("Name", textAlign: TextAlign.left),
+                    child: Text("Name",
+                        textAlign: TextAlign.left,
+                        style: TextStyle(color: Colors.white, fontSize: 20)),
                   ),
                   Expanded(
                     child: Text(snapshot.data.data, textAlign: TextAlign.left),

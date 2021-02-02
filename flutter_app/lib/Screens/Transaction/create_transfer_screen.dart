@@ -27,16 +27,27 @@ class _CreateTransferScreenState extends State<CreateTransferScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Form(
-          key: _formKey,
-          child: Builder(builder: (BuildContext context) {
-            return ListView(
-              children: getFormWidget(context),
-            );
-          }),
-        ),
+      body: Form(
+        key: _formKey,
+        child: Builder(builder: (BuildContext context) {
+          return Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [
+                  Colors.white,
+                  Color(0xFF4E54C8),
+                ],
+                    begin: Alignment.bottomCenter,
+                    end: Alignment.topCenter,
+                    tileMode: TileMode.clamp)),
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: ListView(
+                children: getFormWidget(context),
+              ),
+            ),
+          );
+        }),
       ),
     );
   }

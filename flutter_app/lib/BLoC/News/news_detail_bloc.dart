@@ -1,41 +1,37 @@
-import 'package:app/Models/bank_account_model.dart';
+import 'package:app/Models/news_model.dart';
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
-import 'package:app/Repositories/bank_account_repository.dart';
+import 'package:app/Repositories/news_repository.dart';
 import 'package:flutter/cupertino.dart';
 import 'dart:async';
 import '../bloc.dart';
 
-class BankAccountDetailBloc implements Bloc {
-  BankAccountRepository _bankAccountRepository;
-  StreamController _walletListController;
+class NewsDetailBloc implements Bloc {
+  NewsRepository _newsRepository;
+  StreamController _controller;
 
-  StreamSink<ApiResponse<BankAccountModel>> get bankAccountDetailSink =>
-      _walletListController.sink;
+  StreamSink<ApiResponse<NewsModel>> get newsDetailSink => _controller.sink;
 
-  Stream<ApiResponse<BankAccountModel>> get bankAccountDetailStream =>
-      _walletListController.stream;
+  Stream<ApiResponse<NewsModel>> get newsDetailStream => _controller.stream;
 
-  BankAccountDetailBloc() {
-    _walletListController = StreamController<ApiResponse<BankAccountModel>>();
-    _bankAccountRepository = BankAccountRepository();
+  NewsDetailBloc() {
+    _controller = StreamController<ApiResponse<NewsModel>>();
+    _newsRepository = NewsRepository();
   }
 
-  fetchBankAccountDetail(int a) async {
-    bankAccountDetailSink
-        .add(ApiResponse.loading('Đang lấy dữ liệu người dùng'));
+  fetchNewsDetail(int a) async {
+    newsDetailSink.add(ApiResponse.loading('Đang lấy dữ liệu tin tức'));
     try {
-      BankAccountModel bankAccountDetail =
-          await _bankAccountRepository.fetchBankAccountDetail(id: a);
-      bankAccountDetailSink.add(ApiResponse.completed(bankAccountDetail));
+      NewsModel newsDetail = await _newsRepository.fetchNewsDetail(id: a);
+      newsDetailSink.add(ApiResponse.completed(newsDetail));
     } catch (e) {
-      bankAccountDetailSink.add(ApiResponse.error(e.toString()));
+      newsDetailSink.add(ApiResponse.error(e.toString()));
       print(e);
     }
   }
 
   @override
   void dispose() {
-    _walletListController.close();
+    _controller.close();
   }
 }
