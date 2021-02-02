@@ -41,6 +41,10 @@ const headers = [
     "field": "status_text"
   },
   {
+    "value": "Created at",
+    "field": "created_at"
+  },
+  {
     "value": "Action",
     "align": "center"
   }
@@ -99,6 +103,14 @@ const RenderBankAccountsPage = (props) => {
                   <TableCell
                     align="center"
                   >
+                    <Button
+                      variant="outlined"
+                      onClick={() => props.handleDetailClick(row['account_number'])}
+                      color="secondary"
+                      className={classes.button}
+                    >
+                      Detail
+                    </Button>
                     <Button
                       variant="outlined"
                       onClick={() => props.handleTransactionClick(row['account_number'])}

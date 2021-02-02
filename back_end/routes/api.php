@@ -18,6 +18,7 @@ use App\Http\Controllers\Api\Admin\TransactionController as AdminTransactionCont
 use App\Http\Controllers\Api\Admin\StatisticController as AdminStatisticController;
 use App\Http\Controllers\Api\Admin\BlockchainBlockController as AdminBlockchainBlockController;
 use App\Http\Controllers\Api\Admin\BlockchainTransactionController as AdminBlockchainTransactionController;
+use App\Http\Controllers\Api\Admin\BillController as AdminBillController;
 
 use App\Http\Controllers\Api\System\BlockchainBlockController as SystemBlockchainBlockController;
 use App\Http\Controllers\Api\System\BlockchainTransactionController as SystemBlockchainTransactionController;
@@ -181,11 +182,15 @@ Route::group([
         Route::get('/', [AdminBankAccountController::class, 'list'])
             ->where(['user_id' => '[0-9]+']);
 
+
         Route::post('/', [AdminBankAccountController::class, 'create'])
             ->where(['user_id' => '[0-9]+']);
 
         Route::get('/detail-bc', [AdminBankAccountController::class, 'detailOnBC']);
     });    
+
+    Route::get('bank-account/{account_number}', [AdminBankAccountController::class, 'detail'])
+        ->where(['account_number' => '[0-9]+']);
 
     /*
     |--------------------------------------------------------------------------
@@ -305,6 +310,20 @@ Route::group([
         Route::get('/daily', [AdminStatisticController::class, 'getDailyStatistic']);
 
         Route::get('/monthly', [AdminStatisticController::class, 'getMonthlyStatistic']);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | bill
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('bill')->group(function () {
+        Route::get('/', [AdminBillController::class, 'list']);
+
+        Route::get('/{id}', [AdminBillController::class, 'detail'])
+            ->where(['id' => '[0-9]+']);
+        
+        Route::post('/', [AdminBillController::class, 'create']);
     });
 
 });

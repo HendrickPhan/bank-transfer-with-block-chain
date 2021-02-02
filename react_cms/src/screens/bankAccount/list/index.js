@@ -38,6 +38,12 @@ export default function BankAccountsPage() {
     })  
   }
 
+  const handleDetailClick = (accountNumber) => {
+    history.push({
+      pathname: `/bank-account/${accountNumber}/detail`,
+    })  
+  }
+
   const handleAddMoreClick = () => {
     history.push({
       pathname: `/user/${userId}/bank-account/add`,
@@ -73,6 +79,7 @@ export default function BankAccountsPage() {
       handleAddMoreClick={handleAddMoreClick}
       handleTransactionClick={handleTransactionClick}
       handleAddBalanceClick={handleAddBalanceClick}
+      handleDetailClick={handleDetailClick}
     />
   );
 }

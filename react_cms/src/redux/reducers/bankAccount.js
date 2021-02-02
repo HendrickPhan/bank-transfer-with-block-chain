@@ -3,6 +3,10 @@ import {
   GET_BANK_ACCOUNTS_SUCCESS,
   GET_BANK_ACCOUNTS_FAIL,
 
+  GETTING_BANK_ACCOUNT,
+  GET_BANK_ACCOUNT_SUCCESS,
+  GET_BANK_ACCOUNT_FAIL,
+
   ADDING_BANK_ACCOUNT,
   ADDING_BANK_ACCOUNT_SUCCESS,
   ADDING_BANK_ACCOUNT_FAIL,
@@ -125,6 +129,41 @@ export const addBankAccountBalanceReducer = (state = initialStateAddBalance, { p
         added: false,
         errors: {},
       }
+    default:
+      return state;
+  }
+};
+
+/**
+ * list 
+ */
+const initialBankAccountStateList = {
+  loading: false,
+  bankAccount: {},
+  errors: null,
+};
+
+export const bankAccountReducer = (state = initialBankAccountStateList, { payload, type }) => {
+  switch (type) {
+    case GETTING_BANK_ACCOUNT:
+      return {
+        ...state,
+        loading: true
+      };
+    case GET_BANK_ACCOUNT_SUCCESS:
+      return {
+        ...state,
+        bankAccount: payload.bankAccount,
+        errors: null,
+        loading: false
+      };
+    case GET_BANK_ACCOUNT_FAIL:
+      return {
+        ...state,
+        bankAccount: {},
+        errors: payload.errors,
+        loading: false
+      };
     default:
       return state;
   }

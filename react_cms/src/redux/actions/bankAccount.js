@@ -2,7 +2,11 @@ import {
   GETTING_BANK_ACCOUNTS,
   GET_BANK_ACCOUNTS_SUCCESS,
   GET_BANK_ACCOUNTS_FAIL,
-  
+
+  GETTING_BANK_ACCOUNT,
+  GET_BANK_ACCOUNT_SUCCESS,
+  GET_BANK_ACCOUNT_FAIL,
+
   ADDING_BANK_ACCOUNT,
   ADDING_BANK_ACCOUNT_SUCCESS,
   ADDING_BANK_ACCOUNT_FAIL,
@@ -39,6 +43,31 @@ export const getBankAccounts = (userId, page, limit) => async (dispatch, getStat
   } catch (error) {
     dispatch({
       type: GET_BANK_ACCOUNTS_FAIL, payload: {
+        errors: error.response.data.errors,
+      }
+    });
+  }
+}
+
+
+/**
+ * add 
+ */
+export const getBankAccount = (accountNumber, type) =>  async (dispatch, getState) => {
+  console.log("OK");
+  try {
+    dispatch({type: GETTING_BANK_ACCOUNT});
+
+    const data = await callApi('get', `admin/bank-account/${accountNumber}`);
+    dispatch({
+      type: GET_BANK_ACCOUNT_SUCCESS, payload: {
+        bankAccount: data
+      }
+    });
+
+  } catch (error) {
+    dispatch({
+      type: GET_BANK_ACCOUNT_FAIL, payload: {
         errors: error.response.data.errors,
       }
     });

@@ -9,6 +9,7 @@ import AddUser from '../screens/user/add';
 import User from '../screens/user/detail';
 import Transactions from '../screens/transaction';
 import BankAccounts from '../screens/bankAccount/list';
+import BankAccountDetail from '../screens/bankAccount/detail';
 import AddBankAccount from '../screens/bankAccount/add';
 import AddBankAccountBalance from '../screens/bankAccount/addBalance';
 import InterestRates from '../screens/interestRate/list';
@@ -61,6 +62,10 @@ const Routes = (props) => {
                         <AdminRoute exact path="/bank-account/:accountNumber/transactions">
                             <Transactions />
                         </AdminRoute>
+                        <AdminRoute exact path="/bank-account/:accountNumber/detail">
+                            <BankAccountDetail />
+                        </AdminRoute>
+
                         <AdminRoute exact path="/transactions">
                             <Transactions />
                         </AdminRoute>

@@ -6,7 +6,8 @@ import {
   addUserReducer
 } from './reducers/user'
 import {transactionsReducer} from './reducers/transaction'
-import {bankAccountsReducer, 
+import {bankAccountsReducer,
+  bankAccountReducer, 
   addBankAccountReducer,
   addBankAccountBalanceReducer
 } from './reducers/bankAccount'
@@ -38,6 +39,7 @@ export default configureStore({
     transactions: transactionsReducer,
     
     bankAccounts: bankAccountsReducer,
+    bankAccount: bankAccountReducer,
     addBankAccount: addBankAccountReducer,
     addBankAccountBalance: addBankAccountBalanceReducer,
     
