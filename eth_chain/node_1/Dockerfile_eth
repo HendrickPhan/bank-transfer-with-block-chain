@@ -7,4 +7,5 @@ RUN	apt-get update
 RUN apt-get install -y ethereum 
 COPY ./ /app
 WORKDIR /app/bc_node
+RUN ./init.sh
 CMD ./start.sh

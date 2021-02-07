@@ -28,8 +28,7 @@ class BankAccountController extends Controller
     // create bank account for user
     public function create(CreateRequest $request)
     {
-        $user = User::where('role', User::ROLE_USER)
-            ->where('id', $request->user_id)
+        $user = User::where('id', $request->user_id)
             ->first();
         if(!$user) {
             return $this->responseError('Không tìm thấy user');
