@@ -100,7 +100,15 @@ class _MyAppState extends State<MyApp> {
                 builder: (_) => GenerateQRScreen(accountNumber: accountNumber));
             break;
           case CreateTransferScreen.route:
-            return MaterialPageRoute(builder: (_) => CreateTransferScreen());
+            Map transferInfo = settings.arguments;
+            return MaterialPageRoute(
+              builder: (_) => CreateTransferScreen(
+                fromAccount: transferInfo["fromAccount"],
+                toAccount: transferInfo["toAccount"],
+                amount: transferInfo["amount"],
+                description: transferInfo["description"],
+              ),
+            );
             break;
           case CreateCashOutScreen.route:
             return MaterialPageRoute(builder: (_) => CreateCashOutScreen());
