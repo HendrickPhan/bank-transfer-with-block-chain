@@ -6,6 +6,7 @@ import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class TransactionDetailScreen extends StatefulWidget {
   static const String route = "transaction_detail";
@@ -32,7 +33,7 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bank Accounts',
+        title: Text('History Detail',
             style: TextStyle(color: Colors.white, fontSize: 20)),
         elevation: 0.0,
       ),
@@ -81,6 +82,8 @@ class TransactionDetail extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
+    MoneyFormatterOutput fo = fmf.output;
     return NotificationListener<ScrollNotification>(
       child: Scaffold(
         body: Container(
@@ -115,7 +118,7 @@ class TransactionDetail extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       SizedBox(
-                        height: 5,
+                        height: 15,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -172,7 +175,12 @@ class TransactionDetail extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            transactionDetail.amount.toString(),
+                            fmf
+                                .copyWith(
+                                    amount: transactionDetail.amount.toDouble(),
+                                    fractionDigits: 0)
+                                .output
+                                .nonSymbol,
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,

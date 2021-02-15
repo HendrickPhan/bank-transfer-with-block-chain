@@ -4,20 +4,28 @@ import 'package:app/Ultilities/custom_text_input_formatter.dart';
 
 class CreateCashOutScreen extends StatefulWidget {
   static const String route = "cash-out";
-
+  final String fromAccount;
+  final int amount;
+  const CreateCashOutScreen({
+    Key key,
+    this.fromAccount = '',
+    this.amount = 0,
+  }) : super(key: key);
   @override
   _CreateCashOutScreenState createState() => _CreateCashOutScreenState();
 }
 
 class _CreateCashOutScreenState extends State<CreateCashOutScreen> {
   final _formKey = GlobalKey<FormState>();
-
-  String _from_account = '';
-  int _amount = null;
-
+  String _from_account;
+  int _amount;
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _from_account = widget.fromAccount;
+      _amount = widget.amount;
+    });
   }
 
   @override
@@ -59,6 +67,7 @@ class _CreateCashOutScreenState extends State<CreateCashOutScreen> {
         return null;
       },
       inputFormatters: [CustomTextInputFormatter()],
+      initialValue: _amount.toString(),
       onSaved: (value) {
         setState(() {
           _amount = int.parse(value.replaceAll(',', ''));
@@ -68,8 +77,6 @@ class _CreateCashOutScreenState extends State<CreateCashOutScreen> {
 
     void onPressedSubmit() {
       _formKey.currentState.save();
-      print("_from_account " + _from_account);
-      print("_amount " + _amount.toString());
       Scaffold.of(context)
           .showSnackBar(SnackBar(content: Text('Form Submitted')));
     }

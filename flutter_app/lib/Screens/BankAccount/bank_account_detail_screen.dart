@@ -9,6 +9,7 @@ import 'package:app/Widget/Transaction/transaction_list_widget.dart';
 import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class BankAccountDetailScreen extends StatefulWidget {
   final int id;
@@ -34,12 +35,10 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bank Accounts',
+        title: Text('Bank Accounts Detail',
             style: TextStyle(color: Colors.white, fontSize: 20)),
-        backgroundColor: Color(0xFF222222),
         elevation: 0.0,
       ),
-      backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
           stream: _bloc.bankAccountDetailStream,
@@ -83,6 +82,8 @@ class BankAccountDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
+    MoneyFormatterOutput fo = fmf.output;
     return NotificationListener<ScrollNotification>(
       child: Scaffold(
         backgroundColor: Color(0xff4E295B),
@@ -155,7 +156,7 @@ class BankAccountDetail extends StatelessWidget {
                                 ),
                               ),
                               Text(
-                                "VISA",
+                                "DETAIL",
                                 style: TextStyle(
                                     fontStyle: FontStyle.italic,
                                     fontSize: 28,
@@ -201,7 +202,13 @@ class BankAccountDetail extends StatelessWidget {
                                         letterSpacing: 2.0),
                                   ),
                                   Text(
-                                    bankAccountDetail.amount.toString(),
+                                    fmf
+                                        .copyWith(
+                                            amount: bankAccountDetail.amount
+                                                .toDouble(),
+                                            fractionDigits: 0)
+                                        .output
+                                        .nonSymbol,
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey[100],
@@ -361,46 +368,46 @@ class BankAccountDetail extends StatelessWidget {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.all(Radius.circular(10)),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black54,
-                              blurRadius: 20.0,
-                            )
-                          ]),
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                      margin: EdgeInsets.symmetric(horizontal: 32),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Row(
-                            children: <Widget>[
-                              Icon(
-                                Icons.mobile_screen_share,
-                                color: Colors.lightBlue[900],
-                              ),
-                              SizedBox(
-                                width: 16,
-                              ),
-                              Text(
-                                "",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 18,
-                                    color: Colors.grey[700]),
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
+                    // SizedBox(
+                    //   height: 16,
+                    // ),
+                    // Container(
+                    //   decoration: BoxDecoration(
+                    //       color: Colors.white,
+                    //       borderRadius: BorderRadius.all(Radius.circular(10)),
+                    //       boxShadow: [
+                    //         BoxShadow(
+                    //           color: Colors.black54,
+                    //           blurRadius: 20.0,
+                    //         )
+                    //       ]),
+                    //   padding:
+                    //       EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                    //   margin: EdgeInsets.symmetric(horizontal: 32),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //     children: <Widget>[
+                    //       Row(
+                    //         children: <Widget>[
+                    //           Icon(
+                    //             Icons.mobile_screen_share,
+                    //             color: Colors.lightBlue[900],
+                    //           ),
+                    //           SizedBox(
+                    //             width: 16,
+                    //           ),
+                    //           Text(
+                    //             "",
+                    //             style: TextStyle(
+                    //                 fontWeight: FontWeight.w500,
+                    //                 fontSize: 18,
+                    //                 color: Colors.grey[700]),
+                    //           )
+                    //         ],
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ],
                 ),
               ),

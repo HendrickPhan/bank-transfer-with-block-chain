@@ -1,3 +1,4 @@
+import 'package:app/Screens/Transaction/create_cash_out_screen.dart';
 import 'package:flutter/material.dart';
 // ----- screen
 import 'package:app/Screens/BankAccount/bank_account_list_screen.dart';
@@ -73,6 +74,18 @@ class _HomeScreenState extends State<HomeScreen> {
           context,
           CreateTransferScreen.route,
           arguments: transferInfo,
+        );
+        break;
+      case "cashout":
+        Map cashOutInfo = {
+          "fromAccount": datas[1],
+          "amount": int.parse(datas[2]),
+        };
+
+        Navigator.pushNamed(
+          context,
+          CreateCashOutScreen.route,
+          arguments: cashOutInfo,
         );
         break;
       default:

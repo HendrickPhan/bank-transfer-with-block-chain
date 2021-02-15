@@ -2,6 +2,7 @@ import 'package:app/Screens/Transaction/pin_code_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/Widget/Transaction/bank_account_name_widget.dart';
 import 'package:app/Models/transaction_model.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class ConfirmTransferScreen extends StatefulWidget {
   static const String route = "confirm_transfer";
@@ -45,6 +46,8 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
 
   @override
   Widget build(BuildContext context) {
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
+    MoneyFormatterOutput fo = fmf.output;
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -79,7 +82,7 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
                             height: 32,
                           ),
                           Text(
-                            "Account From",
+                            "From Account",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -98,7 +101,7 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
                             height: 20,
                           ),
                           Text(
-                            "Account To",
+                            "To Account",
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -125,7 +128,12 @@ class _ConfirmTransferScreenState extends State<ConfirmTransferScreen> {
                                 letterSpacing: 2.0),
                           ),
                           Text(
-                            widget.amount.toString(),
+                            fmf
+                                .copyWith(
+                                    amount: widget.amount.toDouble(),
+                                    fractionDigits: 0)
+                                .output
+                                .nonSymbol,
                             style: TextStyle(
                                 fontSize: 16,
                                 color: Colors.grey[100],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:app/Screens/Home/home_screen.dart';
 
 class FinishTransferScreen extends StatefulWidget {
   static const String route = "finish_transfer";
@@ -26,11 +27,50 @@ class _FinishTransferScreenState extends State<FinishTransferScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Successful',
+            style: TextStyle(color: Colors.white, fontSize: 20)),
+        automaticallyImplyLeading: false,
+        elevation: 0.0,
+      ),
       body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+              colors: [
+                Colors.white,
+                Color(0xFF4E54C8),
+              ],
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              tileMode: TileMode.clamp),
+        ),
         constraints: BoxConstraints.expand(),
-        child: Text(
-          "TRANSFER SUBMITTED",
-          textAlign: TextAlign.center,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              ListView(
+                shrinkWrap: true,
+                children: <Widget>[
+                  Text('YOUR TRANSFER SUBMITTED SUCCESSFULLY!',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(color: Colors.white, fontSize: 20)),
+                  RaisedButton(
+                    color: Colors.blue,
+                    textColor: Colors.white,
+                    child: new Text('Back to Home Page'),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        HomeScreen.route,
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

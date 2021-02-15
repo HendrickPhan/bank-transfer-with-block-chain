@@ -101,17 +101,31 @@ class _MyAppState extends State<MyApp> {
             break;
           case CreateTransferScreen.route:
             Map transferInfo = settings.arguments;
-            return MaterialPageRoute(
-              builder: (_) => CreateTransferScreen(
-                fromAccount: transferInfo["fromAccount"],
-                toAccount: transferInfo["toAccount"],
-                amount: transferInfo["amount"],
-                description: transferInfo["description"],
-              ),
-            );
+            if (transferInfo == null) {
+              return MaterialPageRoute(builder: (_) => CreateTransferScreen());
+            } else {
+              return MaterialPageRoute(
+                builder: (_) => CreateTransferScreen(
+                  fromAccount: transferInfo["fromAccount"],
+                  toAccount: transferInfo["toAccount"],
+                  amount: transferInfo["amount"],
+                  description: transferInfo["description"],
+                ),
+              );
+            }
             break;
           case CreateCashOutScreen.route:
-            return MaterialPageRoute(builder: (_) => CreateCashOutScreen());
+            Map cashoutInfo = settings.arguments;
+            if (cashoutInfo == null) {
+              return MaterialPageRoute(builder: (_) => CreateCashOutScreen());
+            } else {
+              return MaterialPageRoute(
+                builder: (_) => CreateCashOutScreen(
+                  fromAccount: cashoutInfo["fromAccount"],
+                  amount: cashoutInfo["amount"],
+                ),
+              );
+            }
             break;
           case ProfileScreen.route:
             return MaterialPageRoute(builder: (_) => ProfileScreen());

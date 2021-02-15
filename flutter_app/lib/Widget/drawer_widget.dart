@@ -27,7 +27,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: Column(
+      child: ListView(
         children: <Widget>[
           Container(
             width: double.infinity,
@@ -117,9 +117,9 @@ class _DrawerWidgetState extends State<DrawerWidget> {
             },
           ),
           ListTile(
-            leading: Icon(Icons.insights),
+            leading: Icon(Icons.account_balance_wallet_rounded),
             title: Text(
-              'Statics',
+              'Bills',
               style: TextStyle(
                 fontSize: 18,
               ),
