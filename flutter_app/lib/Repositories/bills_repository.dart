@@ -36,4 +36,19 @@ class BillsRepository {
     return BillsListModel<BillsModel>.fromJson(
         (json) => new BillsModel.fromJson(json), response);
   }
+
+  Future<String> paid({
+    int billId,
+    String pinCode,
+    String accountNumber,
+  }) async {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['pin_code'] = pinCode;
+    data['account_number'] = accountNumber;
+    final response = await _provider.post(
+      url: 'bill/' + billId.toString(),
+      data: data,
+    );
+    return "Sucess";
+  }
 }

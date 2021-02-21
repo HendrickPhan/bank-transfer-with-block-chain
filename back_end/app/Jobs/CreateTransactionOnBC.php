@@ -85,9 +85,7 @@ class CreateTransactionOnBC implements ShouldQueue
         }
 
         if($transaction->type == Transaction::TYPE_PAID_BILL)  {
-            // add amount to to bank account
-            $toAccount = $transaction->toAccount;
-            $toAccount->increment('amount', $transaction->amount);
+            // update bill info
             $bill = $transaction->bill;
             $bill->status = Bill::STATUS_PAID;
             $bill->paid_at = now();

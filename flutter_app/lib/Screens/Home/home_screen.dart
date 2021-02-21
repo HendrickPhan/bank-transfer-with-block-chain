@@ -63,6 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Future _scan() async {
     String barcode = await scanner.scan();
     List<String> datas = barcode.split("|");
+
     switch (datas[0]) {
       case "transfer":
         Map transferInfo = {

@@ -1,4 +1,3 @@
-import 'package:app/Models/transaction_model.dart';
 import 'package:app/Screens/Transaction/finish_transfer_screen.dart';
 import 'package:flutter/material.dart';
 // ----- screen
@@ -6,7 +5,7 @@ import 'package:app/Screens/Home/home_screen.dart';
 // BankAccountListScreen
 // ----- bloc
 import 'package:app/BLoC/bloc_provider.dart';
-import 'package:app/BLoC/Transaction/create_transaction_bloc.dart';
+import 'package:app/BLoC/Bills/paid_bill_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
 
 import 'package:app/Models/transaction_model.dart';
@@ -16,19 +15,24 @@ import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:flutter/gestures.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
-class PinCodeScreen extends StatefulWidget {
-  static const String route = "pin-code";
-  final TransactionModel transactionModel;
+class BillPinCodeScreen extends StatefulWidget {
+  static const String route = "bill-pin-code";
+  final int billId;
+  final String accountNumber;
 
-  const PinCodeScreen({Key key, this.transactionModel}) : super(key: key);
+  const BillPinCodeScreen({
+    Key key,
+    this.accountNumber,
+    this.billId,
+  }) : super(key: key);
 
   @override
-  _PinCodeScreenState createState() => _PinCodeScreenState();
+  _BillPinCodeScreenState createState() => _BillPinCodeScreenState();
 }
 
-class _PinCodeScreenState extends State<PinCodeScreen> {
+class _BillPinCodeScreenState extends State<BillPinCodeScreen> {
   var onTapRecognizer;
-  CreateTransactionBloc _bloc;
+  PaidBillBloc _bloc;
 
   TextEditingController textEditingController = TextEditingController();
 
@@ -44,7 +48,7 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
         Navigator.pop(context);
       };
     super.initState();
-    _bloc = CreateTransactionBloc();
+    _bloc = PaidBillBloc();
   }
 
   @override
@@ -174,9 +178,10 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                       } else {
                         setState(() {
                           hasError = false;
-                          _bloc.transfer(
-                            transaction: widget.transactionModel,
+                          _bloc.paid(
                             pinCode: currentText,
+                            accountNumber: widget.accountNumber,
+                            billId: widget.billId,
                           );
                           // _bloc.activate(pinCode: currentText);
                         });
@@ -221,7 +226,7 @@ class _PinCodeScreenState extends State<PinCodeScreen> {
                 ],
               ),
               StreamBuilder<ApiResponse>(
-                stream: _bloc.transactionStream,
+                stream: _bloc.billStream,
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     switch (snapshot.data.status) {

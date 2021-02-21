@@ -95,7 +95,7 @@ const sendEther = async (req, res, web3, coinbase) => {
   web3.eth.sendTransaction({
     from: coinbase, 
     to: accountAddress, 
-    value: web3.utils.toWei("1", "ether"),
+    value: web3.utils.toWei("20", "ether"),
     gas: 1000000,
     gasPrice: 10
   })

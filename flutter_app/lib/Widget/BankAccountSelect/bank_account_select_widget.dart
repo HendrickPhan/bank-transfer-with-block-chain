@@ -45,13 +45,6 @@ class _BankAccountSelectWidgetState extends State<BankAccountSelectWidget> {
                     child: new Text(bankAccountModel.accountNumber),
                   );
                 }).toList();
-                // _items.insert(
-                //   0,
-                //   new DropdownMenuItem<String>(
-                //     value: "",
-                //     child: new Text("Bank Account"),
-                //   ),
-                // );
                 return DropdownButtonFormField<String>(
                     decoration: InputDecoration(
                         hintText: 'From Account', labelText: 'From Account'),

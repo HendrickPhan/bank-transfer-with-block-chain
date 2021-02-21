@@ -42,7 +42,7 @@ class BillController extends Controller
 
         // bill
         $bill = Bill::where('user_id', $user->id)
-            ->where('id', $data['bill_id'])
+            ->where('id', $request->id)
             ->first();
 
         if ($bill->status == Bill::STATUS_PAID) {

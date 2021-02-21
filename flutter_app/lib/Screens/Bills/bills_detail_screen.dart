@@ -1,4 +1,5 @@
 import 'package:app/Models/bills_model.dart';
+import 'package:app/Screens/Bills/pin_code_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:app/BLoC/Bills/bills_detail_bloc.dart';
 import 'package:app/Networking/api_responses.dart';
@@ -10,6 +11,7 @@ import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 import 'package:flutter/services.dart';
 import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
+import 'package:app/Widget/BankAccountSelect/bank_account_select_widget.dart';
 
 class BillsDetailScreen extends StatefulWidget {
   static const String route = "bills-detail";
@@ -75,13 +77,67 @@ class _BillsDetailScreenState extends State<BillsDetailScreen> {
   }
 }
 
-class BillsDetail extends StatelessWidget {
+class BillsDetail extends StatefulWidget {
   final BillsModel billsDetail;
 
   const BillsDetail({Key key, this.billsDetail}) : super(key: key);
 
   @override
+  _BillsDetailState createState() => _BillsDetailState();
+}
+
+class _BillsDetailState extends State<BillsDetail> {
+  String _from_account;
+
+  void onPressedSubmit() {
+    Map billInfo = {
+      "accountNumber": _from_account,
+      "billId": widget.billsDetail.id,
+    };
+    Navigator.pushNamed(
+      context,
+      BillPinCodeScreen.route,
+      arguments: billInfo,
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    Widget paidButton() {
+      return widget.billsDetail.status == 0
+          ? RaisedButton(
+              color: Colors.blue,
+              textColor: Colors.white,
+              child: new Text('Paid'),
+              disabledColor: Colors.grey,
+              onPressed: () => showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: new Text('Select Bank Account'),
+                      content: Center(
+                        child: Column(
+                          children: [
+                            BankAccountSelectWidget(
+                              onChanged: (value) {
+                                setState(() {
+                                  _from_account = value;
+                                });
+                              },
+                            ),
+                            RaisedButton(
+                              child: new Text('Paid'),
+                              onPressed: onPressedSubmit,
+                            )
+                          ],
+                        ),
+                      ),
+                    );
+                  }),
+            )
+          : Container();
+    }
+
     FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
     MoneyFormatterOutput fo = fmf.output;
     return NotificationListener<ScrollNotification>(
@@ -177,7 +233,7 @@ class BillsDetail extends StatelessWidget {
                                 letterSpacing: 2.0),
                           ),
                           Text(
-                            billsDetail.type_text.toString(),
+                            widget.billsDetail.type_text.toString(),
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -204,8 +260,8 @@ class BillsDetail extends StatelessWidget {
                                   Text(
                                     fmf
                                         .copyWith(
-                                            amount:
-                                                billsDetail.amount.toDouble(),
+                                            amount: widget.billsDetail.amount
+                                                .toDouble(),
                                             fractionDigits: 0)
                                         .output
                                         .nonSymbol,
@@ -229,7 +285,7 @@ class BillsDetail extends StatelessWidget {
                                         letterSpacing: 2.0),
                                   ),
                                   Text(
-                                    billsDetail.user_id.toString(),
+                                    widget.billsDetail.user_id.toString(),
                                     style: TextStyle(
                                         fontSize: 16,
                                         color: Colors.grey[100],
@@ -246,16 +302,7 @@ class BillsDetail extends StatelessWidget {
                     SizedBox(
                       height: 16,
                     ),
-                    RaisedButton(
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      child: new Text('Cash Out'),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                        );
-                      },
-                    ),
+                    paidButton(),
                   ],
                 ),
               ),

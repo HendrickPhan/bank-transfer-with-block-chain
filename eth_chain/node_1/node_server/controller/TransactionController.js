@@ -25,8 +25,8 @@ exports.transfer = async (req, res, web3) => {
     timeStamp,
   ).send({
     from: account.address,
-    gas: 1000000,
-    gasPrice: 2
+    gas: 2000000,
+    gasPrice: 1
   })
   .on('receipt', function(receipt){
     res.send(receipt);

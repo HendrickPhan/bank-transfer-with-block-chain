@@ -1,4 +1,5 @@
 import 'package:app/Models/transaction_model.dart';
+import 'package:app/Screens/Bills/pin_code_screen.dart';
 import 'package:flutter/material.dart';
 
 // ----- bloc
@@ -154,6 +155,16 @@ class _MyAppState extends State<MyApp> {
               ),
             );
             break;
+          case BillPinCodeScreen.route:
+            Map data = settings.arguments;
+            return MaterialPageRoute(
+              builder: (_) => BillPinCodeScreen(
+                billId: data["billId"],
+                accountNumber: data["accountNumber"],
+              ),
+            );
+            break;
+
           case FinishTransferScreen.route:
             return MaterialPageRoute(builder: (_) => FinishTransferScreen());
             break;
