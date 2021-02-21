@@ -32,6 +32,7 @@ class _FinishTransferScreenState extends State<FinishTransferScreen> {
             style: TextStyle(color: Colors.white, fontSize: 20)),
         automaticallyImplyLeading: false,
         elevation: 0.0,
+        backgroundColor: Color(0xFF222222),
       ),
       body: Container(
         decoration: BoxDecoration(
