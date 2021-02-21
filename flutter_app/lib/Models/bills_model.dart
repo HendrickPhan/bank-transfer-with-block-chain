@@ -9,6 +9,7 @@ class BillsModel implements Model {
   final String time;
   final String paid_at;
   final int status;
+  final String type_text;
 
   BillsModel(
       {this.id,
@@ -18,7 +19,8 @@ class BillsModel implements Model {
       this.amount,
       this.time,
       this.paid_at,
-      this.status});
+      this.status,
+      this.type_text});
 
   factory BillsModel.fromJson(Map<String, dynamic> json) {
     return BillsModel(
@@ -29,6 +31,7 @@ class BillsModel implements Model {
       time: json['time'],
       paid_at: json['paid_at'],
       status: json['status'],
+      type_text: json['type_text'],
     );
   }
 
@@ -41,6 +44,7 @@ class BillsModel implements Model {
     data['time'] = this.time;
     data['paid_at'] = this.paid_at;
     data['status'] = this.status;
+    data['type_text'] = this.type_text;
     return data;
   }
 }

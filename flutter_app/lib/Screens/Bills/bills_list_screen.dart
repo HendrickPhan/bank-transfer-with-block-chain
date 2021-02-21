@@ -197,7 +197,7 @@ class BillsList extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
-                              billsList.data[index].user_id.toString(),
+                              billsList.data[index].type_text.toString(),
                               style: TextStyle(
                                 //fontStyle: FontStyle.italic,
                                 fontSize: 18,

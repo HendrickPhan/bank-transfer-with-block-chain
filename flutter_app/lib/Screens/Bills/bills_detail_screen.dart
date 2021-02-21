@@ -177,7 +177,7 @@ class BillsDetail extends StatelessWidget {
                                 letterSpacing: 2.0),
                           ),
                           Text(
-                            billsDetail.user_id.toString(),
+                            billsDetail.type_text.toString(),
                             style: TextStyle(
                                 fontSize: 20,
                                 color: Colors.white,
@@ -245,6 +245,16 @@ class BillsDetail extends StatelessWidget {
                     ),
                     SizedBox(
                       height: 16,
+                    ),
+                    RaisedButton(
+                      color: Colors.blue,
+                      textColor: Colors.white,
+                      child: new Text('Cash Out'),
+                      onPressed: () {
+                        Navigator.pushNamed(
+                          context,
+                        );
+                      },
                     ),
                   ],
                 ),

@@ -14,6 +14,7 @@ import 'package:app/Screens/ActivateAccount/activate_account_screen.dart';
 import 'package:app/Screens/Transaction/select_create_transaction_screen.dart';
 
 import 'package:app/Screens/Transaction/create_transfer_screen.dart';
+import 'package:app/Screens/Bills/bills_detail_screen.dart';
 
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/user_model.dart';
@@ -81,11 +82,23 @@ class _HomeScreenState extends State<HomeScreen> {
           "fromAccount": datas[1],
           "amount": int.parse(datas[2]),
         };
-
         Navigator.pushNamed(
           context,
           CreateCashOutScreen.route,
           arguments: cashOutInfo,
+        );
+        break;
+      case "bill":
+        Map cashOutInfo = {
+          "id": datas[1],
+        };
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => BillsDetailScreen(
+              int.parse(datas[1]),
+            ),
+          ),
         );
         break;
       default:
