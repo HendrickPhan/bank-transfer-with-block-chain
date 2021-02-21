@@ -21,6 +21,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:
+  flutter_money_formatter: ^0.8.3
   flutter:
     sdk: flutter
 

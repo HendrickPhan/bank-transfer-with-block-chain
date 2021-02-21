@@ -22,7 +22,7 @@ class GenerateQRScreenState extends State<GenerateQRScreen> {
   @override
   initState() {
     super.initState();
-    _generateBarCode(widget.accountNumber);
+    _generateBarCode("transfer|" + widget.accountNumber);
   }
 
   @override

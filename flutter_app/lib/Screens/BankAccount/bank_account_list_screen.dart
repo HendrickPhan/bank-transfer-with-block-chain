@@ -7,6 +7,7 @@ import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
 import 'package:app/Screens/BankAccount/bank_account_detail_screen.dart';
 import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
+import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class BankAccountListScreen extends StatefulWidget {
   @override
@@ -99,6 +100,8 @@ class BankAccountList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
+    MoneyFormatterOutput fo = fmf.output;
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -217,8 +220,13 @@ class BankAccountList extends StatelessWidget {
                                 ),
                               ),
                             Text(
-                              bankAccountList.data[index].amount.toString() +
-                                  'VND',
+                              fmf
+                                  .copyWith(
+                                      amount: bankAccountList.data[index].amount
+                                          .toDouble(),
+                                      fractionDigits: 0)
+                                  .output
+                                  .nonSymbol,
                               style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey,

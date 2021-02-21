@@ -5,7 +5,18 @@ import 'confirm_transfer_screen.dart';
 
 class CreateTransferScreen extends StatefulWidget {
   static const String route = "transfer";
+  final String fromAccount;
+  final String toAccount;
+  final int amount;
+  final String description;
 
+  const CreateTransferScreen({
+    Key key,
+    this.fromAccount = '',
+    this.toAccount = '',
+    this.amount = 0,
+    this.description = '',
+  }) : super(key: key);
   @override
   _CreateTransferScreenState createState() => _CreateTransferScreenState();
 }
@@ -14,14 +25,22 @@ class _CreateTransferScreenState extends State<CreateTransferScreen> {
   final _formKey = GlobalKey<FormState>();
   var _passKey = GlobalKey<FormFieldState>();
 
-  String _from_account = '';
-  String _to_account = '';
-  int _amount = null;
-  String _description = '';
+  String _from_account;
+  String _to_account;
+  TextEditingController toAccountController = new TextEditingController();
+  int _amount;
+  String _description;
 
   @override
   void initState() {
     super.initState();
+    setState(() {
+      _from_account = widget.fromAccount;
+      _to_account = widget.toAccount;
+      toAccountController.text = _to_account;
+      _amount = widget.amount;
+      _description = widget.description;
+    });
   }
 
   @override
@@ -73,6 +92,7 @@ class _CreateTransferScreenState extends State<CreateTransferScreen> {
         }
         return null;
       },
+      controller: toAccountController,
       onSaved: (value) {
         setState(() {
           _to_account = value;
@@ -91,6 +111,7 @@ class _CreateTransferScreenState extends State<CreateTransferScreen> {
         return null;
       },
       inputFormatters: [CustomTextInputFormatter()],
+      initialValue: _amount.toString(),
       onSaved: (value) {
         setState(() {
           _amount = int.parse(value.replaceAll(',', ''));

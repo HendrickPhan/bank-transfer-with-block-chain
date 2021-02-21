@@ -1,3 +1,4 @@
+import 'package:app/Screens/Transaction/create_cash_out_screen.dart';
 import 'package:flutter/material.dart';
 // ----- screen
 import 'package:app/Screens/BankAccount/bank_account_list_screen.dart';
@@ -11,6 +12,8 @@ import 'package:qrscan/qrscan.dart' as scanner;
 // ----- screen
 import 'package:app/Screens/ActivateAccount/activate_account_screen.dart';
 import 'package:app/Screens/Transaction/select_create_transaction_screen.dart';
+
+import 'package:app/Screens/Transaction/create_transfer_screen.dart';
 
 import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/user_model.dart';
@@ -58,7 +61,36 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future _scan() async {
     String barcode = await scanner.scan();
-    print(barcode);
+    List<String> datas = barcode.split("|");
+    switch (datas[0]) {
+      case "transfer":
+        Map transferInfo = {
+          "fromAccount": '',
+          "toAccount": datas[1],
+          "amount": 0,
+          "description": '',
+        };
+        Navigator.pushNamed(
+          context,
+          CreateTransferScreen.route,
+          arguments: transferInfo,
+        );
+        break;
+      case "cashout":
+        Map cashOutInfo = {
+          "fromAccount": datas[1],
+          "amount": int.parse(datas[2]),
+        };
+
+        Navigator.pushNamed(
+          context,
+          CreateCashOutScreen.route,
+          arguments: cashOutInfo,
+        );
+        break;
+      default:
+        print("QR scan: " + datas[0] + datas[1]);
+    }
   }
 
   @override
