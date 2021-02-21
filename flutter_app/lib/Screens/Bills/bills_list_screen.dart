@@ -138,7 +138,7 @@ class BillsList extends StatelessWidget {
                   children: [
                     Center(
                       child: IconButton(
-                        icon: Icon(Icons.account_balance),
+                        icon: Icon(Icons.account_balance_wallet_rounded),
                         color: Colors.blueAccent,
                         onPressed: () {
                           // Navigator.pushNamed(
@@ -167,6 +167,17 @@ class BillsList extends StatelessWidget {
                               height: 2,
                             ),
                             Text(
+                              "Type:",
+                              style: TextStyle(
+                                //fontStyle: FontStyle.italic,
+                                fontSize: 12, color: Colors.grey,
+                                //fontWeight: FontWeight.w900,
+                              ),
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            Text(
                               "Amount:",
                               style: TextStyle(
                                 fontSize: 12,
@@ -176,40 +187,73 @@ class BillsList extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
-                              height: 5,
-                            ),
-                            Text(
-                              "Type:",
-                              style: TextStyle(
-                                //fontStyle: FontStyle.italic,
-                                fontSize: 12, color: Colors.grey,
-                                //fontWeight: FontWeight.w900,
-                              ),
-                            ),
-                            SizedBox(
                               height: 10,
                             ),
                           ],
                         )),
                     Padding(
-                        padding: EdgeInsets.only(top: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              billsList.data[index].type_text.toString(),
-                              style: TextStyle(
-                                //fontStyle: FontStyle.italic,
-                                fontSize: 18,
-                                color: Colors.black,
-                                fontWeight: FontWeight.w700,
-                              ),
+                      padding: EdgeInsets.only(top: 10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            billsList.data[index].user_id.toString(),
+                            style: TextStyle(
+                              //fontStyle: FontStyle.italic,
+                              fontSize: 18,
+                              color: Colors.black,
+                              fontWeight: FontWeight.w700,
                             ),
-                            SizedBox(
-                              height: 2,
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            billsList.data[index].type_text.toString(),
+                            style: TextStyle(
+                              //fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                              color: Colors.grey,
                             ),
-                          ],
-                        )),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            fmf
+                                .copyWith(
+                                    amount:
+                                        billsList.data[index].amount.toDouble(),
+                                    fractionDigits: 0)
+                                .output
+                                .nonSymbol,
+                            style: TextStyle(
+                              //fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                              color: Colors.grey,
+                              //fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Center(
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundColor: Color.fromRGBO(50, 172, 121, 1),
+                          child: Icon(
+                            Icons.chevron_right,
+                            color: Colors.white,
+                            size: 24,
+                          ),
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
