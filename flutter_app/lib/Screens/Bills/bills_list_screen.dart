@@ -101,6 +101,8 @@ class BillsList extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
     MoneyFormatterOutput fo = fmf.output;
+    var status = '';
+
     return Container(
       decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -115,9 +117,15 @@ class BillsList extends StatelessWidget {
       child: new ListView.builder(
         controller: controller,
         itemBuilder: (context, index) {
+          if (billsList.data[index].status.toString() == '0') {
+            status = "Unpaid";
+          }
+          if (billsList.data[index].status.toString() == '1') {
+            status = "Paid";
+          }
           return Container(
             padding: new EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
-            height: 110,
+            height: 130,
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.white70, width: 1),
@@ -187,6 +195,18 @@ class BillsList extends StatelessWidget {
                               ),
                             ),
                             SizedBox(
+                              height: 2,
+                            ),
+                            Text(
+                              "Status:",
+                              style: TextStyle(
+                                fontSize: 12,
+                                color: Colors.grey,
+                                //fontWeight: FontWeight.w700,
+                                //letterSpacing: 2.0
+                              ),
+                            ),
+                            SizedBox(
                               height: 10,
                             ),
                           ],
@@ -232,6 +252,17 @@ class BillsList extends StatelessWidget {
                               fontSize: 12,
                               color: Colors.grey,
                               //fontWeight: FontWeight.w900,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 2,
+                          ),
+                          Text(
+                            status,
+                            style: TextStyle(
+                              //fontStyle: FontStyle.italic,
+                              fontSize: 12,
+                              color: Colors.grey,
                             ),
                           ),
                           SizedBox(
