@@ -12,12 +12,17 @@ class BillController extends Controller
     //
     public function list(Request $request)
     {
-
+        $query = Bill::where('user_id', $request->user()->id);
+        $bills = $query->paginate($request->query('limit', 10));
+        return $this->responseSuccess($bills);
     }
 
     public function detail(Request $request)
     {
-
+        $bill = Bill::where('user_id', $request->user()->id)
+            ->where('id', $request->id)
+            ->first();
+        return $bill; 
     }
 
     public function paid(Request $request)

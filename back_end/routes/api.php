@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\User\TransactionController;
 use App\Http\Controllers\Api\User\NewsController;
 use App\Http\Controllers\Api\User\NotificationController;
 use App\Http\Controllers\Api\User\DeviceController;
+use App\Http\Controllers\Api\User\BillController;
 
 use App\Http\Controllers\Api\Admin\InterestRateController as AdminInterestRateController;
 use App\Http\Controllers\Api\Admin\BankAccountController as AdminBankAccountController;
@@ -147,6 +148,22 @@ Route::group([
         Route::get('/', [NotificationController::class, 'list']);
     
         Route::get('/{id}', [NotificationController::class, 'detail']);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Bill
+    |--------------------------------------------------------------------------
+    */
+    Route::prefix('bill')->group(function () {
+        Route::get('/', [BillController::class, 'list']);
+
+        Route::get('/{id}', [BillController::class, 'detail'])
+            ->where(['id' => '[0-9]+']);
+        
+        Route::post('/{id}', [BillController::class, 'paid'])
+            ->where(['id' => '[0-9]+']);
+
     });
 });
 
