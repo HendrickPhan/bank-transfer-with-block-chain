@@ -18,10 +18,12 @@ import 'package:app/Screens/Profile/profile_screen.dart';
 import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 import 'package:app/Screens/Transaction/pin_code_screen.dart';
 import 'package:app/Screens/Transaction/finish_transfer_screen.dart';
+import 'package:app/Screens/Bills/bills_list_screen.dart';
 import 'Screens/News/news_screen.dart';
 import 'package:app/Screens/Transaction/transaction_detail_screen.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:app/Widget/Transaction/transaction_list_widget.dart';
+import 'package:app/Screens/Transaction/select_create_transaction_screen.dart';
 
 void main() => runApp(BlocProvider(bloc: DeviceBloc(), child: MyApp()));
 
@@ -157,6 +159,13 @@ class _MyAppState extends State<MyApp> {
             break;
           case NewsScreen.route:
             return MaterialPageRoute(builder: (_) => NewsScreen());
+            break;
+          case SelectCreateTransactionScreen.route:
+            return MaterialPageRoute(
+                builder: (_) => SelectCreateTransactionScreen());
+            break;
+          case BillsListScreen.route:
+            return MaterialPageRoute(builder: (_) => BillsListScreen());
             break;
           default:
             return MaterialPageRoute(builder: (_) => LoginScreen());

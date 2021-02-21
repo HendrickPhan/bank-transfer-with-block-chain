@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 // ----- screens
 import 'package:app/Screens/Login/login_screen.dart';
 import 'package:app/Screens/Transaction/transaction_list_screen.dart';
+import 'package:app/Screens/Bills/bills_list_screen.dart';
 import 'package:app/Screens/News/news_screen.dart';
 // import 'package:app/Screens/CreateTransaction/create_transaction_screen.dart';
 import 'package:app/Screens/Home/home_screen.dart';
 import 'package:app/Screens/Profile/profile_screen.dart';
 import 'package:app/BLoC/auth_bloc.dart';
+import 'package:app/Screens/Transaction/select_create_transaction_screen.dart';
 
 class DrawerWidget extends StatefulWidget {
   @override
@@ -101,21 +103,21 @@ class _DrawerWidgetState extends State<DrawerWidget> {
               )
             },
           ),
-          ListTile(
-            leading: Icon(Icons.local_atm),
-            title: Text(
-              'Transactions',
-              style: TextStyle(
-                fontSize: 18,
-              ),
-            ),
-            onTap: () => {
-              Navigator.pushNamed(
-                context,
-                HomeScreen.route,
-              )
-            },
-          ),
+          // ListTile(
+          //   leading: Icon(Icons.local_atm),
+          //   title: Text(
+          //     'Transactions',
+          //     style: TextStyle(
+          //       fontSize: 18,
+          //     ),
+          //   ),
+          //   onTap: () => {
+          //     Navigator.pushNamed(
+          //       context,
+          //       SelectCreateTransactionScreen.route,
+          //     )
+          //   },
+          // ),
           ListTile(
             leading: Icon(Icons.account_balance_wallet_rounded),
             title: Text(
@@ -124,7 +126,12 @@ class _DrawerWidgetState extends State<DrawerWidget> {
                 fontSize: 18,
               ),
             ),
-            onTap: null,
+            onTap: () => {
+              Navigator.pushNamed(
+                context,
+                BillsListScreen.route,
+              )
+            },
           ),
           ListTile(
             leading: Icon(Icons.new_releases),
