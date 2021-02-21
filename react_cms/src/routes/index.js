@@ -24,6 +24,10 @@ import BlockchainBlockDetailPage from '../screens/blockchainBlock/detail';
 import BlockchainTransactionsPage from '../screens/blockchainTransaction/list';
 import BlockchainTransactionDetaiPage from '../screens/blockchainTransaction/detail';
 
+import Bills from '../screens/bill/list';
+import AddBill from '../screens/bill/add';
+import BillDetail from '../screens/bill/detail';
+
 import Menu from "../components/menu"
 
 const Routes = (props) => {
@@ -64,6 +68,17 @@ const Routes = (props) => {
                         </AdminRoute>
                         <AdminRoute exact path="/bank-account/:accountNumber/detail">
                             <BankAccountDetail />
+                        </AdminRoute>
+
+                        <AdminRoute exact path="/bills">
+                            <Bills />
+                        </AdminRoute>
+                        <AdminRoute exact path="/bills/add">
+                            <AddBill />
+                        </AdminRoute>
+                        
+                        <AdminRoute exact path="/bill/:billId">
+                            <BillDetail />
                         </AdminRoute>
 
                         <AdminRoute exact path="/transactions">

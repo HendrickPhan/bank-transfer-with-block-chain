@@ -5,6 +5,10 @@ import {
   userReducer,
   addUserReducer
 } from './reducers/user'
+import {
+  billReducer,
+  addBillReducer
+} from './reducers/bill'
 import {transactionsReducer} from './reducers/transaction'
 import {bankAccountsReducer,
   bankAccountReducer, 
@@ -53,6 +57,9 @@ export default configureStore({
 
     blockchainBlock: blockchainBlockReducer,
     blockchainTransaction: blockchainTransactionReducer,
-    statistic: statisticReducer
+    statistic: statisticReducer,
+
+    bill: billReducer,
+    addBill: addBillReducer
   }
 })

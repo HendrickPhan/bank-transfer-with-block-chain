@@ -1,0 +1,20 @@
+export const GETTING_BILLS = 'GETTING_BILLS';
+export const GET_BILLS_SUCCESS = 'GET_BILLS_SUCCESS';
+export const GET_BILLS_FAIL = 'GET_BILLS_FAIL';
+
+export const GETTING_BILL = 'GETTING_BILL';
+export const GET_BILL_SUCCESS = 'GET_BILL_SUCCESS';
+export const GET_BILL_FAIL = 'GET_BILL_FAIL';
+
+export const ADDING_BILL = 'ADDING_BILL';
+export const ADD_BILL_SUCCESS = 'ADD_BILL_SUCCESS';
+export const ADD_BILL_FAIL = 'ADD_BILL_FAIL';
+export const ADD_BILL_CLEAR = 'ADD_BILL_CLEAR';
+
+
+export const UPDATING_BILL = 'UPDATING_BILL';
+export const UPDATE_BILL_SUCCESS = 'UPDATE_BILL_SUCCESS';
+export const UPDATE_BILL_FAIL = 'UPDATE_BILL_FAIL';
+export const UPDATE_BILL_CLEAR = 'UPDATE_BILL_CLEAR';
+
+

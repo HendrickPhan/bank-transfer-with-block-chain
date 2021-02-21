@@ -13,6 +13,7 @@ import { logOut } from '../../redux/actions/auth';
 import SaveIcon from '@material-ui/icons/Save';
 import PeopleIcon from '@material-ui/icons/People';
 import ReceiptIcon from '@material-ui/icons/Receipt';
+import DescriptionIcon from '@material-ui/icons/Description';
 import TrendingUpIcon from '@material-ui/icons/TrendingUp';
 import AnnouncementIcon from '@material-ui/icons/Announcement';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -41,7 +42,7 @@ const menuItemsData = [
   {
     title: "Transactions",
     route: "/transactions",
-    startIcon: <ReceiptIcon/>
+    startIcon: <DescriptionIcon/>
   },
   {
     title: "Interest Rates",
@@ -52,6 +53,11 @@ const menuItemsData = [
     title: "News",
     route: "/news-list",
     startIcon: <AnnouncementIcon/>
+  },
+  {
+    title: "Bill",
+    route: "/bills",
+    startIcon: <ReceiptIcon/>
   },
   {
     title: "Settings",

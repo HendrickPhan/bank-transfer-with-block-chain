@@ -22,6 +22,28 @@ class Bill extends Model
         'transaction_code'
     ];
 
+    protected $appends = [
+        'type_text'
+    ];
+
+    public function getTypeTextAttribute()
+    {
+        return isset($this->attributes['type']) 
+            ? $this->getTypeText($this->attributes['type'])
+            : null;
+    }
+
+    public static function getTypeText($type)
+    {
+        $typeTexts = [
+            "Water",
+            "Electricity",
+            "Internet",
+        ];
+
+        return $typeTexts[$type];
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
