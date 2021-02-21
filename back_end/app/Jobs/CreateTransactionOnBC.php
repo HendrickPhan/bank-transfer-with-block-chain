@@ -14,6 +14,8 @@ use Illuminate\Encryption\Encrypter;
 use App\Models\Notification;
 use App\Http\Services\NotificationService;
 use App\Models\BankAccount;
+use App\Models\Bill;
+use Illuminate\Support\Facades\Log;
 
 class CreateTransactionOnBC implements ShouldQueue
 {
@@ -80,6 +82,17 @@ class CreateTransactionOnBC implements ShouldQueue
             // add amount to to bank account
             $toAccount = $transaction->toAccount;
             $toAccount->increment('amount', $transaction->amount);
+        }
+
+        if($transaction->type == Transaction::TYPE_PAID_BILL)  {
+            // add amount to to bank account
+            $toAccount = $transaction->toAccount;
+            $toAccount->increment('amount', $transaction->amount);
+            $bill = $transaction->bill;
+            $bill->status = Bill::STATUS_PAID;
+            $bill->paid_at = now();
+            $bill->save();
+            Log::info('OK');
         }
 
         // noti

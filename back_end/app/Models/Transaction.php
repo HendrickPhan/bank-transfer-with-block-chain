@@ -66,6 +66,6 @@ class Transaction extends Model
     }
 
     public function bill() {
-        return $this->hasOne(Bill::class, 'code', 'transaction_code');
+        return $this->hasOne(Bill::class, 'transaction_code', 'code');
     }
 }

@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Bill;
 use App\Models\Transaction;
-
+use App\Models\BankAccount;
+use DB;
+use App\Jobs\CreateTransactionOnBC;
 class BillController extends Controller
 {
     //
@@ -35,7 +37,7 @@ class BillController extends Controller
             ->where('account_number', $data['account_number'])
             ->first();        
         if (!$bankAccount) {
-            return $this->responseError('Không tìm thấy tài khoản');
+            return $this->responseError('Account not found');
         }
 
         // bill
@@ -43,8 +45,12 @@ class BillController extends Controller
             ->where('id', $data['bill_id'])
             ->first();
 
+        if ($bill->status == Bill::STATUS_PAID) {
+            return $this->responseError('Already paid');
+        }
+
         if ($bankAccount->amount < $bill->amount) {
-            return $this->responseError('Số tiền vượt quá số dư');
+            return $this->responseError('Not enough amount');
         }
 
         DB::beginTransaction();
@@ -55,7 +61,7 @@ class BillController extends Controller
                 'type' => Transaction::TYPE_PAID_BILL,
                 'amount' => $bill->amount,
                 'from_account' => $bankAccount->account_number,
-                'to_account' => env('MONEY_BASE_BANK_ACCOUNT'),
+                'to_account' => env('BILL_BASE_BANK_ACCOUNT'),
                 'fee' => 0
             ]);
             // decrease bank account balance
