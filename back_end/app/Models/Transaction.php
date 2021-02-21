@@ -44,7 +44,8 @@ class Transaction extends Model
         $typeTexts = [
             "Transfer",
             "Cash In",
-            "Cash Out"
+            "Cash Out",
+            "Paid Bill"
         ];
 
         return $typeTexts[$type];
