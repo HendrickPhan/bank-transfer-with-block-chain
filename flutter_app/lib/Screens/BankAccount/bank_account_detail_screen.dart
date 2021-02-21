@@ -38,6 +38,7 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
         title: Text('Bank Accounts Detail',
             style: TextStyle(color: Colors.white, fontSize: 20)),
         elevation: 0.0,
+        backgroundColor: Color(0xFF222222),
       ),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
@@ -94,7 +95,7 @@ class BankAccountDetail extends StatelessWidget {
                 gradient: LinearGradient(
                     colors: [
                       Colors.white,
-                      Color(0xFF4E54C8),
+                      Color(0xFFA5A5A5),
                     ],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,

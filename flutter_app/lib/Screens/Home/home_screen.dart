@@ -109,7 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     ScreenWithTitle currentScreen = _widgetOptions.elementAt(_selectedIndex);
     return Scaffold(
-      appBar: AppBar(title: Text(currentScreen.title)),
+      appBar: AppBar(
+        title: Text(currentScreen.title),
+        backgroundColor: Color(0xFF222222),
+      ),
       body: StreamBuilder<ApiResponse<UserModel>>(
         stream: _bloc.userStream,
         builder: (context, snapshot) {

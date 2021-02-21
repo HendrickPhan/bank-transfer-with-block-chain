@@ -21,7 +21,7 @@ class _SelectCreateTransactionScreenState
             gradient: LinearGradient(
                 colors: [
               Colors.white,
-              Color(0xFF4E54C8),
+              Color(0xFFA5A5A5),
             ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,

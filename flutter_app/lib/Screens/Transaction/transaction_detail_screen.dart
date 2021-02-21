@@ -36,8 +36,8 @@ class _TransactionDetailScreenState extends State<TransactionDetailScreen> {
         title: Text('History Detail',
             style: TextStyle(color: Colors.white, fontSize: 20)),
         elevation: 0.0,
+        backgroundColor: Color(0xFF222222),
       ),
-      // backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
           stream: _bloc.transactionDetailStream,
@@ -84,6 +84,19 @@ class TransactionDetail extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
     FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
     MoneyFormatterOutput fo = fmf.output;
+    var type = '';
+    if (transactionDetail.type.toString() == '0') {
+      type = "Transfer";
+    }
+    if (transactionDetail.type.toString() == '1') {
+      type = "Cash In";
+    }
+    if (transactionDetail.type.toString() == '2') {
+      type = "Cash Out";
+    }
+    if (transactionDetail.type.toString() == '3') {
+      type = "Paid Bill";
+    }
     return NotificationListener<ScrollNotification>(
       child: Scaffold(
         body: Container(
@@ -91,7 +104,7 @@ class TransactionDetail extends StatelessWidget {
               gradient: LinearGradient(
                   colors: [
                 Colors.white,
-                Color(0xFF4E54C8),
+                Color(0xFFA5A5A5),
               ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,
@@ -157,6 +170,28 @@ class TransactionDetail extends StatelessWidget {
                             style: TextStyle(
                               fontSize: 20,
                               color: Colors.black,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Type",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            type,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
                             ),
                           ),
                         ],

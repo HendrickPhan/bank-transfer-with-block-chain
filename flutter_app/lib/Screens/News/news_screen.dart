@@ -61,6 +61,7 @@ class _NewsScreen extends State<NewsScreen> {
         title:
             Text('News', style: TextStyle(color: Colors.white, fontSize: 20)),
         elevation: 0.0,
+        backgroundColor: Color(0xFF333333),
       ),
       body: StreamBuilder<ApiResponse<PaginateModel>>(
         stream: _bloc.newsListStream,
@@ -97,13 +98,6 @@ class _NewsScreen extends State<NewsScreen> {
           return Container();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _bloc.addBankAccount();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.lightBlue,
-      ),
     );
   }
 }
@@ -120,7 +114,7 @@ class NewsList extends StatelessWidget {
           gradient: LinearGradient(
               colors: [
             Colors.white,
-            Color(0xFF4E54C8),
+            Color(0xFFA5A5A5),
           ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -169,10 +163,6 @@ class NewsList extends StatelessWidget {
                                 fontSize: 18,
                                 color: Colors.black,
                               ),
-                            ),
-                            subtitle: Text(
-                              newsList.data[index].body.substring(0, 100) +
-                                  '...',
                             ),
                           ),
                         ],

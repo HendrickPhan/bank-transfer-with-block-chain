@@ -37,12 +37,11 @@ class _NewsDetailScreen extends State<NewsDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bank Accounts',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
-        backgroundColor: Color(0xFF222222),
+        title:
+            Text('News', style: TextStyle(color: Colors.white, fontSize: 20)),
+        backgroundColor: Color(0xFF333333),
         elevation: 0.0,
       ),
-      backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
           stream: _bloc.newsDetailStream,
@@ -137,7 +136,7 @@ class NewsDetail extends StatelessWidget {
                 gradient: LinearGradient(
                     colors: [
                       Colors.white,
-                      Color(0xFF4E54C8),
+                      Color(0xFFA5A5A5),
                     ],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topCenter,

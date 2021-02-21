@@ -76,6 +76,7 @@ class UsertDetail extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           title: Text('Profile'),
+          backgroundColor: Color(0xFF222222),
         ),
         //drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
         body: Container(
@@ -83,7 +84,7 @@ class UsertDetail extends StatelessWidget {
               gradient: LinearGradient(
                   colors: [
                 Colors.white,
-                Color(0xFF4E54C8),
+                Color(0xFFA5A5A5),
               ],
                   begin: Alignment.bottomCenter,
                   end: Alignment.topCenter,

@@ -81,13 +81,6 @@ class _BankAccountListScreenState extends State<BankAccountListScreen> {
           return Container();
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          // _bloc.addBankAccount();
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.lightBlue,
-      ),
     );
   }
 }
@@ -107,7 +100,7 @@ class BankAccountList extends StatelessWidget {
           gradient: LinearGradient(
               colors: [
             Colors.white,
-            Color(0xFF4E54C8),
+            Color(0xFFA5A5A5),
           ],
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -117,7 +110,8 @@ class BankAccountList extends StatelessWidget {
         controller: controller,
         itemBuilder: (context, index) {
           return Container(
-            height: 100,
+            padding: new EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
+            height: 110,
             child: Card(
               shape: RoundedRectangleBorder(
                 side: BorderSide(color: Colors.white70, width: 1),
