@@ -31,12 +31,11 @@ class _BankAccountDetailScreenState extends State<BankAccountDetailScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Bank Accounts',
-            style: TextStyle(color: Colors.white, fontSize: 20)),
+        title:
+            Text('News', style: TextStyle(color: Colors.white, fontSize: 20)),
         backgroundColor: Color(0xFF222222),
         elevation: 0.0,
       ),
-      backgroundColor: Color(0xFF333333),
       body: NotificationListener<ScrollNotification>(
         child: StreamBuilder<ApiResponse>(
           stream: _bloc.bankAccountDetailStream,

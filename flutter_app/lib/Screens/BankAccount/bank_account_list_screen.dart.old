@@ -103,7 +103,7 @@ class BankAccountList extends StatelessWidget {
     double topContainer = 0;
     return Scaffold(
         appBar: AppBar(
-          title: Text('Bank Accounts'),
+          title: Text('Bank Accountsww'),
         ),
         drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
         body: Container(

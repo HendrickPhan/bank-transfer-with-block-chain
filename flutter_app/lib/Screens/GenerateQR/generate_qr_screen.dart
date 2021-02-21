@@ -31,6 +31,7 @@ class GenerateQRScreenState extends State<GenerateQRScreen> {
       home: Scaffold(
         appBar: AppBar(
           title: Text('QR code of: ' + widget.accountNumber),
+          backgroundColor: Color(0xFF222222),
           leading: BackButton(
             color: Colors.white,
             onPressed: () => Navigator.of(context).pop(),

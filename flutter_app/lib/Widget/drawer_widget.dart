@@ -32,7 +32,7 @@ class _DrawerWidgetState extends State<DrawerWidget> {
           Container(
             width: double.infinity,
             padding: EdgeInsets.all(20),
-            color: Theme.of(context).primaryColor,
+            color: Color(0xFF222222),
             child: Center(
               child: Column(
                 children: <Widget>[

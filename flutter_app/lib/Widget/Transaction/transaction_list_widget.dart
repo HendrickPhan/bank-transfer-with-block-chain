@@ -100,9 +100,11 @@ class TransactionList extends StatelessWidget {
     final double categoryHeight = size.height * 0.30;
     bool closeTopContainer = false;
     double topContainer = 0;
+    var type = '';
     return Scaffold(
       appBar: AppBar(
         title: Text('History'),
+        backgroundColor: Color(0xFF222222),
       ),
       //drawer: Container(width: 250, child: Drawer(child: DrawerNav())),
       body: Container(
@@ -110,7 +112,7 @@ class TransactionList extends StatelessWidget {
             gradient: LinearGradient(
                 colors: [
               Colors.white,
-              Color(0xFF4E54C8),
+              Color(0xFFA5A5A5),
             ],
                 begin: Alignment.bottomCenter,
                 end: Alignment.topCenter,
@@ -119,6 +121,18 @@ class TransactionList extends StatelessWidget {
         child: new ListView.builder(
           controller: controller,
           itemBuilder: (context, index) {
+            if (transactionList.data[index].type.toString() == '0') {
+              type = "Transfer";
+            }
+            if (transactionList.data[index].type.toString() == '1') {
+              type = "Cash In";
+            }
+            if (transactionList.data[index].type.toString() == '2') {
+              type = "Cash Out";
+            }
+            if (transactionList.data[index].type.toString() == '3') {
+              type = "Paid Bill";
+            }
             return Container(
               padding: new EdgeInsets.only(top: 10.0, left: 5.0, right: 5.0),
               child: new Center(
@@ -184,6 +198,18 @@ class TransactionList extends StatelessWidget {
                                           height: 5,
                                         ),
                                         Text(
+                                          "Type:",
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                            //fontWeight: FontWeight.w700,
+                                            //letterSpacing: 2.0
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
                                           "Amount:",
                                           style: TextStyle(
                                             //fontStyle: FontStyle.italic,
@@ -229,34 +255,44 @@ class TransactionList extends StatelessWidget {
                                         SizedBox(
                                           height: 2,
                                         ),
-                                        if (transactionList
-                                                .data[index].toAccount
-                                                .toString() ==
-                                            '1')
-                                          Text(
-                                            'Thụ hưởng',
-                                            style: TextStyle(
-                                              //fontStyle: FontStyle.italic,
-                                              fontSize: 12,
-                                              color: Colors.grey,
-                                              //fontWeight: FontWeight.w900,
-                                            ),
-                                          ),
                                         Text(
-                                          fmf
-                                              .copyWith(
-                                                  amount: transactionList
-                                                      .data[index].amount
-                                                      .toDouble(),
-                                                  fractionDigits: 0)
-                                              .output
-                                              .nonSymbol,
+                                          transactionList.data[index].toAccount
+                                              .toString(),
                                           style: TextStyle(
-                                              fontSize: 12,
-                                              color: Colors.grey,
-                                              //fontWeight: FontWeight.w700,
-                                              letterSpacing: 2.0),
+                                            //fontStyle: FontStyle.italic,
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
                                         ),
+                                        SizedBox(
+                                          height: 2,
+                                        ),
+                                        Text(
+                                          type,
+                                          style: TextStyle(
+                                            //fontStyle: FontStyle.italic,
+                                            fontSize: 12,
+                                            color: Colors.grey,
+                                          ),
+                                        ),
+                                        // Text((() {
+                                        //   if (transactionList.data[index].type
+                                        //           .toString() ==
+                                        //       '0') {
+                                        //     return "Transfer";
+                                        //   }
+                                        //   if (transactionList.data[index].type
+                                        //           .toString() ==
+                                        //       '1') {
+                                        //     return "Cash In";
+                                        //   }
+                                        //   if (transactionList.data[index].type
+                                        //           .toString() ==
+                                        //       '2') {
+                                        //     return "Cash Out";
+                                        //   }
+                                        //   return "Paid Bill";
+                                        // })()),
                                         SizedBox(
                                           height: 5,
                                         ),
