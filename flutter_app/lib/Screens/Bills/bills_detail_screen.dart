@@ -5,14 +5,11 @@ import 'package:app/Networking/api_responses.dart';
 import 'package:app/Models/paginate_model.dart';
 import 'package:app/Widget/Error/err_widget.dart';
 import 'package:app/Widget/Loading/loading_widget.dart';
-import 'package:app/Widget/Transaction/transaction_list_widget.dart';
-import 'package:app/Screens/Transaction/transaction_list_screen.dart';
 import 'package:flutter/services.dart';
-import 'package:app/Screens/GenerateQR/generate_qr_screen.dart';
 import 'package:flutter_money_formatter/flutter_money_formatter.dart';
 
 class BillsDetailScreen extends StatefulWidget {
-  static const String route = "bills-detail";
+  static const String route = "bills_detail";
   final int id;
   const BillsDetailScreen(this.id);
   @override
@@ -64,13 +61,13 @@ class _BillsDetailScreenState extends State<BillsDetailScreen> {
           },
         ),
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () {
-      //     // _bloc.addBankAccount();
-      //   },
-      //   child: Icon(Icons.add),
-      //   backgroundColor: Colors.lightBlue,
-      // ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // _bloc.addBankAccount();
+        },
+        child: Icon(Icons.add),
+        backgroundColor: Colors.lightBlue,
+      ),
     );
   }
 }
@@ -82,183 +79,169 @@ class BillsDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     FlutterMoneyFormatter fmf = FlutterMoneyFormatter(amount: 12345678.9012345);
     MoneyFormatterOutput fo = fmf.output;
+    var status = '';
+    if (billsDetail.status.toString() == '0') {
+      status = "Unpaid";
+    }
+    if (billsDetail.status.toString() == '1') {
+      status = "Paid";
+    }
+
     return NotificationListener<ScrollNotification>(
       child: Scaffold(
-        backgroundColor: Color(0xff4E295B),
-        body: SingleChildScrollView(
-          child: SafeArea(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      Colors.white,
-                      Color(0xFFA5A5A5),
-                    ],
-                    begin: Alignment.bottomCenter,
-                    end: Alignment.topCenter,
-                    tileMode: TileMode.clamp),
-              ),
-              height: MediaQuery.of(context).size.height,
-              width: double.infinity,
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    SizedBox(
-                      height: 24,
-                    ),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        body: Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                Colors.white,
+                Color(0xFFA5A5A5),
+              ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  tileMode: TileMode.clamp)),
+          height: size.height,
+          width: size.width,
+          child: Container(
+            height: 250,
+            child: Column(
+              //mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                SizedBox(
+                  height: 16,
+                ),
+                Container(
+                  margin: EdgeInsets.symmetric(horizontal: 32),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                  ),
+                  padding: EdgeInsets.all(16),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 15,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Your Bills",
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w900,
-                                    fontSize: 24,
-                                    color: Colors.white),
-                              ),
-                            ],
+                          Text(
+                            "User ID",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
+                          ),
+                          Text(
+                            billsDetail.user_id.toString(),
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: Colors.black,
+                            ),
                           ),
                         ],
                       ),
-                      padding: EdgeInsets.symmetric(horizontal: 32),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Container(
-                      margin: EdgeInsets.symmetric(horizontal: 32),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(10)),
-                        color: Color.fromRGBO(35, 60, 103, 1),
+                      SizedBox(
+                        height: 5,
                       ),
-                      padding: EdgeInsets.all(16),
-                      child: Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              CircleAvatar(
-                                radius: 16,
-                                backgroundColor:
-                                    Color.fromRGBO(50, 172, 121, 1),
-                                child: Icon(
-                                  Icons.check,
-                                  color: Colors.white,
-                                  size: 24,
-                                ),
-                              ),
-                              Text(
-                                "DETAIL",
-                                style: TextStyle(
-                                    fontStyle: FontStyle.italic,
-                                    fontSize: 28,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 32,
+                          Text(
+                            "Amount",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.black,
+                            ),
                           ),
                           Text(
-                            "Account Number",
+                            fmf
+                                .copyWith(
+                                    amount: billsDetail.amount.toDouble(),
+                                    fractionDigits: 0)
+                                .output
+                                .nonSymbol,
                             style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 2.0),
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Type",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
                           Text(
                             billsDetail.type_text.toString(),
                             style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700,
-                                letterSpacing: 2.0),
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
                           ),
-                          SizedBox(
-                            height: 32,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "AMOUNT",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.blue[100],
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 2.0),
-                                  ),
-                                  Text(
-                                    fmf
-                                        .copyWith(
-                                            amount:
-                                                billsDetail.amount.toDouble(),
-                                            fractionDigits: 0)
-                                        .output
-                                        .nonSymbol,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey[100],
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 2.0),
-                                  ),
-                                ],
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Text(
-                                    "RATE",
-                                    style: TextStyle(
-                                        fontSize: 12,
-                                        color: Colors.blue[100],
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 2.0),
-                                  ),
-                                  Text(
-                                    billsDetail.user_id.toString(),
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        color: Colors.grey[100],
-                                        fontWeight: FontWeight.w700,
-                                        letterSpacing: 2.0),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          )
                         ],
                       ),
-                    ),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    RaisedButton(
-                      color: Colors.blue,
-                      textColor: Colors.white,
-                      child: new Text('Cash Out'),
-                      onPressed: () {
-                        Navigator.pushNamed(
-                          context,
-                        );
-                      },
-                    ),
-                  ],
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Status",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            status,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Date",
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey,
+                            ),
+                          ),
+                          Text(
+                            billsDetail.paid_at.substring(0, 10).toString(),
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
           ),
         ),
